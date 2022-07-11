@@ -1,0 +1,102 @@
+syntax enable
+highlight ColorColumn guifg=#440000
+if has('termguicolors')
+  set termguicolors
+endif
+colorscheme nebulous
+hi Normal guibg=#000000 ctermbg=0
+hi TabLineSel guifg=#ffffff ctermbg=green
+hi TabLineFill guifg=#888888 guibg=#440000
+hi MatchParen cterm=NONE ctermfg=green ctermbg=lightgreen
+hi BufferCurrentMod guifg=#c0865c
+hi BufferInactiveMod guifg=#695b40
+
+" set guifontsize = 16
+set guifont=ProFontWindows\ Nerd\ Font\ Mono:h16
+
+set title
+set hidden
+set number
+set cursorline
+
+" tabs and spaces
+set softtabstop=2
+set tabstop=2
+set shiftwidth=2
+set expandtab
+set ruler
+filetype plugin indent on
+autocmd FileType go setlocal noexpandtab shiftwidth=4 softtabstop=4 tabstop=4 shiftwidth=4 omnifunc=lsp#complete
+
+" show whitespace anomalies
+" set list
+" set listchars=tab:>-,trail:~,extends:>,precedes:<
+
+" nerdcommenter
+let g:NERDSpaceDelims = 1
+let g:NERDCommentEmptyLines = 1
+let g:NERDTrimTrailingWhitespace = 1
+
+" don't jump to start-of-line on buffer change
+set nostartofline
+set colorcolumn=80
+
+" barbar
+let bufferline = get(g:, 'bufferline', {})
+let bufferline.icons = v:true
+let bufferline.closable = v:false
+let bufferline.icon_close_tab = '·'
+let bufferline.icon_close_tab_modified = '●'
+let bufferline.icon_custom_colors = v:true
+let bufferline.maximum_padding = 1
+" let bufferline.auto_hide = v:true
+nnoremap <silent>    <C-PageUp> :BufferPrevious<CR>
+nnoremap <silent>    <C-PageDown> :BufferNext<CR>
+nnoremap <silent>    <C-K> :BufferPrevious<CR>
+nnoremap <silent>    <C-J> :BufferNext<CR>
+nnoremap <silent>    <C-H> :BufferMovePrevious<CR>
+nnoremap <silent>    <C-L> :BufferMoveNext<CR>
+nnoremap <silent>    <C-W> :BufferClose<CR>
+hi Normal guibg=#000000 ctermbg=0
+hi TabLineSel guifg=#ffffff ctermbg=green
+hi TabLineFill guifg=#888888 guibg=#440000
+hi MatchParen cterm=NONE ctermfg=green ctermbg=lightgreen
+hi BufferCurrentMod guifg=#c0865c
+hi BufferInactiveMod guifg=#695b40
+
+let g:ctrlp_map = '<c-p>'
+let g:ctrlp_cmd = 'CtrlP'
+let g:ctrlp_custom_ignore = 'node_modules\|git'
+
+" search selected text with //
+vnoremap // y/\V<C-r>=escape(@",'/\')<CR><CR>
+
+" leader key
+let mapleader=";"
+
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+if has("patch-8.1.1564")
+  " Recently vim can merge signcolumn and number column into one
+  set signcolumn=number
+else
+  set signcolumn=yes
+endif
+
+" remap 'mark' to gm
+nnoremap gm m
+" M to delete to end of line and yank
+nmap M <Plug>MoveMotionEndOfLinePlug
+
+let g:EasyClipShareYanks = 1
+
+let g:go_fmt_command = "golines"
+let g:go_fmt_options = {
+    \ 'golines': '-m 100',
+    \ }
+
+autocmd BufWritePre *.go lua vim.lsp.buf.formatting_sync(nil, 1000)
+
+" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
+set updatetime=300

@@ -1,0 +1,14 @@
+xkb_keymap {
+	xkb_keycodes  { include "evdev+aliases(qwerty)"	};
+	xkb_types     { include "complete"	};
+	xkb_compat    { include "complete"	};
+	xkb_symbols   {
+		include "pc+us(altgr-intl)+inet(evdev)+altwin(swap_lalt_lwin)+capslock(swapescape)"
+		//key <AC06> { symbols =   [ h, H, Left ], actions =   [ Redirect(key=<LEFT>), Redirect(key=<LEFT>), Redirect(key=<LEFT>) ] };
+		key <AC06> { [         h,          H,            Left,                LEFT ] };
+		key <AC07> { [         j,          J,            Down,                DOWN ] };
+		key <AC08> { [         k,          K,            Up,                  UP ] };
+		key <AC09> { [         l,          L,            Right,               RIGHT ] };
+	};
+	xkb_geometry  { include "pc(pc104)"	};
+};
