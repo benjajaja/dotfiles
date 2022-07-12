@@ -16,7 +16,6 @@
   # A DBus service that allows applications to update firmware
   services.fwupd.enable = true;
 
-  networking.hostName = "motherbase"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -123,9 +122,6 @@
   services.xserver = {
     enable = true;
     dpi = 150;
-    videoDrivers = [ "modesetting" ];
-    useGlamor = true;
-    xrandrHeads = [ "DP-3" "eDP-1" ];
 
     # custom xkb is loaded by home-manager, this is fallback
     layout = "us";
@@ -239,18 +235,6 @@
     steam = {
       enable = true;
     };
-  };
-
-  systemd.services.mywarp = {
-    enable = true;
-    description = "Warp server";
-    unitConfig = {
-      Type = "simple";
-    };
-    serviceConfig = {
-      ExecStart = "/home/gipsy/.nix-profile/bin/warp-svc";
-    };
-    wantedBy = [ "multi-user.target" ];
   };
 
   system.stateVersion = "22.05"; # Did you read the comment?
