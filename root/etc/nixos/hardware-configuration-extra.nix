@@ -1,22 +1,6 @@
 { config, pkgs, ... }:
 
 {
-  # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.systemd-boot.consoleMode = "2";
-  boot.loader.efi.efiSysMountPoint = "/boot/efi";
-  boot.initrd.kernelModules = [ "i915" ];
-  boot.kernelParams = [];
-  boot.plymouth.enable = true;
-
-  # Use latest kernel
-  # boot.kernelPackages will use linuxPackages by default, so no need to define it
-  #nixpkgs.config.packageOverrides = in_pkgs :
-  #  {
-  #    linuxPackages = in_pkgs.linuxPackages_latest;
-  #    #vaapiIntel = pkgs.vaapiIntel.override { enableHybridCodec = true; };
-  #  };
 
   hardware.cpu.intel.updateMicrocode = true;
   hardware.ksm.enable = true;

@@ -8,10 +8,15 @@
   imports =
     [ # Include the results of the hardware scan.
       /etc/nixos/hardware-configuration.nix
-      ./hardware-configuration-extra.nix
       <home-manager/nixos>
     ];
 
+  # Bootloader.
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.systemd-boot.consoleMode = "2";
+  boot.loader.efi.efiSysMountPoint = "/boot/efi";
+  boot.plymouth.enable = true;
 
   # A DBus service that allows applications to update firmware
   services.fwupd.enable = true;
