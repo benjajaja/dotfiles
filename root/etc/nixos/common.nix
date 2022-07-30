@@ -93,6 +93,9 @@
     killall
     nixos-option
     stow
+    glxinfo
+    inxi
+    xorg.xdpyinfo
 
     lightlocker
     inputplug
@@ -140,8 +143,9 @@
     synaptics.tapButtons = false;
 
     displayManager = {
-    gdm.enable = false;
-    lightdm = {
+      defaultSession = "none+xmonad";
+      gdm.enable = false;
+      lightdm = {
           enable = true;
           greeters.mini = {
             enable = true;
@@ -166,9 +170,11 @@
     };
     desktopManager.gnome.enable = true;
 
-    windowManager.xmonad = {
-      enable = true;
-      enableContribAndExtras = true;
+    windowManager = {
+      xmonad = {
+        enable = true;
+        enableContribAndExtras = true;
+      };
     };
   };
 
