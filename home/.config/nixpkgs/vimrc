@@ -67,6 +67,7 @@ hi BufferInactiveMod guifg=#695b40
 let g:ctrlp_map = '<c-p>'
 let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_custom_ignore = 'node_modules\|git'
+let g:ctrlp_show_hidden = 1
 
 " search selected text with //
 vnoremap // y/\V<C-r>=escape(@",'/\')<CR><CR>

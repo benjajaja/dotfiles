@@ -52,6 +52,10 @@ in
     tig
     tdesktop
     chromium
+    libreoffice
+    inkscape
+
+    # dev
     gotestsum
     pre-commit
     terraform
@@ -60,6 +64,9 @@ in
     unzip
     losslesscut-bin
     vlc
+    cypress
+    tree-sitter
+    bat
 
     # hobby
     rustc
@@ -160,9 +167,5 @@ in
   # systemd.user.services.mywarp = {
     # enable = true;
   # };
-  services.polybar = {
-    enable = false;
-    script = "polybar bar &";
-    extraConfig = builtins.readFile ./polybar;
-  };
+  services = {};
 }

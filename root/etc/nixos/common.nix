@@ -42,6 +42,7 @@
   };
 
   services.gnome.gnome-keyring.enable = true;
+  security.pam.services.gdm.enableGnomeKeyring = true;
   services.upower.enable = true;
 
 
@@ -125,7 +126,7 @@
 
     (steam.override {
        withPrimus = true;
-       extraPkgs = pkgs: [ bumblebee glxinfo ];
+       extraPkgs = pkgs: [ glxinfo ];
     }).run
   ];
 
@@ -248,6 +249,9 @@
     };
     steam = {
       enable = true;
+    };
+    ssh = {
+      startAgent = true;
     };
   };
 
