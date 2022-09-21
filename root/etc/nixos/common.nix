@@ -52,6 +52,8 @@
   sound.enable = true;
   hardware.pulseaudio.enable = true;
 
+  hardware.bluetooth.enable = true;
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.gipsy = {
     isNormalUser = true;
@@ -248,6 +250,8 @@
       enable = true;
     };
   };
+
+  services.blueman.enable = true;
 
   system.stateVersion = "22.05"; # Did you read the comment?
 }
