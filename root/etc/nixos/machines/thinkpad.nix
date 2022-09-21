@@ -3,6 +3,7 @@
 {
   imports = [ 
     ../common.nix
+    ./falcon.nix
   ];
   boot.initrd.kernelModules = [ "i915" ];
 
