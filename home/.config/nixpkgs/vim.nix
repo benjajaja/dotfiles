@@ -52,6 +52,8 @@ in {
         nvim-lsputils
         nvim-treesitter
         cmp-treesitter
+        completion-nvim
+        rust-tools-nvim
 
         plenary-nvim
         null-ls-nvim

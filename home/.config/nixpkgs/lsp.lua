@@ -8,11 +8,10 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 local on_attach = function(client, bufnr)
+  require'completion'.on_attach(client)
+
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-
-  -- buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 
   -- Mappings.
   local opts = { noremap=true, silent=true }
@@ -54,6 +53,9 @@ local on_attach = function(client, bufnr)
       augroup END
     ]], false)
   end
+
+  -- buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
+  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
 end
 
 nvim_lsp.gopls.setup{
@@ -188,24 +190,61 @@ nvim_lsp.tsserver.setup({
     end,
 })
 
-nvim_lsp.rust_analyzer.setup({
-    on_attach=on_attach,
-    settings = {
-        ["rust-analyzer"] = {
-            assist = {
-                importGranularity = "module",
-                importPrefix = "by_self",
-            },
-            cargo = {
-                allFeatures = true,
-                -- runBuildScripts = false
-            },
-            procMacro = {
-                enable = true
-            },
+-- local rust_on_attach = function(client)
+    -- require'completion'.on_attach(client)
+-- end
+-- nvim_lsp.rust_analyzer.setup({
+    -- on_attach=on_attach,
+    -- settings = {
+        -- ["rust-analyzer"] = {
+            -- imports = {
+                -- granularity = {
+                    -- group = "module",
+                -- },
+                -- prefix = "self",
+            -- },
+            -- cargo = {
+                -- buildScripts = {
+                    -- enable = true,
+                -- },
+            -- },
+            -- procMacro = {
+                -- enable = true
+            -- },
+        -- }
+    -- }
+-- })
+local opts = {
+    tools = { -- rust-tools options
+        autoSetHints = true,
+        hover_with_actions = true,
+        inlay_hints = {
+            show_parameter_hints = false,
+            parameter_hints_prefix = "",
+            other_hints_prefix = "",
+        },
+    },
+
+    -- all the opts to send to nvim-lspconfig
+    -- these override the defaults set by rust-tools.nvim
+    -- see https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#rust_analyzer
+    server = {
+        -- on_attach is a callback called when the language server attachs to the buffer
+        on_attach = on_attach,
+        settings = {
+            -- to enable rust-analyzer settings visit:
+            -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
+            ["rust-analyzer"] = {
+                -- enable clippy on save
+                checkOnSave = {
+                    command = "clippy"
+                },
+            }
         }
-    }
-})
+    },
+}
+
+require('rust-tools').setup(opts)
 
 local null_ls = require("null-ls")
 null_ls.setup({

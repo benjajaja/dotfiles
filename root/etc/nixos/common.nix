@@ -139,8 +139,9 @@
     libinput = {
       enable = true;
       touchpad.disableWhileTyping = true;
+      touchpad.tapping = false;
+      touchpad.clickMethod = "buttonareas";
     };
-    synaptics.tapButtons = false;
 
     displayManager = {
       defaultSession = "none+xmonad";

@@ -29,6 +29,7 @@ in
 
   home.packages = with pkgs; [
     htop
+    docker-compose
 
     # wm session
     hsetroot
@@ -43,6 +44,7 @@ in
     dunst
     pavucontrol
     udiskie
+    mate.mate-applets
 
     # programs
     alacritty
@@ -55,10 +57,14 @@ in
     terraform
     cloudflare-warp
     slack-term
+    unzip
+    losslesscut-bin
+    vlc
 
     # hobby
     rustc
     cargo
+    rust-analyzer
     cmake
     pkg-config
     freetype
@@ -129,7 +135,6 @@ in
     trayer --edge top --align right --SetPartialStrut true --transparent true --tint 0x000000 -l --height 32 --iconspacing 4 --expand false &
     dunst &
     nm-applet &
-    pa-applet &
     pasystray &
     mictray &
     xfce4-clipman &
@@ -155,4 +160,9 @@ in
   # systemd.user.services.mywarp = {
     # enable = true;
   # };
+  services.polybar = {
+    enable = false;
+    script = "polybar bar &";
+    extraConfig = builtins.readFile ./polybar;
+  };
 }
