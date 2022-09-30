@@ -15,12 +15,11 @@ rustPlatform.buildRustPackage rec {
     fetchSubmodules = true;
   };
 
-  cargoSha256 = "2uZXmH0Gw6cwBegS0n4r6NYOJWYFp+ndg618I8Og37k=";
+  cargoHash = "sha256-SgpttAL1/hSpApVCVZvlGpgotbYxN43YtH0yAtYehu4=";
 
-  nativeBuildInputs = [
-    openssl
-    pkgconfig
-  ];
+  nativeBuildInputs = [ openssl pkgconfig ];
+  
+  buildInputs = [ openssl ];
 
   doCheck = true;
 }
