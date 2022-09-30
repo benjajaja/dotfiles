@@ -4,6 +4,7 @@ let
   compiledLayout = pkgs.runCommand "keyboard-layout" {} ''
     ${pkgs.xorg.xkbcomp}/bin/xkbcomp ${./xkb/layout.xkb} $out
   '';
+  pista = pkgs.callPackage ./pista.nix {};
 in
 {
   imports = [
@@ -48,6 +49,7 @@ in
 
     # programs
     alacritty
+    pista
     neovide
     tig
     tdesktop
@@ -106,6 +108,15 @@ in
       shellAliases = {
         ne = "neovide --multigrid -- --cmd 'cd ~/p/core' --cmd 'set mouse=a'";
       };
+      initExtra = ''
+        export PROMPT_CHAR=">"
+        export HIDE_HOME_CWD=1
+        export PROMPT_CHAR_COLOR="green"
+        export PROMPT_CHAR_ROOT_COLOR="green"
+        export SHORTEN_CWD=1
+        export CWD_COLOR="yellow"
+        export PS1='$(pista -m)'
+      '';
     };
     alacritty = {
       enable = true;
