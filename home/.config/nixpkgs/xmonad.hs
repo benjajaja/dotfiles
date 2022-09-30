@@ -92,7 +92,8 @@ main = do
         -- spawn "udiskie -t -a -n -f thunar"
         -- spawn "nm-applet"
         spawnOn "1" "firefox"
-        spawnOn "2" "neovide --multigrid --nofork --maximized -- --cmd 'cd ~/p/core' --cmd 'set mouse=a'"
+        -- spawnOn "2" "neovide --multigrid --nofork --maximized -- --cmd 'cd ~/p/core' --cmd 'set mouse=a'"
+        spawnOn "2" (myTerminal ++ " --working-directory ~/p/core")
         spawnOn "3" myTerminal
         spawnOn "3" myTerminal
         spawnOn "5" "telegram-desktop"
