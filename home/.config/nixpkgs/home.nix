@@ -69,6 +69,7 @@ in
     cypress
     tree-sitter
     bat
+    vscode
 
     # hobby
     rustc
@@ -85,6 +86,9 @@ in
     xorg.xkbcomp
     xorg.xev
     qmk
+
+    retroarchFull
+    python39Packages.ds4drv
   ];
 
   gtk = {
