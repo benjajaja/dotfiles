@@ -64,6 +64,7 @@ in
     cloudflare-warp
     slack-term
     unzip
+    unar
     losslesscut-bin
     vlc
     cypress
@@ -87,8 +88,8 @@ in
     xorg.xev
     qmk
 
-    retroarchFull
-    python39Packages.ds4drv
+    # games
+    dolphin-emu
   ];
 
   gtk = {
