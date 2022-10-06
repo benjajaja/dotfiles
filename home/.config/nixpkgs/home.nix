@@ -158,28 +158,30 @@ in
       config = ./xmonad.hs;
     };
     initExtra = ''
-    hsetroot -center $HOME/Pictures/skull_on_fire_framed_c700-477x480.jpg &
-    trayer --edge top --align right --SetPartialStrut true --transparent true --tint 0x000000 -l --height 32 --iconspacing 4 --expand false &
-    dunst &
-    nm-applet &
-    pasystray &
-    mictray &
-    xfce4-clipman &
-    cbatticon &
-    flameshot &
-    udiskie -t -a -n -f thunar &
-    light-locker --lock-after-screensaver=30 &
-    xset s 1800
-    { echo "XIDeviceEnabled XISlaveKeyboard" ; inputplug -d -c echo ; } |
-    while read event
-    do
-        case $event in
-        XIDeviceEnabled*XISlaveKeyboard*)
-            ${pkgs.xorg.xkbcomp}/bin/xkbcomp ${compiledLayout} $DISPLAY
-            ${pkgs.xorg.xset}/bin/xset r rate 200 40
-                ;;
-        esac
-    done &
+      hsetroot -center $HOME/Pictures/skull_on_fire_framed_c700-477x480.jpg &
+      xsetroot -cursor_name left_ptr
+      trayer --edge top --align right --SetPartialStrut true --transparent true --tint 0x000000 -l --height 32 --iconspacing 4 --expand false &
+      dunst &
+      nm-applet &
+      pasystray &
+      mictray &
+      xfce4-clipman &
+      cbatticon &
+      flameshot &
+      udiskie -t -a -n -f thunar &
+      blueman-applet &
+      light-locker --lock-after-screensaver=30 &
+      xset s 1800
+      { echo "XIDeviceEnabled XISlaveKeyboard" ; inputplug -d -c echo ; } |
+      while read event
+      do
+          case $event in
+          XIDeviceEnabled*XISlaveKeyboard*)
+              ${pkgs.xorg.xkbcomp}/bin/xkbcomp ${compiledLayout} $DISPLAY
+              ${pkgs.xorg.xset}/bin/xset r rate 200 40
+                  ;;
+          esac
+      done &
     '';
   };
     # TODO: remove when this gets merged:
