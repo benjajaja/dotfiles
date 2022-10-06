@@ -78,6 +78,8 @@ in
     rustc
     cargo
     rust-analyzer
+    clippy
+    rustfmt
     cmake
     pkg-config
     freetype

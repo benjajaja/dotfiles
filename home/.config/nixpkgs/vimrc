@@ -96,7 +96,7 @@ let g:go_fmt_options = {
     \ 'golines': '-m 100',
     \ }
 
-autocmd BufWritePre *.go lua vim.lsp.buf.formatting_sync(nil, 1000)
+autocmd BufWritePre *.go,*.ts,*.elm,*.rs lua vim.lsp.buf.formatting_sync(nil, 1000)
 
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 " delays and poor user experience.
