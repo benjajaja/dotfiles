@@ -102,8 +102,8 @@ main = do
         windows (greedyViewOnScreen 1 "4")
     }
     `additionalKeys`
-      -- [ ((myModmask, xK_p), spawn "dmenu_run") -- launcher
-      [ ((myModmask, xK_p), spawn "dmenu_run -fn 'ProFontWindows-12' -sb '#f0e68c' -sf black -nf '#f0e68c' -nb black")
+      [ ((myModmask, xK_p), spawn "dmitri") -- launcher
+      -- [ ((myModmask, xK_p), spawn "dmenu_run -fn 'ProFontWindows-12' -sb '#f0e68c' -sf black -nf '#f0e68c' -nb black")
       , ((myModmask .|. shiftMask, xK_m), io (exitWith ExitSuccess)) -- quit?
       , ((myModmask, xK_b), sendMessage ToggleStruts) -- toggle struts (bar)
       , ((myModmask .|. shiftMask, xK_l), spawn "light-locker-command -l")

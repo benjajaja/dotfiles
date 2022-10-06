@@ -5,6 +5,7 @@ let
     ${pkgs.xorg.xkbcomp}/bin/xkbcomp ${./xkb/layout.xkb} $out
   '';
   pista = pkgs.callPackage ./pista.nix {};
+  dmitri = pkgs.callPackage ./dmitri.nix {};
 in
 {
   imports = [
@@ -50,6 +51,7 @@ in
     # programs
     alacritty
     pista
+    dmitri
     neovide
     tig
     tdesktop
