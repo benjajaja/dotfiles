@@ -50,6 +50,7 @@ in
 
     # programs
     alacritty
+    qutebrowser
     pista
     dmitri
     neovide
@@ -182,6 +183,7 @@ in
                   ;;
           esac
       done &
+      export QT_AUTO_SCREEN_SCALE_FACTOR=1
     '';
   };
     # TODO: remove when this gets merged:
