@@ -120,6 +120,9 @@ in
       bashrcExtra = ''
         PATH="$PATH:/home/$USER/go/bin"
       '';
+      sessionVariables = {
+        EDITOR = "nvim";
+      };
       shellAliases = {
         ne = "neovide --multigrid -- --cmd 'cd ~/p/core' --cmd 'set mouse=a'";
       };
@@ -131,6 +134,19 @@ in
         export SHORTEN_CWD=1
         export CWD_COLOR="yellow"
         export PS1='$(pista -m)'
+        set -o vi
+        set show-mode-in-prompt on
+        set vi-cmd-mode-string "\1\e[2 q\2"
+        set vi-ins-mode-string "\1\e[6 q\2"
+      '';
+    };
+    readline = {
+      enable = true;
+      extraConfig = ''
+        set show-mode-in-prompt on
+        set vi-cmd-mode-string "\1\e[2 q\2"
+        set vi-ins-mode-string "\1\e[3 q\2"
+        set keyseq-timeout 50
       '';
     };
     alacritty = {
