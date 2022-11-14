@@ -9,7 +9,7 @@ let
   '';
 in {
   systemd.services.falcon-sensor = {
-    enable = true;
+    enable = false;
     description = "CrowdStrike Falcon Sensor";
     unitConfig.DefaultDependencies = false;
     after = [ "local-fs.target" ];

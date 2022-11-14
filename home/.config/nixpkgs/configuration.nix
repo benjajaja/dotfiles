@@ -38,6 +38,7 @@
   };
 
   services.gnome.gnome-keyring.enable = true;
+  services.gvfs.enable = true;
   services.upower.enable = true;
 
 
@@ -98,14 +99,15 @@
     flameshot
     light
     gnome.adwaita-icon-theme
+    lxqt.lxqt-policykit
     gimp
+    nfs-utils
 
     nodejs
     yarn
     go_1_18
     python3
     python39Packages.pip
-    gopls
     nodePackages.typescript-language-server
 
     gnumake
@@ -240,17 +242,17 @@
     };
   };
 
-  systemd.services.mywarp = {
-    enable = true;
-    description = "Warp server";
-    unitConfig = {
-      Type = "simple";
-    };
-    serviceConfig = {
-      ExecStart = "/home/gipsy/.nix-profile/bin/warp-svc";
-    };
-    wantedBy = [ "multi-user.target" ];
-  };
+  # systemd.services.mywarp = {
+    # enable = true;
+    # description = "Warp server";
+    # unitConfig = {
+      # Type = "simple";
+    # };
+    # serviceConfig = {
+      # ExecStart = "/home/gipsy/.nix-profile/bin/warp-svc";
+    # };
+    # wantedBy = [ "multi-user.target" ];
+  # };
 
   system.stateVersion = "22.05"; # Did you read the comment?
 }

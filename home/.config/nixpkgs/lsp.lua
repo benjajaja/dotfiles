@@ -186,6 +186,9 @@ nvim_lsp.tsserver.setup({
         vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", ":TSLspRenameFile<CR>", opts)
         vim.api.nvim_buf_set_keymap(bufnr, "n", "gi", ":TSLspImportAll<CR>", opts)
 
+        -- default to null-ls for formatting, suppress prompt
+        client.resolved_capabilities.document_formatting = false
+        client.resolved_capabilities.document_range_formatting = false
         on_attach(client, bufnr)
     end,
 })
@@ -245,6 +248,10 @@ local opts = {
 }
 
 require('rust-tools').setup(opts)
+
+nvim_lsp.elmls.setup({
+   on_attach = on_attach;
+})
 
 local null_ls = require("null-ls")
 null_ls.setup({

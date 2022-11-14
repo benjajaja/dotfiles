@@ -6,10 +6,15 @@ let
   '';
   pista = pkgs.callPackage ./pista.nix {};
   dmitri = pkgs.callPackage ./dmitri.nix {};
+  git-recent = pkgs.callPackage ./git-recent.nix {};
+  # warp-service = pkgs.callPackage (import ./warp-service.nix) {};
+  # mywarp = pkgs.callPackage ./warp.nix {};
+  # gopls = pkgs.callPackage ./go.nix {};
 in
 {
   imports = [
     ./vim.nix
+    # ./warp-service.nix
   ];
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
@@ -48,6 +53,8 @@ in
     udiskie
     mate.mate-applets
     brightnessctl
+    gvfs
+    samba
 
     # programs
     alacritty
@@ -61,26 +68,42 @@ in
     libreoffice
     inkscape
     transmission-gtk
-    radarr
     gnome_mplayer
     gnomecast
 
     # dev
+    gopls
     gotestsum
     pre-commit
     terraform
-    cloudflare-warp
+    cypress
+    tree-sitter
+    bat
+    vscode
+    nodePackages.serverless
+    git-recent
+
+    # apps
     slack-term
     unzip
     unar
     losslesscut-bin
     vlc
-    cypress
-    tree-sitter
-    bat
-    vscode
+    signal-desktop
+    # pidgin
+    # telegram-purple # bad hash?
+    # pidgin-opensteamworks
+    # purple-slack
+    # purple-discord
+    # purple-hangouts
+    # purple-googlechat
+    # gurk-rs
+    fractal
+    quaternion
+    mirage-im
+    libsForQt5.neochat
 
-    # hobby
+    # hobby dev
     rustc
     cargo
     rust-analyzer
@@ -88,8 +111,8 @@ in
     rustfmt
     cmake
     pkg-config
-    freetype
-    expat
+    elmPackages.elm-language-server
+    elmPackages.elm-test
 
     # debug / unusual
     glxinfo
@@ -97,6 +120,7 @@ in
     xorg.xkbcomp
     xorg.xev
     qmk
+    binutils # a bunch of helper bins, a lot of build tools need some
 
     # games
     dolphin-emu
@@ -118,7 +142,7 @@ in
     bash = {
       enable = true;
       bashrcExtra = ''
-        PATH="$PATH:/home/$USER/go/bin"
+        PATH="$PATH:/home/$USER/go/bin:/home/$USER/.cargo/bin"
       '';
       sessionVariables = {
         EDITOR = "nvim";
@@ -170,6 +194,15 @@ in
           psu = "push -u origin HEAD";
       };
     };
+    pidgin = {
+      enable = true;
+      plugins = [
+        # pkgs.telegram-purple
+        pkgs.purple-discord
+        pkgs.purple-slack
+        pkgs.purple-matrix
+      ];
+    };
   };
 
   xsession = {
@@ -207,10 +240,4 @@ in
       export QT_AUTO_SCREEN_SCALE_FACTOR=1
     '';
   };
-    # TODO: remove when this gets merged:
-  # https://github.com/NixOS/nixpkgs/blob/ba0e1d31f9c28342c0eb9007e5609e56ed76697d/nixos/modules/services/networking/cloudflare-warp.nix
-  # systemd.user.services.mywarp = {
-    # enable = true;
-  # };
-  services = {};
 }

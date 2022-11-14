@@ -87,3 +87,10 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 
+vim.api.nvim_set_var("lsp_utils_location_opts", {
+  height = 30,
+  -- callbacks = {
+    -- select = action.selection_handler,
+    -- close = action.close_cancelled_handler,
+  -- },
+});

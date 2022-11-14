@@ -6,7 +6,7 @@ self: super: {
     version = "0.2.5";
     src = super.fetchFromGitHub {
       owner = "benjajaja";
-      repo = "mictray";
+      repo = oldAttrs.pname;
       rev = "15de891e48da9f8f9f1b8d4a3615a0d40117dca6";
       sha256 = "sha256-3QsWqi6KOPHX62RxvAn5C0P9Sx2R8imzXawUn+ELYxI=";
     };
