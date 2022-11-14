@@ -91,8 +91,6 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     nano # leave this as last resort editor!
-    #vim
-    #neovim
     wget
     git
     killall

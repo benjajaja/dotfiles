@@ -7,14 +7,10 @@ let
   pista = pkgs.callPackage ./pista.nix {};
   dmitri = pkgs.callPackage ./dmitri.nix {};
   git-recent = pkgs.callPackage ./git-recent.nix {};
-  # warp-service = pkgs.callPackage (import ./warp-service.nix) {};
-  # mywarp = pkgs.callPackage ./warp.nix {};
-  # gopls = pkgs.callPackage ./go.nix {};
 in
 {
   imports = [
     ./vim.nix
-    # ./warp-service.nix
   ];
   # Home Manager needs a bit of information about you and the
   # paths it should manage.
@@ -70,6 +66,8 @@ in
     transmission-gtk
     gnome_mplayer
     gnomecast
+    nheko
+    fractal
 
     # dev
     gopls
@@ -90,15 +88,6 @@ in
     losslesscut-bin
     vlc
     signal-desktop
-    # pidgin
-    # telegram-purple # bad hash?
-    # pidgin-opensteamworks
-    # purple-slack
-    # purple-discord
-    # purple-hangouts
-    # purple-googlechat
-    # gurk-rs
-    fractal
     quaternion
     mirage-im
     libsForQt5.neochat
