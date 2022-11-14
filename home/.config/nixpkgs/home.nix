@@ -47,6 +47,7 @@ in
     pavucontrol
     udiskie
     mate.mate-applets
+    brightnessctl
 
     # programs
     alacritty
@@ -59,6 +60,10 @@ in
     chromium
     libreoffice
     inkscape
+    transmission-gtk
+    radarr
+    gnome_mplayer
+    gnomecast
 
     # dev
     gotestsum

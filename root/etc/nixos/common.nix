@@ -13,10 +13,11 @@
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.systemd-boot.consoleMode = "2";
+  boot.loader.efi.canTouchEfiVariables = false;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
   boot.plymouth.enable = true;
+  boot.supportedFilesystems = [ "ntfs" ];
 
   # A DBus service that allows applications to update firmware
   services.fwupd.enable = true;
@@ -99,6 +100,9 @@
     glxinfo
     inxi
     xorg.xdpyinfo
+    pciutils
+    refind
+    efibootmgr
 
     lightlocker
     inputplug
