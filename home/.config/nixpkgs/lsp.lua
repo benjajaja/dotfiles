@@ -8,7 +8,6 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 local on_attach = function(client, bufnr)
-  require'completion'.on_attach(client)
 
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
   local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
@@ -34,25 +33,25 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
 
   -- Set some keybinds conditional on server capabilities
-  if client.resolved_capabilities.document_formatting then
-    buf_set_keymap("n", "ff", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-  elseif client.resolved_capabilities.document_range_formatting then
-    buf_set_keymap("n", "ff", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
-  end
+  -- if client.resolved_capabilities.document_formatting then
+    -- buf_set_keymap("n", "ff", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+  -- elseif client.resolved_capabilities.document_range_formatting then
+    -- buf_set_keymap("n", "ff", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
+  -- end
 
   -- Set autocommands conditional on server_capabilities
-  if client.resolved_capabilities.document_highlight then
-    vim.api.nvim_exec([[
-      hi LspReferenceRead cterm=bold ctermbg=DarkMagenta guibg=DarkRed
-      hi LspReferenceText cterm=bold ctermbg=DarkMagenta guibg=#206000
-      hi LspReferenceWrite cterm=bold ctermbg=DarkMagenta guibg=DarkRed
-      augroup lsp_document_highlight
-        autocmd! * <buffer>
-        autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-        autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-      augroup END
-    ]], false)
-  end
+  -- if client.resolved_capabilities.document_highlight then
+    -- vim.api.nvim_exec([[
+      -- hi LspReferenceRead cterm=bold ctermbg=DarkMagenta guibg=DarkRed
+      -- hi LspReferenceText cterm=bold ctermbg=DarkMagenta guibg=#206000
+      -- hi LspReferenceWrite cterm=bold ctermbg=DarkMagenta guibg=DarkRed
+      -- augroup lsp_document_highlight
+        -- autocmd! * <buffer>
+        -- autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
+        -- autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
+      -- augroup END
+    -- ]], false)
+  -- end
 
   -- buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
@@ -196,7 +195,7 @@ nvim_lsp.tsserver.setup({
 require('rust-tools').setup({
     tools = { -- rust-tools options
         autoSetHints = true,
-        hover_with_actions = true,
+        -- hover_with_actions = true,
         inlay_hints = {
             show_parameter_hints = false,
             parameter_hints_prefix = "",
