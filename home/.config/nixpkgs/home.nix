@@ -7,6 +7,7 @@ let
   pista = pkgs.callPackage ./pista.nix {};
   dmitri = pkgs.callPackage ./dmitri.nix {};
   git-recent = pkgs.callPackage ./git-recent.nix {};
+  iamb = pkgs.callPackage ./iamb.nix {};
 in
 {
   imports = [
