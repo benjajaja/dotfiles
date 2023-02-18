@@ -50,9 +50,8 @@ in {
         vim-vsnip
         popfix
         nvim-lsputils
-        nvim-treesitter
+        nvim-treesitter.withAllGrammars
         cmp-treesitter
-        completion-nvim
         rust-tools-nvim
 
         plenary-nvim
