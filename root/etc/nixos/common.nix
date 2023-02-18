@@ -31,6 +31,10 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
+  networking.extraHosts =
+  ''
+    192.168.1.131 shield
+  '';
 
   # Set your time zone.
   time.timeZone = "Atlantic/Canary";
@@ -46,6 +50,7 @@
   services.gnome.gnome-keyring.enable = true;
   security.pam.services.gdm.enableGnomeKeyring = true;
   services.upower.enable = true;
+  services.gvfs.enable = true;
 
 
   # Enable CUPS to print documents.
