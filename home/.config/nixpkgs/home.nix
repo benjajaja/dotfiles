@@ -170,7 +170,6 @@ in
           normal.family = "ProFontWindows Nerd Font Mono";
           size = 16.0;
           bold.style = "normal";
-          use_thin_strokes = true;
         };
         draw_bold_text_with_bright_colors = true;
       };
