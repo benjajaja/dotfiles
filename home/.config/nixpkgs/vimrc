@@ -39,7 +39,7 @@ let g:NERDTrimTrailingWhitespace = 1
 
 " don't jump to start-of-line on buffer change
 set nostartofline
-set colorcolumn=80
+set colorcolumn=100
 
 " barbar
 let bufferline = get(g:, 'bufferline', {})

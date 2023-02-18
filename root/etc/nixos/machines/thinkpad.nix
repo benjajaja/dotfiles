@@ -37,10 +37,12 @@
             sha256 = "sha256-tZ4yMyg/NwQYZyQ+zALHzpOEmD/SL7Xmav77KED6NHU=";
           };
       });
+      falcon-sensor = super.callPackage ../overlays/falcon-sensor.nix { };
     })
   ];
   environment.systemPackages = with pkgs; [
     cloudflare-warp
+    falcon-sensor
   ];
   systemd.services.somemywarp = {
     enable = true;
@@ -54,5 +56,5 @@
     };
     wantedBy = [ "multi-user.target" ];
   };
-
+  custom.falcon.enable = true;
 }

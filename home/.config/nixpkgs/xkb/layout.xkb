@@ -1,32 +1,36 @@
 xkb_keymap {
-	xkb_keycodes  { include "evdev+aliases(qwerty)" };
-	xkb_types     {
+  xkb_keycodes  { include "evdev+aliases(qwerty)" };
+  xkb_types {
     include "complete"
     type "FOUR_LEVEL" {
-       modifiers= Shift+LevelThree+Control;
-       map[Shift]= Level2;
-       map[LevelThree]= Level3;
-       map[Control]= Level4;
-       level_name[Level1]= "Base";
-       level_name[Level2]= "Shift";
-       level_name[Level3]= "Alt Base";
-       level_name[Level4]= "Control";
+      modifiers= Shift+LevelThree+Control;
+      map[Shift]= Level2;
+      map[LevelThree]= Level3;
+      map[Control]= Level4;
+      level_name[Level1]= "Base";
+      level_name[Level2]= "Shift";
+      level_name[Level3]= "Alt Base";
+      level_name[Level4]= "Control";
     };
   };
-	xkb_compat    { include "complete" };
-	xkb_symbols   {
-    // altgr-intl is *the* best US+Spanish layout, we got really lucky here - no dead keys.
-    // Swap lalt with lwin, to control xmonad with the key next to spacebar *but* without activating Alt menus on apps all the time.
-    // Swap capslock with escape not only for vim, but for any application that uses esc to close something.
-		include "pc+us(altgr-intl)+inet(evdev)+altwin(swap_lalt_lwin)+capslock(swapescape)"
+  xkb_compat { include "complete" };
+  xkb_symbols {
+    // altgr-intl is *the* best US+Spanish layout, we got really lucky here - no 
+    // dead keys.
+    // Swap lalt with lwin, to control xmonad with the key next to spacebar *but*
+    // without activating Alt menus on apps all the time.
+    // Swap capslock with escape not only for vim, but for any application that
+    // uses esc to close something.
+    include "pc+us(altgr-intl)+inet(evdev)+altwin(swap_lalt_lwin)+capslock(swapescape)"
 
-    // HJKL vim keys in the AltGr layer, and special Ctrl-J/K remappings for the usual tab navigation.
-		key <AC06> { [h, H, Left ] };
-		key <AC09> { [l, L, Right, Left ] };
+    // HJKL vim keys in the AltGr layer, and special Ctrl-J/K remappings for the
+    // usual tab navigation.
+    key <AC06> { [h, H, Left ] };
+    key <AC09> { [l, L, Right, Left ] };
     // Special Control Level4 for tab navigation
     key.type = "FOUR_LEVEL";
-		key <AC07> { [j, J, Down, Page_Down] };
-		key <AC08> { [k, K, Up, Page_Up ] };
-	};
-	xkb_geometry  { include "pc(pc104)" };
+    key <AC07> { [j, J, Down, Page_Down] };
+    key <AC08> { [k, K, Up, Page_Up ] };
+  };
+  xkb_geometry  { include "pc(pc104)" };
 };

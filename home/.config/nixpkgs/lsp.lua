@@ -193,31 +193,7 @@ nvim_lsp.tsserver.setup({
     end,
 })
 
--- local rust_on_attach = function(client)
-    -- require'completion'.on_attach(client)
--- end
--- nvim_lsp.rust_analyzer.setup({
-    -- on_attach=on_attach,
-    -- settings = {
-        -- ["rust-analyzer"] = {
-            -- imports = {
-                -- granularity = {
-                    -- group = "module",
-                -- },
-                -- prefix = "self",
-            -- },
-            -- cargo = {
-                -- buildScripts = {
-                    -- enable = true,
-                -- },
-            -- },
-            -- procMacro = {
-                -- enable = true
-            -- },
-        -- }
-    -- }
--- })
-local opts = {
+require('rust-tools').setup({
     tools = { -- rust-tools options
         autoSetHints = true,
         hover_with_actions = true,
@@ -241,13 +217,11 @@ local opts = {
                 -- enable clippy on save
                 checkOnSave = {
                     command = "clippy"
-                },
+                }
             }
         }
     },
-}
-
-require('rust-tools').setup(opts)
+})
 
 nvim_lsp.elmls.setup({
    on_attach = on_attach;

@@ -7,7 +7,8 @@ let
   pista = pkgs.callPackage ./pista.nix {};
   dmitri = pkgs.callPackage ./dmitri.nix {};
   git-recent = pkgs.callPackage ./git-recent.nix {};
-  iamb = pkgs.callPackage ./iamb.nix {};
+  # iamb = pkgs.callPackage ./iamb.nix {};
+  # gtk-demos = pkgs.callPackage ./gtk-demos.nix {};
 in
 {
   imports = [
@@ -52,9 +53,11 @@ in
     brightnessctl
     gvfs
     samba
+    rubik
 
     # programs
     alacritty
+    kitty
     qutebrowser
     pista
     dmitri
@@ -69,6 +72,8 @@ in
     gnomecast
     nheko
     fractal
+    gomuks
+    # iamb
 
     # dev
     gopls
@@ -92,6 +97,7 @@ in
     quaternion
     mirage-im
     libsForQt5.neochat
+    gtk3
 
     # hobby dev
     rustc

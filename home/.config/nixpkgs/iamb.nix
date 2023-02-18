@@ -1,29 +1,49 @@
-with import <nixpkgs> {};
+# with import <nixpkgs> {};
+with import <nixpkgs> { overlays = [ (import <overlays/rust-overlay>) ]; };
 with pkgs;
 
 { stdenv, lib }:
-with import "${src.out}/rust-overlay.nix" pkgs pkgs;
+
+# let
+  # rustPlatform = callPackage ./rust-platform-nightly.nix {};
+# in (rustPlatform "2023-01-24").buildRustPackage rec {
+# let
+  # rustPkgs = import <nixpkgs> {
+    # inherit system;
+    # overlays = [ (import rust-overlay) ];
+  # };
+#
+  # rustVersion = "1.61.0";
+#
+  # wasmTarget = "wasm32-unknown-unknown";
+#
+  # rustWithWasmTarget = rustPkgs.rust-bin.stable.${rustVersion}.default.override {
+    # targets = [ wasmTarget ];
+  # };
+#
+  # rustPlatformNightly = makeRustPlatform {
+    # cargo = rustPkgs.rust-bin.stable.${rustVersion};
+    # rustc = rustPkgs.rust-bin.stable.${rustVersion};
+  # };
+# in
 rustPlatform.buildRustPackage rec {
   pname = "iamb";
-  version = "0.0.3";
+  version = "0.1.2";
 
   src = fetchFromGitHub {
     owner = "ulyssa";
     repo = "iamb";
-    rev = "69125e3fc433122700deec698e318a4152af0099";
-    sha256 = "sha256-AeYZDjg1u5wTS3L7w+zFRw/xPlrWt8ZO4HKcBkPAtaQ=";
+    rev = "4f2261e66f41580d2add92234fc9f3d68eb669be";
+    sha256 = "sha256-/lS7K3/OfBbgOlFlC4DKjN3zm1lXDxZN9bwgxXafLmE=";
     fetchSubmodules = true;
   };
 
-  cargoHash = "sha256-+D4+oH9AysUpzLA/nZAbvyUco3fyyBDi3weSZWt7qsA=";
+  cargoHash = "sha256-bgUyJUZ+XzX+rUHVMy/qH6IlVP6xzHqcYZEvAwXOwM4=";
 
-  nativeBuildInputs = [ ];
+  nativeBuildInputs = [ openssl pkgconfig ];
   
-  buildInputs = [
-    latest.rustChannels.nightly.rust
-  ];
+  buildInputs = [ openssl ];
 
   doCheck = true;
 }
-
 
