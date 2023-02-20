@@ -1,0 +1,33 @@
+{
+    "profiles": {
+        "qdice.wtf": {
+            "url": "https://qdice.wtf",
+            "user_id": "@benjajaja:qdice.wtf",
+            "settings": {
+              "default_room": "!cxDoVOFeVKGDSZlBcj:qdice.wtf",
+              "open_command": "firefox",
+              "users": {
+                "@telegram_11873457:t2bot.io": {
+                  "name": "@dcaminero",
+                  "color": "blue"
+                },
+                "@telegram_7228397:t2bot.io": {
+                  "name": "@kse617",
+                  "color": "blue"
+                },
+                "@telegram_701545706:t2bot.io": {
+                  "name": "@perico",
+                  "color": "blue"
+                },
+                "@telegram_7295935:t2bot.io": {
+                  "name": "@adri",
+                  "color": "blue"
+                }
+              }
+            },
+            "dirs": {
+              "downloads": "/home/gipsy/Downloads/iamb"
+            }
+        }
+    }
+}

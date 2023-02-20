@@ -208,7 +208,7 @@ in
       config = ./xmonad.hs;
     };
     initExtra = ''
-      hsetroot -center $HOME/Pictures/skull_on_fire_framed_c700-477x480.jpg &
+      hsetroot -extend $HOME/.config/wallpaper.png -gamma 0.5 &
       xsetroot -cursor_name left_ptr
       trayer --edge top --align right --SetPartialStrut true --transparent true --tint 0x000000 -l --height 32 --iconspacing 4 --expand false &
       dunst &
