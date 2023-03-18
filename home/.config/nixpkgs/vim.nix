@@ -21,6 +21,16 @@ let
       sha256 = "sha256-88xkhhVVpWHCMBfUcUgYshHm+OM5yjMnqwNtsUV21No=";
     };
   };
+  telescope-zf-native = pkgs.vimUtils.buildVimPluginFrom2Nix {
+    pname = "telescope-zf-native";
+    version = "2023-03-17";
+    src =  pkgs.fetchFromGitHub {
+      owner = "natecraddock";
+      repo = "telescope-zf-native.nvim";
+      rev = "beb34b6c48154ec117930180f257a5592606d48f";
+      sha256 = "sha256-KpODXemfksWQ0PjjQrpC6E4tBVmQtcUnRyapX0PTQD4=";
+    };
+  };
   vimrc = builtins.readFile ./vimrc;
   lsp_lua = builtins.readFile ./lsp.lua;
   cmp_lua = builtins.readFile ./cmp.lua;
@@ -35,7 +45,7 @@ in {
         barbar-nvim
         vim-repeat
         easyclip
-        ctrlp-vim
+        # ctrlp-vim
         vim-surround
         nerdcommenter
         camelcasemotion
@@ -48,7 +58,9 @@ in {
         nvim-cmp
         cmp-vsnip
         vim-vsnip
-        popfix
+        telescope-nvim
+        # telescope-fzf-native-nvim
+        telescope-zf-native
         nvim-lsputils
         nvim-treesitter.withAllGrammars
         cmp-treesitter

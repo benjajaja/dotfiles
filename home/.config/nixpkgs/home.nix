@@ -180,6 +180,9 @@ in
           bold.style = "normal";
         };
         draw_bold_text_with_bright_colors = true;
+        env = {
+          # WINIT_X11_SCALE_FACTOR = "1.5";
+        };
       };
     };
     git = {

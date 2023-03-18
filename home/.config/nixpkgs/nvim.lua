@@ -94,3 +94,11 @@ vim.api.nvim_set_var("lsp_utils_location_opts", {
     -- close = action.close_cancelled_handler,
   -- },
 });
+
+local builtin = require('telescope.builtin')
+vim.keymap.set('n', '<C-p>', builtin.find_files, {})
+vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
+vim.keymap.set('n', '<leader>rr', builtin.lsp_references, {})
+vim.keymap.set('n', '<leader>gd', builtin.lsp_definitions, {})
+-- vim.keymap.set('n', '<leader>ga', builtin.quickfix, {})
+require("telescope").load_extension("zf-native")
