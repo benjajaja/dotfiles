@@ -130,6 +130,7 @@
     gnumake
     gcc
     awscli
+    ssm-session-manager-plugin
     vcprompt
 
     (steam.override {

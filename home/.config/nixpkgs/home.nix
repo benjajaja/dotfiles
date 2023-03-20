@@ -35,6 +35,7 @@ in
   home.packages = with pkgs; [
     htop
     docker-compose
+    xclip
 
     # wm session
     hsetroot
@@ -145,6 +146,7 @@ in
       };
       shellAliases = {
         ne = "neovide --multigrid -- --cmd 'cd ~/p/core' --cmd 'set mouse=a'";
+        xc = "xclip -selection clipboard";
       };
       initExtra = ''
         export PROMPT_CHAR=">"
