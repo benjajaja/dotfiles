@@ -22,7 +22,6 @@
   networking.hostName = "motherbase"; # Define your hostname.
 
   services.xserver.videoDrivers = [ "modesetting" ];
-  services.xserver.useGlamor = true;
   services.xserver.xrandrHeads = [ "DP-3" "eDP-1" ];
 
     # TODO: remove when this gets merged:
