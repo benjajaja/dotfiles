@@ -74,7 +74,7 @@ in
     nheko
     fractal
     gomuks
-    iamb
+    # iamb # dev build installed with nix-env
 
     # dev
     gopls
@@ -87,6 +87,8 @@ in
     vscode
     nodePackages.serverless
     git-recent
+    ripgrep
+    fd
 
     # apps
     slack-term

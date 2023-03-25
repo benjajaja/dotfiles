@@ -63,42 +63,67 @@ require("nebulous").setup {
 }
 
 require'nvim-treesitter.configs'.setup {
-  -- One of "all", "maintained" (parsers with maintainers), or a list of languages
-  -- ensure_installed = "all",
-
-  -- Install languages synchronously (only applied to `ensure_installed`)
-  --sync_install = false,
-
-  -- List of parsers to ignore installing
-  --ignore_install = { "javascript" },
-
   highlight = {
     -- `false` will disable the whole extension
     enable = true,
 
-    -- list of language that will be disabled
-    --disable = { "c", "rust" },
-
-    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
-    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
-    -- Using this option may slow down your editor, and you may see some duplicate highlights.
-    -- Instead of true it can also be a list of languages
-    --additional_vim_regex_highlighting = false,
   },
 }
 
 vim.api.nvim_set_var("lsp_utils_location_opts", {
   height = 30,
-  -- callbacks = {
-    -- select = action.selection_handler,
-    -- close = action.close_cancelled_handler,
-  -- },
 });
 
+-- TELESCOPE
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<C-p>', builtin.find_files, {})
 vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
 vim.keymap.set('n', '<leader>rr', builtin.lsp_references, {})
-vim.keymap.set('n', '<leader>gd', builtin.lsp_definitions, {})
+vim.keymap.set('n', 'gd', builtin.lsp_definitions, {})
 -- vim.keymap.set('n', '<leader>ga', builtin.quickfix, {})
 require("telescope").load_extension("zf-native")
+
+local telescope = require("telescope")
+local telescopeConfig = require("telescope.config")
+
+-- Clone the default Telescope configuration
+local vimgrep_arguments = { unpack(telescopeConfig.values.vimgrep_arguments) }
+
+-- I want to search in hidden/dot files.
+table.insert(vimgrep_arguments, "--hidden")
+-- I don't want to search in the `.git` directory.
+table.insert(vimgrep_arguments, "--glob")
+table.insert(vimgrep_arguments, "!**/.git/*")
+
+telescope.setup({
+	defaults = {
+		-- `hidden = true` is not supported in text grep commands.
+		vimgrep_arguments = vimgrep_arguments,
+	},
+	pickers = {
+		find_files = {
+			-- `hidden = true` will still show the inside of `.git/` as it's not `.gitignore`d.
+			find_command = { "rg", "--files", "--hidden", "--glob", "!**/.git/*" },
+		},
+	},
+})
+
+local sidebar = require("sidebar-nvim")
+sidebar.setup({
+    disable_default_keybindings = 0,
+    bindings = {
+      ["a"] = function() sidebar.focus() end,
+      -- ["<Leader>sf"] = function() sidebar.focus() end,
+    },
+    open = false,
+    side = "right",
+    initial_width = 35,
+    hide_statusline = false,
+    update_interval = 100,
+    sections = { "buffers", "diagnostics", "symbols", "files" },
+    section_separator = {""},
+    section_title_separator = {""},
+    todos = { ignored_paths = { "~" } },
+})
+
+-- vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]

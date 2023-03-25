@@ -31,6 +31,37 @@ let
       sha256 = "sha256-KpODXemfksWQ0PjjQrpC6E4tBVmQtcUnRyapX0PTQD4=";
     };
   };
+  sidebar-nvim = pkgs.vimUtils.buildVimPluginFrom2Nix {
+    pname = "sidebar-nvim";
+    version = "2023-03-17";
+    src =  pkgs.fetchFromGitHub {
+      owner = "sidebar-nvim";
+      repo = "sidebar.nvim";
+      rev = "990ce5f562c9125283ccac5473235b1a56fea6dc";
+      sha256 = "sha256-/6q/W7fWXlJ2B9o4v+0gg2QjhzRC/Iws+Ez6yyL1bqI=";
+    };
+  };
+  typescript-nvim = pkgs.vimUtils.buildVimPluginFrom2Nix {
+    pname = "typescript-nvim";
+    version = "2023-03-17";
+    src =  pkgs.fetchFromGitHub {
+      owner = "jose-elias-alvarez";
+      repo = "typescript.nvim";
+      rev = "f66d4472606cb24615dfb7dbc6557e779d177624";
+      sha256 = "sha256-PHVY5NJbOGvY9p0F0QNSfMKmAWdqjw1RB0Vspq88qMI=";
+    };
+  };
+  rust-tools-nvim = pkgs.vimUtils.buildVimPluginFrom2Nix {
+    pname = "rust-tools-nvim";
+    version = "2023-03-17";
+    src =  pkgs.fetchFromGitHub {
+      owner = "simrat39";
+      repo = "rust-tools.nvim";
+      rev = "71d2cf67b5ed120a0e31b2c8adb210dd2834242f";
+      sha256 = "sha256-Cuk/vdoviB9ibt2rrkNRmNFy4S+6czhbExmIjTJRdZM=";
+    };
+  };
+
   vimrc = builtins.readFile ./vimrc;
   lsp_lua = builtins.readFile ./lsp.lua;
   cmp_lua = builtins.readFile ./cmp.lua;
@@ -49,6 +80,7 @@ in {
         vim-surround
         nerdcommenter
         camelcasemotion
+        sidebar-nvim
 
         nvim-lspconfig
         cmp-nvim-lsp
@@ -68,7 +100,8 @@ in {
 
         plenary-nvim
         null-ls-nvim
-        nvim-lsp-ts-utils
+        # nvim-lsp-ts-utils
+        typescript-nvim
 
         tokyonight-nvim
         nebulous

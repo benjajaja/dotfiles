@@ -6,6 +6,7 @@
 
 {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.auto-optimise-store = true;
   imports =
     [ # Include the results of the hardware scan.
       /etc/nixos/hardware-configuration.nix
