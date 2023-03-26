@@ -7,7 +7,8 @@ let
   pista = pkgs.callPackage ./pista.nix {};
   dmitri = pkgs.callPackage ./dmitri.nix {};
   git-recent = pkgs.callPackage ./git-recent.nix {};
-  iamb = pkgs.callPackage ./iamb.nix {};
+  # iamb = pkgs.callPackage ./iamb.nix {};
+  iamb = (builtins.getFlake "github:benjajaja/iamb/nix").packages.x86_64-linux.default;
   # gtk-demos = pkgs.callPackage ./gtk-demos.nix {};
 in
 {
