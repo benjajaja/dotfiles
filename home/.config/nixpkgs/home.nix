@@ -75,7 +75,7 @@ in
     nheko
     fractal
     gomuks
-    # iamb # dev build installed with nix-env
+    iamb
 
     # dev
     gopls
