@@ -38,6 +38,15 @@ in
     docker-compose
     xclip
 
+    # wayland
+    sway
+    swaylock
+    swayidle
+    swaybg
+    dmenu
+    foot
+    cagebreak
+
     # wm session
     hsetroot
     trayer
@@ -242,5 +251,13 @@ in
       done &
       export QT_AUTO_SCREEN_SCALE_FACTOR=1
     '';
+  };
+  wayland.windowManager.sway = {
+    enable = false;
+    config = rec {
+      modifier = "Mod4";
+      terminal = "alacritty";
+      startup = [{command = "firefox";}];
+    };
   };
 }

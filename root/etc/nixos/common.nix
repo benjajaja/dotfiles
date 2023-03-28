@@ -50,6 +50,7 @@
 
   services.gnome.gnome-keyring.enable = true;
   security.pam.services.gdm.enableGnomeKeyring = true;
+  security.polkit.enable = true;
   services.upower.enable = true;
   services.gvfs.enable = true;
 
@@ -225,7 +226,7 @@
       '';
     };
     dconf.enable = true;
-    light.enable = true;
+    light.enable = false;
     neovim = {
       enable = true;
       package = pkgs.neovim-unwrapped;
