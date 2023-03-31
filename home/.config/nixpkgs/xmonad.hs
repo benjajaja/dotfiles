@@ -55,7 +55,6 @@ addSupported props = withDisplay $ \dpy -> do
 
 
 main = do
-  -- xmproc <- spawnPipe "xmobar"
   xmonad $ docks $ def
     { terminal = myTerminal
     , borderWidth = 4
@@ -70,12 +69,6 @@ main = do
                                <+> fullscreenManageHook
                                <+> manageHook def
     , handleEventHook = handleEventHook def
-                               -- <+> docks
-                               -- <+> fullscreenEventHook
-    -- , logHook = dynamicLogWithPP xmobarPP
-                        -- { ppOutput = hPutStrLn xmproc
-                        -- , ppTitle = xmobarColor "green" "" . shorten 50
-                        -- }
     , startupHook = do
         setWMName "LG3D" <+> setFullscreenSupported
         -- trayer must run AFTER xmonad has started or it will sit behind any windows
@@ -96,8 +89,7 @@ main = do
         spawnOn "2" (myTerminal ++ " --working-directory ~/p/core")
         spawnOn "3" myTerminal
         spawnOn "3" myTerminal
-        spawnOn "5" "telegram-desktop"
-        spawnOn "5" "chromium https://web.whatsapp.com --disable-session-crashed-bubble"
+        spawnOn "5" (myTerminal ++ " -e iamb")
         -- sendMessage ToggleStruts -- hide strut on first workspace
         windows (greedyViewOnScreen 1 "4")
     }
