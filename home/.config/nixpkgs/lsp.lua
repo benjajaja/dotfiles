@@ -7,14 +7,6 @@ local nvim_lsp = require('lspconfig')
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-local lsp_formatting = function(bufnr)
-    vim.lsp.buf.format({
-        filter = function(client)
-            return client.name ~= "tsserver"
-        end,
-        bufnr = bufnr,
-    })
-end
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
 local on_attach = function(client, bufnr)
@@ -42,28 +34,7 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', 'gn', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
   buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
 
-  -- Set some keybinds conditional on server capabilities
-  -- if client.server_capabilities.document_formatting then
-    -- buf_set_keymap("n", "ff", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-  -- elseif client.server_capabilities.document_range_formatting then
-    -- buf_set_keymap("n", "ff", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
-  -- end
 
-  -- Set autocommands conditional on server_capabilities
-  -- if client.server_capabilities.document_highlight then
-    -- vim.api.nvim_exec([[
-      -- hi LspReferenceRead cterm=bold ctermbg=DarkMagenta guibg=DarkRed
-      -- hi LspReferenceText cterm=bold ctermbg=DarkMagenta guibg=#206000
-      -- hi LspReferenceWrite cterm=bold ctermbg=DarkMagenta guibg=DarkRed
-      -- augroup lsp_document_highlight
-        -- autocmd! * <buffer>
-        -- autocmd CursorHold <buffer> lua vim.lsp.buf.document_highlight()
-        -- autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
-      -- augroup END
-    -- ]], false)
-  -- end
-
-  -- buf_set_option('omnifunc', 'v:lua.vim.lsp.omnifunc')
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
   if client.supports_method("textDocument/formatting") then
       vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
@@ -71,7 +42,12 @@ local on_attach = function(client, bufnr)
           group = augroup,
           buffer = bufnr,
           callback = function()
-              lsp_formatting(bufnr)
+              vim.lsp.buf.format({
+                  filter = function(client)
+                      return client.name ~= "tsserver"
+                  end,
+                  bufnr = bufnr,
+              })
           end,
       })
   end
@@ -222,11 +198,6 @@ require("typescript").setup({
         -- vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", ":TSLspRenameFile<CR>", opts)
         vim.api.nvim_buf_set_keymap(bufnr, "n", "gi", '<Cmd>lua org_imports_typescript()<CR>', opts)
         vim.api.nvim_buf_set_keymap(bufnr, "n", "gd", '<Cmd>:TypescriptGoToSourceDefinition<CR>', opts)
-
-        -- default to null-ls for formatting, suppress prompt
-        -- client.server_capabilities.document_formatting = false
-        -- client.server_capabilities.document_range_formatting = false
-        -- client.server_capabilities.documentFormattingProvider = false
       end,
     },
 })

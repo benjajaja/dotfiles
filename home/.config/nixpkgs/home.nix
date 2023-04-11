@@ -128,7 +128,6 @@ in
     vulkan-tools
     xorg.xkbcomp
     xorg.xev
-    qmk
     binutils # a bunch of helper bins, a lot of build tools need some
 
     # games

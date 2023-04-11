@@ -126,7 +126,6 @@
     go_1_18
     python3
     python39Packages.pip
-    gopls
     nodePackages.typescript-language-server
 
     gnumake
@@ -267,6 +266,8 @@
   };
 
   services.blueman.enable = true;
+
+  services.udev.packages = with pkgs; [qmk-udev-rules];
 
   system.stateVersion = "22.05"; # Did you read the comment?
 }

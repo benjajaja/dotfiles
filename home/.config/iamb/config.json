@@ -9,19 +9,19 @@
               "users": {
                 "@telegram_11873457:t2bot.io": {
                   "name": "@dcaminero",
-                  "color": "blue"
+                  "color": "cyan"
                 },
                 "@telegram_7228397:t2bot.io": {
                   "name": "@kse617",
-                  "color": "blue"
+                  "color": "green"
                 },
                 "@telegram_701545706:t2bot.io": {
                   "name": "@perico",
-                  "color": "blue"
+                  "color": "yellow"
                 },
                 "@telegram_7295935:t2bot.io": {
                   "name": "@adri",
-                  "color": "blue"
+                  "color": "red"
                 }
               }
             },
