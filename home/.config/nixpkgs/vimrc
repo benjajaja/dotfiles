@@ -4,12 +4,12 @@ if has('termguicolors')
   set termguicolors
 endif
 colorscheme nebulous
-hi Normal guibg=#000000 ctermbg=0
-hi TabLineSel guifg=#ffffff ctermbg=green
-hi TabLineFill guifg=#888888 guibg=#440000
-hi MatchParen cterm=NONE ctermfg=green ctermbg=lightgreen
-hi BufferCurrentMod guifg=#c0865c
-hi BufferInactiveMod guifg=#695b40
+" hi Normal guibg=#000000 ctermbg=0
+" hi TabLineSel guifg=#ffffff ctermbg=green
+" hi TabLineFill guifg=#888888 guibg=#440000
+" hi MatchParen cterm=NONE ctermfg=green ctermbg=lightgreen
+" hi BufferCurrentMod guifg=#c0865c
+" hi BufferInactiveMod guifg=#695b40
 
 " set guifontsize = 16
 set guifont=ProFontWindows\ Nerd\ Font\ Mono:h16
@@ -56,16 +56,11 @@ nnoremap <silent>    <C-K> :BufferPrevious<CR>
 nnoremap <silent>    <C-J> :BufferNext<CR>
 nnoremap <silent>    <C-H> :BufferMovePrevious<CR>
 nnoremap <silent>    <C-L> :BufferMoveNext<CR>
-nnoremap <silent>    <C-W> :BufferClose<CR>
-hi Normal guibg=#000000 ctermbg=0
-hi TabLineSel guifg=#ffffff ctermbg=green
-hi TabLineFill guifg=#888888 guibg=#440000
-hi MatchParen cterm=NONE ctermfg=green ctermbg=lightgreen
-hi BufferCurrentMod guifg=#c0865c
-hi BufferInactiveMod guifg=#695b40
 
-nnoremap <silent> <C-Q> :SidebarNvimToggle<CR>
-nnoremap <silent> <C-A> :SidebarNvimFocus<CR>
+nnoremap <silent>    <C-C> :BufferWipeout<CR>
+
+nnoremap <silent> <C-Q> :Neotree focus buffers<CR>
+" nnoremap <silent> <C-A> :SidebarNvimFocus<CR>
 
 set mouse=r
 

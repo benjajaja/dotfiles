@@ -31,6 +31,13 @@ xkb_keymap {
     key.type = "FOUR_LEVEL";
     key <AC07> { [j, J, Down, Page_Down] };
     key <AC08> { [k, K, Up, Page_Up ] };
+
+    // Some spanish symbols
+    key <AE10> { [0, parenright, dead_abovering, rightsinglequotemark ] };
+    key <AB05> { [b, B, trademark ] };
+    key <AC03> { [d, D, section ] };
+    key <AB02> { [x, X, multiply ]};
+    key <AE01> { [1, exclam, exclamdown, onesuperior ] };
   };
   xkb_geometry  { include "pc(pc104)" };
 };

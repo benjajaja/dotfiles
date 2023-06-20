@@ -9,6 +9,7 @@ let
   git-recent = pkgs.callPackage ./git-recent.nix {};
   # iamb = pkgs.callPackage ./iamb.nix {};
   iamb = (builtins.getFlake "github:benjajaja/iamb/nix").packages.x86_64-linux.default;
+  # pandas = pkgs.callPackage ./pandas.nix {};
   # gtk-demos = pkgs.callPackage ./gtk-demos.nix {};
 in
 {
@@ -66,9 +67,14 @@ in
     samba
     rubik
 
-    # programs
+    # terminals
     alacritty
+    contour
+    ctx
     kitty
+    wezterm
+
+    # programs
     qutebrowser
     pista
     dmitri
@@ -99,6 +105,16 @@ in
     git-recent
     ripgrep
     fd
+    python311
+    python311Packages.pip
+    python311Packages.pip-tools
+    python311Packages.setuptools
+    # pandas
+    python311Packages.numpy
+    google-cloud-sdk
+    dbeaver
+    nil
+    postgresql
 
     # apps
     slack-term
@@ -111,6 +127,7 @@ in
     mirage-im
     libsForQt5.neochat
     gtk3
+    lmms
 
     # hobby dev
     rustc
@@ -132,6 +149,7 @@ in
 
     # games
     dolphin-emu
+    python39Packages.ds4drv
   ];
 
   gtk = {
@@ -192,7 +210,7 @@ in
         };
         draw_bold_text_with_bright_colors = true;
         env = {
-          # WINIT_X11_SCALE_FACTOR = "1.5";
+          WINIT_X11_SCALE_FACTOR = "1.2";
         };
       };
     };

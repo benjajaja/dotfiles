@@ -81,6 +81,7 @@ in {
         nerdcommenter
         camelcasemotion
         sidebar-nvim
+        neo-tree-nvim
 
         nvim-lspconfig
         cmp-nvim-lsp

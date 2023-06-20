@@ -59,6 +59,9 @@ require("nebulous").setup {
   custom_colors = {
     BufferInactiveMod = { fg = "#8c7912" },
     BufferCurrentMod = { fg = "#c9b153" },
+    LspReferenceRead = { bg = '#36383F' },
+    LspReferenceText = { bg = '#36383F' },
+    LspReferenceWrite = { bg = '#36383F' },
   },
 }
 
@@ -124,6 +127,13 @@ sidebar.setup({
     section_separator = {""},
     section_title_separator = {""},
     todos = { ignored_paths = { "~" } },
+})
+
+require("neo-tree").setup({
+  enable_git_status = false,
+  window = {
+    position = "right",
+  },
 })
 
 -- vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]

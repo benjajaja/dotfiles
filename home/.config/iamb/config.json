@@ -5,7 +5,20 @@
             "user_id": "@benjajaja:qdice.wtf",
             "settings": {
               "default_room": "!cxDoVOFeVKGDSZlBcj:qdice.wtf",
-              "open_command": "firefox",
+              "typing_notice_send": false,
+              "_image_preview": "disabled",
+              "image_preview": {
+                "sixel": {
+                  "line_count": 10,
+                  "cache_path": "/home/gipsy/Downloads/iamb_previews"
+                }
+              },
+              "_image_preview": {
+                "ascii": {
+                  "line_count": 10,
+                  "cache_path": "/home/gipsy/Downloads/iamb_previews"
+                }
+              },
               "users": {
                 "@telegram_11873457:t2bot.io": {
                   "name": "@dcaminero",

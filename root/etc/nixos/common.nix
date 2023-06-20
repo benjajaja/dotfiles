@@ -20,6 +20,7 @@
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
   boot.plymouth.enable = true;
   boot.supportedFilesystems = [ "ntfs" ];
+  # boot.kernelModules = [ "i2c-dev" ]; # for ddcutils (monitors)
 
   # A DBus service that allows applications to update firmware
   services.fwupd.enable = true;
@@ -124,8 +125,6 @@
     nodejs
     yarn
     go_1_18
-    python3
-    python39Packages.pip
     nodePackages.typescript-language-server
 
     gnumake
@@ -268,6 +267,14 @@
   services.blueman.enable = true;
 
   services.udev.packages = with pkgs; [qmk-udev-rules];
+  
+  # For ddcutils (monitors)
+  # services.udev.extraRules = "KERNEL==\"i2c-[0-9]*\", GROUP+=\"users\"";
+
+  # services.pgadmin = {
+    # enable = true;
+    # initialEmail = "benjamin.grosse@re-cap.com";
+  # };
 
   system.stateVersion = "22.05"; # Did you read the comment?
 }

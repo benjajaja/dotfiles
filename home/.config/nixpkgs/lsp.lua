@@ -4,7 +4,8 @@ if not ok then
 end
 local nvim_lsp = require('lspconfig')
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
+-- local capabilities = vim.lsp.protocol.make_client_capabilities()
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
@@ -51,6 +52,23 @@ local on_attach = function(client, bufnr)
           end,
       })
   end
+
+  -- if client.server_capabilities.documentHighlightProvider then
+      -- vim.api.nvim_create_augroup("lsp_document_highlight", { clear = true })
+      -- vim.api.nvim_clear_autocmds { buffer = bufnr, group = "lsp_document_highlight" }
+      -- vim.api.nvim_create_autocmd("CursorHold", {
+          -- callback = vim.lsp.buf.document_highlight,
+          -- buffer = bufnr,
+          -- group = "lsp_document_highlight",
+          -- desc = "Document Highlight",
+      -- })
+      -- vim.api.nvim_create_autocmd("CursorMoved", {
+          -- callback = vim.lsp.buf.clear_references,
+          -- buffer = bufnr,
+          -- group = "lsp_document_highlight",
+          -- desc = "Clear All the References",
+      -- })
+  -- end
 end
 
 nvim_lsp.gopls.setup{
@@ -61,8 +79,8 @@ nvim_lsp.gopls.setup{
     gopls = {
       experimentalPostfixCompletions = true,
       analyses = {
-        unusedparams = true,
-        shadow = true,
+        unusedparams = false,
+        shadow = false,
      },
      staticcheck = true,
     },
@@ -208,35 +226,51 @@ function org_imports_typescript(wait_ms)
 end
 
 require('rust-tools').setup({
+  server = {
+    on_attach = on_attach,
+    standalone = true,
     capabilities = capabilities,
-    tools = { -- rust-tools options
-        -- autoSetHints = true,
-        -- hover_with_actions = true,
-        inlay_hints = {
-            -- auto = true,
-            -- show_parameter_hints = true,
-            -- parameter_hints_prefix = "< -",
-            -- other_hints_prefix = "",
+    tools = {
+      autoSetHints = true,
+      hover_with_actions = true,
+      runnables = {
+          use_telescope = true
+      },
+      inlay_hints = {
+          show_parameter_hints = true,
+      },
+    },
+    settings = {
+      ['rust-analyzer'] = {
+        diagnostics = {
+          enable = true;
         },
+        -- checkOnSave = {
+					-- command = "clippy",
+					-- extraArgs = { "--all", "--", "-W", "clippy::all" },
+				-- },
+				-- rustfmt = {
+					-- extraArgs = { "+nightly" },
+				-- },
+				-- cargo = {
+					-- loadOutDirsFromCheck = true,
+				-- },
+				-- procMacro = {
+					-- enable = true,
+				-- },
+      }
     },
-
-    -- all the opts to send to nvim-lspconfig
-    -- these override the defaults set by rust-tools.nvim
-    -- see https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#rust_analyzer
-    server = {
-        -- on_attach is a callback called when the language server attachs to the buffer
-        on_attach = on_attach,
-        settings = {
-            -- to enable rust-analyzer settings visit:
-            -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
-            ["rust-analyzer"] = {
-                -- enable clippy on save
-                checkOnSave = {
-                    command = "clippy"
-                }
-            }
-        }
-    },
+    -- settings = {
+        -- to enable rust-analyzer settings visit:
+        -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
+        -- ["rust-analyzer"] = {
+            -- enable clippy on save
+            -- checkOnSave = {
+                -- command = "clippy"
+            -- }
+        -- }
+    -- }
+  },
 })
 
 nvim_lsp.elmls.setup({
@@ -255,3 +289,4 @@ null_ls.setup({
     },
 })
 
+require'lspconfig'.nil_ls.setup{}
