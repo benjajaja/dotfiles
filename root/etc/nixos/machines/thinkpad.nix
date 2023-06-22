@@ -44,7 +44,7 @@
     falcon-sensor
   ];
   systemd.services.somemywarp = {
-    enable = true;
+    enable = false;
     description = "Warp server";
     path = [ pkgs.cloudflare-warp ];
     unitConfig = {

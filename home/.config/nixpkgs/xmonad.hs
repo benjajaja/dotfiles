@@ -12,6 +12,7 @@ import XMonad.Layout.Fullscreen
 import XMonad.Layout.NoBorders
 import XMonad.Actions.SpawnOn
 import XMonad.Actions.OnScreen
+import XMonad.Actions.SwapWorkspaces
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.ManageHelpers
 import XMonad.Hooks.DynamicLog
@@ -71,21 +72,7 @@ main = do
     , handleEventHook = handleEventHook def
     , startupHook = do
         setWMName "LG3D" <+> setFullscreenSupported
-        -- trayer must run AFTER xmonad has started or it will sit behind any windows
-        -- spawn "/usr/bin/polybar example"
-        -- spawn "hsetroot -center $HOME/Pictures/skull_on_fire_framed_c700-477x480.jpg"
-        -- spawn "trayer --edge top --align right --SetPartialStrut true --transparent true --tint 0x000000 -l --height 32 --iconspacing 4 --expand false"
-        -- spawn "dunst"
-        -- spawn "nm-applet"
-        -- spawn "pa-applet"
-        -- spawn "mictray"
-        -- spawn "xfce4-clipman"
-        -- spawn "cbatticon"
-        -- spawn "flameshot"
-        -- spawn "udiskie -t -a -n -f thunar"
-        -- spawn "nm-applet"
         spawnOn "1" "firefox"
-        -- spawnOn "2" "neovide --multigrid --nofork --maximized -- --cmd 'cd ~/p/core' --cmd 'set mouse=a'"
         spawnOn "2" (myTerminal ++ " --working-directory ~/p/core")
         spawnOn "3" myTerminal
         spawnOn "3" myTerminal
@@ -94,11 +81,12 @@ main = do
         windows (greedyViewOnScreen 1 "4")
     }
     `additionalKeys`
-      [ ((myModmask, xK_p), spawn "dmitri") -- launcher
+      ([ ((myModmask, xK_p), spawn "dmitri") -- launcher
       -- [ ((myModmask, xK_p), spawn "dmenu_run -fn 'ProFontWindows-12' -sb '#f0e68c' -sf black -nf '#f0e68c' -nb black")
       , ((myModmask .|. shiftMask, xK_m), io (exitWith ExitSuccess)) -- quit?
       , ((myModmask, xK_b), sendMessage ToggleStruts) -- toggle struts (bar)
       , ((myModmask .|. shiftMask, xK_l), spawn "light-locker-command -l")
-      ]
-
+      ] ++ [((myModmask .|. controlMask, k), windows $ swapWithCurrent i)
+          | (i, k) <- zip myWorkspaces [xK_1 ..]]
+      )
 
