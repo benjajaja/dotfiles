@@ -4,13 +4,14 @@
             "url": "https://qdice.wtf",
             "user_id": "@benjajaja:qdice.wtf",
             "settings": {
-              "default_room": "!cxDoVOFeVKGDSZlBcj:qdice.wtf",
+              "_default_room": "!cxDoVOFeVKGDSZlBcj:qdice.wtf",
+              "default_room": "!bfOLlysFoIzrhROWJL:qdice.wtf",
               "typing_notice_send": false,
               "_image_preview": "disabled",
               "image_preview": {
                 "sixel": {
-                  "line_count": 10,
-                  "cache_path": "/home/gipsy/Downloads/iamb_previews"
+                  "width": 60,
+                  "height": 20,
                 }
               },
               "_image_preview": {
