@@ -124,7 +124,7 @@
 
     nodejs
     yarn
-    go_1_18
+    go
     nodePackages.typescript-language-server
 
     gnumake
@@ -134,7 +134,7 @@
     vcprompt
 
     (steam.override {
-       withPrimus = true;
+       # withPrimus = true;
        extraPkgs = pkgs: [ glxinfo ];
     }).run
   ];
@@ -239,14 +239,6 @@
         set tabstop=2
         set shiftwidth=2
         set expandtab
-        " barbar
-        let bufferline = get(g:, 'bufferline', {})
-        let bufferline.icons = v:false
-        let bufferline.closable = v:false
-        let bufferline.icon_close_tab = '·'
-        let bufferline.icon_close_tab_modified = '●'
-        let bufferline.icon_custom_colors = v:true
-        let bufferline.maximum_padding = 1
         nnoremap <silent>    <C-PageUp> :BufferPrevious<CR>
         nnoremap <silent>    <C-PageDown> :BufferNext<CR>
         nnoremap <silent>    <C-K> :BufferPrevious<CR>
@@ -275,6 +267,12 @@
     # enable = true;
     # initialEmail = "benjamin.grosse@re-cap.com";
   # };
+
+  # nixpkgs.overlays = [
+    # (self: super: {
+      # fcitx-engines = self.fcitx5;
+    # })
+  # ];
 
   system.stateVersion = "22.05"; # Did you read the comment?
 }

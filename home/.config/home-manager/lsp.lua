@@ -21,7 +21,7 @@ local on_attach = function(client, bufnr)
   -- buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
   buf_set_keymap('n', 'ga', '<Cmd>lua vim.lsp.buf.code_action()<CR>', opts)
   buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  -- buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
   buf_set_keymap('n', 'gi', '<cmd>lua org_imports()<CR>', opts)
   buf_set_keymap('n', '<C-i>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
   buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
@@ -44,6 +44,7 @@ local on_attach = function(client, bufnr)
           buffer = bufnr,
           callback = function()
               vim.lsp.buf.format({
+                  timeout_ms = 2000,
                   filter = function(client)
                       return client.name ~= "tsserver"
                   end,
@@ -52,23 +53,6 @@ local on_attach = function(client, bufnr)
           end,
       })
   end
-
-  -- if client.server_capabilities.documentHighlightProvider then
-      -- vim.api.nvim_create_augroup("lsp_document_highlight", { clear = true })
-      -- vim.api.nvim_clear_autocmds { buffer = bufnr, group = "lsp_document_highlight" }
-      -- vim.api.nvim_create_autocmd("CursorHold", {
-          -- callback = vim.lsp.buf.document_highlight,
-          -- buffer = bufnr,
-          -- group = "lsp_document_highlight",
-          -- desc = "Document Highlight",
-      -- })
-      -- vim.api.nvim_create_autocmd("CursorMoved", {
-          -- callback = vim.lsp.buf.clear_references,
-          -- buffer = bufnr,
-          -- group = "lsp_document_highlight",
-          -- desc = "Clear All the References",
-      -- })
-  -- end
 end
 
 nvim_lsp.gopls.setup{
@@ -77,7 +61,6 @@ nvim_lsp.gopls.setup{
 	capabilities = capabilities,
   settings = {
     gopls = {
-      experimentalPostfixCompletions = true,
       analyses = {
         unusedparams = false,
         shadow = false,
@@ -215,7 +198,11 @@ require("typescript").setup({
         -- vim.api.nvim_buf_set_keymap(bufnr, "n", "gs", ":TSLspOrganize<CR>", opts)
         -- vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", ":TSLspRenameFile<CR>", opts)
         vim.api.nvim_buf_set_keymap(bufnr, "n", "gi", '<Cmd>lua org_imports_typescript()<CR>', opts)
-        vim.api.nvim_buf_set_keymap(bufnr, "n", "gd", '<Cmd>:TypescriptGoToSourceDefinition<CR>', opts)
+        -- vim.api.nvim_buf_set_keymap(bufnr, "n", "gd", '<Cmd>:TypescriptGoToSourceDefinition<CR>', opts)
+        client.resolved_capabilities.document_formatting = false
+        client.resolved_capabilities.document_range_formatting = false
+        client.server_capabilities.document_formatting = false
+        client.server_capabilities.document_range_formatting = false
       end,
     },
 })
@@ -280,13 +267,61 @@ nvim_lsp.elmls.setup({
 
 local null_ls = require("null-ls")
 null_ls.setup({
+    debug = true,
     capabilities = capabilities,
     sources = {
-        -- null_ls.builtins.diagnostics.eslint, -- eslint or eslint_d
-        -- null_ls.builtins.code_actions.eslint, -- eslint or eslint_d
+        null_ls.builtins.diagnostics.eslint, -- eslint or eslint_d
+        null_ls.builtins.code_actions.eslint, -- eslint or eslint_d
+        -- null_ls.builtins.formatting.eslint, -- prettier, eslint, eslint_d, or prettierd
         null_ls.builtins.formatting.prettier, -- prettier, eslint, eslint_d, or prettierd
-        require("typescript.extensions.null-ls.code-actions"),
+        -- require("typescript.extensions.null-ls.code-actions"),
     },
 })
 
-require'lspconfig'.nil_ls.setup{}
+-- require'lspconfig'.nil_ls.setup{}
+
+require('illuminate').configure({
+    -- providers: provider used to get references in the buffer, ordered by priority
+    providers = {
+        'lsp',
+        'treesitter',
+        -- 'regex',
+    },
+})
+
+
+-- local bufnr = vim.api.nvim_buf_get_number(0)
+--
+-- vim.lsp.handlers['textDocument/codeAction'] = function(_, _, actions)
+    -- require('lsputil.codeAction').code_action_handler(nil, actions, nil, nil, nil)
+-- end
+--
+-- vim.lsp.handlers['textDocument/references'] = function(_, _, result)
+    -- require('lsputil.locations').references_handler(nil, result, { bufnr = bufnr }, nil)
+-- end
+--
+-- vim.lsp.handlers['textDocument/definition'] = function(_, method, result)
+    -- require('lsputil.locations').definition_handler(nil, result, { bufnr = bufnr, method = method }, nil)
+-- end
+--
+-- vim.lsp.handlers['textDocument/declaration'] = function(_, method, result)
+    -- require('lsputil.locations').declaration_handler(nil, result, { bufnr = bufnr, method = method }, nil)
+-- end
+--
+-- vim.lsp.handlers['textDocument/typeDefinition'] = function(_, method, result)
+    -- require('lsputil.locations').typeDefinition_handler(nil, result, { bufnr = bufnr, method = method }, nil)
+-- end
+--
+-- vim.lsp.handlers['textDocument/implementation'] = function(_, method, result)
+    -- require('lsputil.locations').implementation_handler(nil, result, { bufnr = bufnr, method = method }, nil)
+-- end
+--
+-- vim.lsp.handlers['textDocument/documentSymbol'] = function(_, _, result, _, bufn)
+    -- require('lsputil.symbols').document_handler(nil, result, { bufnr = bufn }, nil)
+-- end
+--
+-- vim.lsp.handlers['textDocument/symbol'] = function(_, _, result, _, bufn)
+    -- require('lsputil.symbols').workspace_handler(nil, result, { bufnr = bufn }, nil)
+-- end
+--
+-- vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]

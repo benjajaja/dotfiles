@@ -26,7 +26,7 @@ xkb_keymap {
     // HJKL vim keys in the AltGr layer, and special Ctrl-J/K remappings for the
     // usual tab navigation.
     key <AC06> { [h, H, Left ] };
-    key <AC09> { [l, L, Right, Left ] };
+    key <AC09> { [l, L, Right ] };
     // Special Control Level4 for tab navigation
     key.type = "FOUR_LEVEL";
     key <AC07> { [j, J, Down, Page_Down] };
@@ -35,8 +35,8 @@ xkb_keymap {
     // Some spanish symbols
     key <AE10> { [0, parenright, dead_abovering, rightsinglequotemark ] };
     key <AB05> { [b, B, trademark ] };
-    key <AC03> { [d, D, section ] };
-    key <AB02> { [x, X, multiply ]};
+    // key <AC03> { [d, D, section ] };
+    // key <AB02> { [x, X, multiply, X ]};
     key <AE01> { [1, exclam, exclamdown, onesuperior ] };
   };
   xkb_geometry  { include "pc(pc104)" };

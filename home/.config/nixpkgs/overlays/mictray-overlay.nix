@@ -3,12 +3,12 @@ with pkgs;
 
 self: super: {
   mictray = super.mictray.overrideAttrs (oldAttrs: {
-    version = "0.2.5";
+    version = "0.3.1";
     src = super.fetchFromGitHub {
-      owner = "benjajaja";
+      owner = "Junker";
       repo = oldAttrs.pname;
-      rev = "15de891e48da9f8f9f1b8d4a3615a0d40117dca6";
-      sha256 = "sha256-3QsWqi6KOPHX62RxvAn5C0P9Sx2R8imzXawUn+ELYxI=";
+      rev = "0.3.1";
+      sha256 = "sha256-QudDgaQNH/t8rsdlzHxvn7O2ClT0OSq9lBwWf2D4BvE=";
     };
     nativeBuildInputs = [
       meson
@@ -22,8 +22,7 @@ self: super: {
       gtk3
       libgee
       libnotify
-      libpulseaudio
-      keybinder3
+      pulseaudio
     ];
   });
 }

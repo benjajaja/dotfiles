@@ -11,8 +11,18 @@ let
       sha256 = "sha256-KBHC95cswqsQinMze/nlI43WZkXMXrDuTfK3z4hHYPg=";
     };
   };
-  nebulous = pkgs.vimUtils.buildVimPluginFrom2Nix {
-    pname = "nebulous";
+  # sidebar-nvim = pkgs.vimUtils.buildVimPluginFrom2Nix {
+    # pname = "sidebar-nvim";
+    # version = "2023-03-17";
+    # src =  pkgs.fetchFromGitHub {
+      # owner = "sidebar-nvim";
+      # repo = "sidebar.nvim";
+      # rev = "990ce5f562c9125283ccac5473235b1a56fea6dc";
+      # sha256 = "sha256-/6q/W7fWXlJ2B9o4v+0gg2QjhzRC/Iws+Ez6yyL1bqI=";
+    # };
+  # };
+  nebulous-nvim = pkgs.vimUtils.buildVimPluginFrom2Nix {
+    pname = "nebulous-nvim";
     version = "2022-01-23";
     src =  pkgs.fetchFromGitHub {
       owner = "Yagua";
@@ -21,44 +31,24 @@ let
       sha256 = "sha256-88xkhhVVpWHCMBfUcUgYshHm+OM5yjMnqwNtsUV21No=";
     };
   };
-  telescope-zf-native = pkgs.vimUtils.buildVimPluginFrom2Nix {
-    pname = "telescope-zf-native";
-    version = "2023-03-17";
+  midnight-nvim = pkgs.vimUtils.buildVimPluginFrom2Nix {
+    pname = "midnight-nvim";
+    version = "2022-01-23";
     src =  pkgs.fetchFromGitHub {
-      owner = "natecraddock";
-      repo = "telescope-zf-native.nvim";
-      rev = "beb34b6c48154ec117930180f257a5592606d48f";
-      sha256 = "sha256-KpODXemfksWQ0PjjQrpC6E4tBVmQtcUnRyapX0PTQD4=";
+      owner = "dasupradyumna";
+      repo = "midnight.nvim";
+      rev = "3e6e5b9c950c785a79f9b0d5d9cdc5096ec87057";
+      sha256 = "sha256-NmBQty0TweUhmERFu/tf0nmAydr1UujAbIkijyixnec=";
     };
   };
-  sidebar-nvim = pkgs.vimUtils.buildVimPluginFrom2Nix {
-    pname = "sidebar-nvim";
-    version = "2023-03-17";
+  nightvision-nvim = pkgs.vimUtils.buildVimPluginFrom2Nix {
+    pname = "nightvision-nvim";
+    version = "2022-01-23";
     src =  pkgs.fetchFromGitHub {
-      owner = "sidebar-nvim";
-      repo = "sidebar.nvim";
-      rev = "990ce5f562c9125283ccac5473235b1a56fea6dc";
-      sha256 = "sha256-/6q/W7fWXlJ2B9o4v+0gg2QjhzRC/Iws+Ez6yyL1bqI=";
-    };
-  };
-  typescript-nvim = pkgs.vimUtils.buildVimPluginFrom2Nix {
-    pname = "typescript-nvim";
-    version = "2023-03-17";
-    src =  pkgs.fetchFromGitHub {
-      owner = "jose-elias-alvarez";
-      repo = "typescript.nvim";
-      rev = "f66d4472606cb24615dfb7dbc6557e779d177624";
-      sha256 = "sha256-PHVY5NJbOGvY9p0F0QNSfMKmAWdqjw1RB0Vspq88qMI=";
-    };
-  };
-  rust-tools-nvim = pkgs.vimUtils.buildVimPluginFrom2Nix {
-    pname = "rust-tools-nvim";
-    version = "2023-03-17";
-    src =  pkgs.fetchFromGitHub {
-      owner = "simrat39";
-      repo = "rust-tools.nvim";
-      rev = "71d2cf67b5ed120a0e31b2c8adb210dd2834242f";
-      sha256 = "sha256-Cuk/vdoviB9ibt2rrkNRmNFy4S+6czhbExmIjTJRdZM=";
+      owner = "mathofprimes";
+      repo = "nightvision-nvim";
+      rev = "8b28cc9907256ff3761495aca3a9bb4e32c892b2";
+      sha256 = "sha256-LI3QdX0Rc8XTqnP972ev1i0xA4uTUfleScbzRL/eA/M=";
     };
   };
 
@@ -73,15 +63,16 @@ in {
       plugins = with pkgs.vimPlugins; [
         vim-nix
         nvim-web-devicons
-        barbar-nvim
+        # barbar-nvim
+        bufferline-nvim
+        bufdelete-nvim
         vim-repeat
         easyclip
-        # ctrlp-vim
         vim-surround
         nerdcommenter
         camelcasemotion
-        sidebar-nvim
-        neo-tree-nvim
+        # sidebar-nvim
+        # neo-tree-nvim
 
         nvim-lspconfig
         cmp-nvim-lsp
@@ -92,20 +83,27 @@ in {
         cmp-vsnip
         vim-vsnip
         telescope-nvim
-        # telescope-fzf-native-nvim
-        telescope-zf-native
+        telescope-zf-native-nvim
         nvim-lsputils
         nvim-treesitter.withAllGrammars
         cmp-treesitter
         rust-tools-nvim
+        vim-illuminate
+        persistence-nvim
 
         plenary-nvim
         null-ls-nvim
-        # nvim-lsp-ts-utils
         typescript-nvim
 
         tokyonight-nvim
-        nebulous
+        dracula-nvim
+        kanagawa-nvim
+        catppuccin-nvim
+        midnight-nvim
+        nightvision-nvim
+        nebulous-nvim
+        awesome-vim-colorschemes
+        changeColorScheme-vim
       ];
       extraConfig = ''
 ${vimrc}

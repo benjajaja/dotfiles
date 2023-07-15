@@ -1,5 +1,5 @@
-{ config, pkgs, ... }:
-
+{ pkgs, ... }:
+with import <nixpkgs> {};
 let
   compiledLayout = pkgs.runCommand "keyboard-layout" {} ''
     ${pkgs.xorg.xkbcomp}/bin/xkbcomp ${./xkb/layout.xkb} $out
@@ -38,6 +38,7 @@ in
     htop
     docker-compose
     xclip
+    xbindkeys
 
     # wayland
     sway
@@ -91,6 +92,7 @@ in
     fractal
     gomuks
     iamb
+    ncdu
 
     # dev
     gopls
@@ -100,7 +102,9 @@ in
     cypress
     tree-sitter
     bat
-    vscode
+    nodePackages.prettier
+    nodePackages.eslint
+    # vscode
     nodePackages.serverless
     git-recent
     ripgrep
@@ -137,6 +141,9 @@ in
     rust-analyzer
     clippy
     rustfmt
+    cargo-watch
+    cargo-readme
+    cargo-make
     cmake
     pkg-config
     elmPackages.elm-language-server
@@ -153,6 +160,17 @@ in
     dolphin-emu
     python39Packages.ds4drv
   ];
+
+  home.file = {
+    xbindkeysrc = {
+      enable = true;
+      target = ".xbindkeysrc";
+      text = ''
+        "dbus-send --dest=app.junker.mictray --type=method_call /app/junker/mictray app.junker.mictray.ToggleMute"
+           XF86AudioMicMute
+      '';
+    };
+  };
 
   gtk = {
     enable = true;
@@ -178,6 +196,7 @@ in
       shellAliases = {
         ne = "neovide --multigrid -- --cmd 'cd ~/p/core' --cmd 'set mouse=a'";
         xc = "xclip -selection clipboard";
+        gow = "gotestsum --watch";
       };
       initExtra = ''
         export PROMPT_CHAR=">"
@@ -225,15 +244,6 @@ in
           psu = "push -u origin HEAD";
       };
     };
-    pidgin = {
-      enable = true;
-      plugins = [
-        # pkgs.telegram-purple
-        pkgs.purple-discord
-        pkgs.purple-slack
-        pkgs.purple-matrix
-      ];
-    };
   };
 
   xsession = {
@@ -268,12 +278,13 @@ in
                   ;;
           esac
       done &
+      xbindkeys
       export QT_AUTO_SCREEN_SCALE_FACTOR=1
     '';
   };
   wayland.windowManager.sway = {
     enable = false;
-    config = rec {
+    config = {
       modifier = "Mod4";
       terminal = "alacritty";
       startup = [{command = "firefox";}];
