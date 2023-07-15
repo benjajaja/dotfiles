@@ -132,6 +132,8 @@ in
     # hobby dev
     rustc
     cargo
+    cargo-deny
+    cargo-watch
     rust-analyzer
     clippy
     rustfmt
