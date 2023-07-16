@@ -15,5 +15,5 @@
       #libvdpau-va-gl
     ];
   };
-  hardware.video.hidpi.enable = false;
+  # hardware.video.hidpi.enable = false;
 }
