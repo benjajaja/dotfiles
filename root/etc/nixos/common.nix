@@ -48,9 +48,20 @@
     enable = true;
     packages = [ pkgs.dconf ];
   };
+  xdg.portal = {
+    enable = true;
+    wlr.enable = true;
+    # gtk portal needed to make gtk apps happy
+    # extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  };
 
   services.gnome.gnome-keyring.enable = true;
   security.pam.services.gdm.enableGnomeKeyring = true;
+  security.pam.services.swaylock.text = ''
+    # PAM configuration file for the swaylock screen locker. By default, it includes
+    # the 'login' configuration file (see /etc/pam.d/login)
+    auth include login
+  '';
   security.polkit.enable = true;
   services.upower.enable = true;
   services.gvfs.enable = true;
@@ -92,7 +103,9 @@
   virtualisation.docker.enable = true;
 
   services.logind = {
+    lidSwitch = "suspend"; # also default
     lidSwitchDocked = "ignore";
+    lidSwitchExternalPower = "suspend";
   };
 
   # List packages installed in system profile. To search, run:
@@ -117,10 +130,10 @@
     dmenu
     arandr
     xfce.thunar
-    flameshot
     light
     gnome.adwaita-icon-theme
     gimp
+    greetd.tuigreet
 
     gnumake
     gcc
@@ -131,6 +144,113 @@
        # withPrimus = true;
        extraPkgs = pkgs: [ glxinfo ];
     }).run
+
+    htop
+    docker-compose
+    oxker
+    xclip
+    xbindkeys
+
+    # wayland
+    sway
+    swaylock-effects
+    swayidle
+    swaybg
+    kickoff
+    foot
+    cagebreak
+    swayrbar
+    swayr
+    playerctl
+    grim
+    slurp
+    bemenu
+    # xdg-utils
+
+    # wm session
+    hsetroot
+    trayer
+    networkmanagerapplet
+    pa_applet
+    pasystray
+    cbatticon
+    mictray
+    flameshot
+    xfce.xfce4-clipman-plugin
+    dunst
+    pavucontrol
+    udiskie
+    mate.mate-applets
+    brightnessctl
+    gvfs
+    samba
+    rubik
+
+    # terminals
+    alacritty
+    contour
+    ctx
+    wezterm
+    ueberzugpp
+    tmux
+
+    # programs
+    qutebrowser
+    neovide
+    tig
+    tdesktop
+    chromium
+    libreoffice
+    inkscape
+    transmission-gtk
+    gnome_mplayer
+    gnomecast
+    nheko
+    fractal
+    gomuks
+    iamb
+    ncdu
+    gnupg
+    awscli
+    file # joshuto file preview mimetype
+    exiftool # joshuto file preview
+
+    bat
+    tree-sitter
+    dbeaver-bin
+    postgresql # for pg_dump
+
+    ripgrep
+    sd
+    fd
+
+    unzip
+    zip
+    unar
+
+    # debug / unusual
+    glxinfo
+    vulkan-tools
+    xorg.xkbcomp
+    xorg.xev
+    xorg.xwd
+    imagemagick
+    xvfb-run
+    xdummy
+    binutils # a bunch of helper bins, a lot of build tools need some
+    xorg.xwd
+    imagemagick
+
+    # media apps
+    losslesscut-bin
+    vlc
+    quaternion
+    libsForQt5.neochat
+    gtk3
+    lmms
+    menyoki
+    blender
+
   ];
 
   services.libinput = {
@@ -154,10 +274,10 @@
     };
 
     displayManager = {
+      startx.enable = true;
       defaultSession = "none+xmonad";
-      gdm.enable = false;
       lightdm = {
-          enable = true;
+          enable = false;
           greeters.mini = {
             enable = true;
             user = "gipsy";
@@ -193,6 +313,7 @@
   console.useXkbConfig = true;
 
   environment.variables = {
+    # QT_QPA_PLATFORM = "wayland";
     # dpi
     #GDK_SCALE = "2";
     #GDK_DPI_SCALE = "0.5";
@@ -223,7 +344,7 @@
       '';
     };
     dconf.enable = true;
-    light.enable = false;
+    light.enable = true;
     neovim = {
       enable = true;
       package = pkgs.neovim-unwrapped;
@@ -254,6 +375,7 @@
       startAgent = true;
     };
   };
+  qt.platformTheme = "qt5ct";
 
   services.blueman.enable = true;
 
@@ -292,6 +414,54 @@
       zlib # numpy
     ];
   };
+
+  # kanshi systemd service
+  systemd.user.services.kanshi = {
+    description = "kanshi daemon";
+    serviceConfig = {
+      Type = "simple";
+      ExecStart = ''${pkgs.kanshi}/bin/kanshi -c kanshi_config_file'';
+    };
+  };
+  services.greetd = {
+    enable = true;
+    settings = rec {
+      default_session = {
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet -t -r --asterisks -s \"/etc/tuigreeter/sessions\"";
+      };
+    };
+  };
+  systemd.services.greetd.serviceConfig = {
+    Type = "idle";
+    StandardInput = "tty";
+    StandardOutput = "tty";
+    StandardError = "journal"; # Without this errors will spam on screen
+    # Without these bootlogs will spam on screen
+    TTYReset = true;
+    TTYVHangup = true;
+    TTYVTDisallocate = true;
+  };
+  environment.etc."tuigreeter/sessions/sway".text = ''
+    [Desktop Entry]
+    Name=Sway
+    Exec="${pkgs.sway}/bin/sway --unsupported-gpu"
+    '';
+  environment.etc."tuigreeter/sessions/bash".text = ''
+    [Desktop Entry]
+    Name=bash
+    Exec="${pkgs.bash}/bin/bash"
+    '';
+  environment.etc."tuigreeter/sessions/xorg".text = ''
+    [Desktop Entry]
+    Name=Xorg
+    Exec="${pkgs.xorg.xinit}/bin/startx"
+    '';
+
+  # services.pipewire = {
+    # enable = true;
+    # alsa.enable = true;
+    # pulse.enable = true;
+  # };
 
   system.stateVersion = "22.05"; # Did you read the comment?
 }

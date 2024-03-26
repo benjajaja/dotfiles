@@ -1,0 +1,189 @@
+# exec "pkill -f swaymonad; swaymonad"
+exec "swaymonad"
+
+input type:keyboard {
+    xkb_file ~/.config/home-manager/xkb/layout.xkb
+    repeat_delay 200
+}
+input <identifier> xkb_model "pc101"
+set $mod Mod4
+
+set $font "ProFontWindows Nerd Font Mono"
+set $orange #f0e68c
+
+output eDP-2 {
+  scale 2
+  bg ~/Pictures/skull_on_fire.jpg center
+}
+
+font $font 8.000000
+floating_modifier $mod
+default_border pixel 2
+default_floating_border pixel 2
+hide_edge_borders none
+focus_wrapping no
+focus_follows_mouse yes
+focus_on_window_activation smart
+mouse_warping output
+workspace_layout default
+workspace_auto_back_and_forth no
+smart_borders on
+
+client.focused $orange #285577 #ffffff $orange $orange
+client.focused_inactive #333333 #5f676a #ffffff #484e50 #222222
+client.unfocused #333333 #222222 #888888 #292d2e #111111
+client.urgent #2f343a #900000 #ffffff #900000 #900000
+client.placeholder #000000 #0c0c0c #ffffff #000000 #0c0c0c
+client.background #ffffff
+
+bindsym $mod+1 workspace number 1
+bindsym $mod+2 workspace number 2
+bindsym $mod+3 workspace number 3
+bindsym $mod+4 workspace number 4
+bindsym $mod+5 workspace number 5
+bindsym $mod+6 workspace number 6
+bindsym $mod+7 workspace number 7
+bindsym $mod+8 workspace number 8
+bindsym $mod+9 workspace number 9
+# bindsym $mod+Down focus down
+# bindsym $mod+Left focus left
+bindsym $mod+Shift+Return exec wezterm
+# bindsym $mod+Right focus right
+bindsym $mod+Shift+1 move container to workspace number 1
+bindsym $mod+Shift+2 move container to workspace number 2
+bindsym $mod+Shift+3 move container to workspace number 3
+bindsym $mod+Shift+4 move container to workspace number 4
+bindsym $mod+Shift+5 move container to workspace number 5
+bindsym $mod+Shift+6 move container to workspace number 6
+bindsym $mod+Shift+7 move container to workspace number 7
+bindsym $mod+Shift+8 move container to workspace number 8
+bindsym $mod+Shift+9 move container to workspace number 9
+# bindsym $mod+Shift+Down move down
+# bindsym $mod+Shift+Left move left
+# bindsym $mod+Shift+Right move right
+# bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+e reload
+bindsym $mod+Shift+q exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
+# bindsym $mod+Shift+h move left
+# bindsym $mod+Shift+j move down
+# bindsym $mod+Shift+k move up
+# bindsym $mod+Shift+l move right
+
+bindsym $mod+j nop focus_next_window
+bindsym $mod+k nop focus_prev_window
+bindsym $mod+Shift+j nop swap_with_next_window
+bindsym $mod+Shift+k nop swap_with_prev_window
+bindsym $mod+Comma nop increment_masters
+bindsym $mod+Period nop decrement_masters
+
+bindsym $mod+h resize shrink width 10px
+bindsym $mod+l resize grow width 10px
+
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+Shift+c kill
+bindsym $mod+Shift+space floating toggle
+bindsym $mod+Up focus up
+bindsym $mod+a focus parent
+# bindsym $mod+b splith
+bindsym $mod+p exec "dmenu_path | bemenu | ${SHELL:-/bin/sh} &"
+bindsym $mod+e layout toggle split
+bindsym $mod+f fullscreen toggle
+# bindsym $mod+h focus left
+# bindsym $mod+j focus right
+# bindsym $mod+k focus left
+# bindsym $mod+l focus right
+bindsym $mod+minus scratchpad show
+bindsym $mod+r modk resize
+bindsym $mod+s layout stacking
+bindsym $mod+space focus mode_toggle
+bindsym $mod+v splitv
+bindsym $mod+w layout tabbed
+bindsym $mod+b exec swaymsg bar mode toggle
+
+mode "resize" {
+  bindsym Down resize grow height 10 px
+  bindsym Escape mode default
+  bindsym Left resize shrink width 10 px
+  bindsym Return mode default
+  bindsym Right resize grow width 10 px
+  bindsym Up resize shrink height 10 px
+  bindsym h resize shrink width 10 px
+  bindsym j resize grow height 10 px
+  bindsym k resize shrink height 10 px
+  bindsym l resize grow width 10 px
+}
+
+bar {
+    swaybar_command swaybar
+    # Use swayrbar as status command with some logging output which
+    # is redirected to /tmp/swayrbar.log.  Be sure to only redirect
+    # stderr because the swaybar protocol requires the status_command
+    # to emit JSON to stdout which swaybar reads.
+    status_command env RUST_BACKTRACE=1 RUST_LOG=swayr=debug swayrbar 2> /tmp/swayrbar.log
+    position top
+    font $font 12
+    height 20
+    # mode hide
+    # modifier $mod
+
+    colors {
+        statusline #f8c500
+        background #222222ff
+        focused_workspace $orange #f8c500 #000000
+    }
+}
+# bar swaybar_command waybar
+# bar {
+  # font pango:monospace 12.000000
+  # mode dock
+  # hidden_state hide
+  # position top
+  # status_command /nix/store/jjr77v4k50y7z4yirmym48wwcbly94dg-i3status-2.14/bin/i3status
+  # swaybar_command /nix/store/bwkmlm76q6rmznw21468yyi0qjb68fy9-sway-1.8.1/bin/swaybar
+  # workspace_buttons yes
+  # strip_workspace_numbers no
+  # tray_output primary
+  # colors {
+    # background #000000
+    # statusline #ffffff
+    # separator #666666
+    # focused_workspace #4c7899 #285577 #ffffff
+    # active_workspace #333333 #5f676a #ffffff
+    # inactive_workspace #333333 #222222 #888888
+    # urgent_workspace #2f343a #900000 #ffffff
+    # binding_mode #2f343a #900000 #ffffff
+  # }
+# }
+
+# set minimum brightness
+exec "light -N 5" 
+bindsym XF86MonBrightnessDown exec light -U 10
+bindsym XF86MonBrightnessUp exec light -A 10
+
+# Volume
+bindsym XF86AudioRaiseVolume exec 'pactl set-sink-volume @DEFAULT_SINK@ +1%'
+bindsym XF86AudioLowerVolume exec 'pactl set-sink-volume @DEFAULT_SINK@ -1%'
+bindsym XF86AudioMute exec 'pactl set-sink-mute @DEFAULT_SINK@ toggle'
+
+
+# Lock screen in 9min30sec
+# Turn screen off in 10min (so 30sec after lock screen)
+# Sleep in 60min (so 50min after screen off)
+# Stop players when going to sleep (probably unnecessary)
+# Lock screen when going to sleep
+exec swayidle -w \
+    timeout 570 'swaylock --indicator --screenshots --effect-blur 5x5 --effect-vignette 0.5:0.5 --clock --font $font -f' \
+    timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
+    timeout 3600 'systemctl suspend' \
+    before-sleep 'playerctl pause' \
+    before-sleep 'swaylock --indicator --screenshots --effect-blur 5x5 --effect-vignette 0.5:0.5 --clock --font $font -f'
+# Do not idle if there is any fullscreen app
+for_window [class=".*"] inhibit_idle fullscreen
+for_window [app_id=".*"] inhibit_idle fullscreen
+
+# exec "dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP XDG_SESSION_TYPE NIXOS_OZONE_WL MOZ_ENABLE_WAYLAND SDL_VIDEODRIVER _JAVA_AWT_WM_NONREPARENTING XDG_SESSION_DESKTOP; systemctl --user start sway-session.target"
+exec "dbus-sway-environment"
+exec "flameshot"
+
+exec "firefox"
+

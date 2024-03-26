@@ -9,8 +9,49 @@ let
   git-recent = pkgs.callPackage ./git-recent.nix {};
   # iamb = pkgs.callPackage ./iamb.nix {};
   iamb = (builtins.getFlake "github:benjajaja/iamb/nix").packages.x86_64-linux.default;
+  swaymonad = (builtins.getFlake "github:nicolasavru/swaymonad").packages.x86_64-linux.swaymonad;
   # pandas = pkgs.callPackage ./pandas.nix {};
   # gtk-demos = pkgs.callPackage ./gtk-demos.nix {};
+
+  # bash script to let dbus know about important env variables and
+  # propagate them to relevent services run at the end of sway config
+  # see
+  # https://github.com/emersion/xdg-desktop-portal-wlr/wiki/"It-doesn't-work"-Troubleshooting-Checklist
+  # note: this is pretty much the same as  /etc/sway/config.d/nixos.conf but also restarts  
+  # some user services to make sure they have the correct environment variables
+  dbus-sway-environment = pkgs.writeTextFile {
+    name = "dbus-sway-environment";
+    destination = "/bin/dbus-sway-environment";
+    executable = true;
+
+    text = ''
+      export QT_QPA_PLATFORM=wayland
+      # dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP XDG_SESSION_TYPE NIXOS_OZONE_WL MOZ_ENABLE_WAYLAND SDL_VIDEODRIVER _JAVA_AWT_WM_NONREPARENTING XDG_SESSION_DESKTOP; systemctl --user start sway-session.target
+      dbus-update-activation-environment --systemd WAYLAND_DISPLAY QT_QPA_PLATFORM=wayland XDG_CURRENT_DESKTOP=sway DISPLAY SWAYSOCK
+      # systemctl --user stop pipewire pipewire-media-session xdg-desktop-portal xdg-desktop-portal-wlr
+      # systemctl --user start pipewire pipewire-media-session xdg-desktop-portal xdg-desktop-portal-wlr
+    '';
+  };
+
+  # currently, there is some friction between sway and gtk:
+  # https://github.com/swaywm/sway/wiki/GTK-3-settings-on-Wayland
+  # the suggested way to set gtk settings is with gsettings
+  # for gsettings to work, we need to tell it where the schemas are
+  # using the XDG_DATA_DIR environment variable
+  # run at the end of sway config
+  configure-gtk = pkgs.writeTextFile {
+    name = "configure-gtk";
+    destination = "/bin/configure-gtk";
+    executable = true;
+    text = let
+      schema = pkgs.gsettings-desktop-schemas;
+      datadir = "${schema}/share/gsettings-schemas/${schema.name}";
+    in ''
+      export XDG_DATA_DIRS=${datadir}:$XDG_DATA_DIRS
+      gnome_schema=org.gnome.desktop.interface
+      gsettings set $gnome_schema gtk-theme 'Dracula'
+    '';
+  };
 in
 {
   imports = [
@@ -35,20 +76,9 @@ in
   programs.home-manager.enable = true;
 
   home.packages = with pkgs; [
-    htop
-    docker-compose
-    oxker
-    xclip
-    xbindkeys
-
-    # wayland
-    sway
-    swaylock
-    swayidle
-    swaybg
-    dmenu
-    foot
-    cagebreak
+    swaymonad
+    dbus-sway-environment
+    configure-gtk
 
     # wm session
     hsetroot
@@ -107,16 +137,11 @@ in
     #pre-commit
     terraform
     cypress
-    tree-sitter
-    bat
     nodePackages.prettier
     nodePackages.eslint
     vscode
     nodePackages.serverless
     git-recent
-    ripgrep
-    sd
-    fd
     #python311
     #python311Packages.pip
     #python311Packages.pip-tools
@@ -138,22 +163,9 @@ in
       #pandas
     #]))
     google-cloud-sdk
-    dbeaver-bin
     nil
-    postgresql
     ruff
     uv
-
-    # apps
-    unzip
-    zip
-    unar
-    losslesscut-bin
-    vlc
-    gtk3
-    lmms
-    menyoki
-    blender
 
     # hobby dev
     rustc
@@ -166,6 +178,7 @@ in
     cargo-watch
     cargo-readme
     cargo-make
+    cargo-fuzz
     cmake
     pkg-config
     elmPackages.elm-language-server
@@ -174,21 +187,8 @@ in
     # wine
     wine64
 
-    # debug / unusual
-    glxinfo
-    vulkan-tools
-    xorg.xkbcomp
-    xorg.xev
-    xorg.xwd
-    imagemagick
-    xvfb-run
-    xdummy
-    binutils # a bunch of helper bins, a lot of build tools need some
-
-    # games
-    dolphin-emu
-    python39Packages.ds4drv
-    ryujinx
+    pista
+    dmitri
   ];
 
   home.file = {
@@ -228,6 +228,12 @@ in
       '';
       sessionVariables = {
         EDITOR = "nvim";
+        MOZ_ENABLE_WAYLAND=1;
+        SDL_VIDEODRIVER=wayland;
+        _JAVA_AWT_WM_NONREPARENTING=1;
+        QT_QPA_PLATFORM=wayland;
+        XDG_CURRENT_DESKTOP=sway;
+        XDG_SESSION_DESKTOP=sway;
       };
       shellAliases = {
         ne = "neovide --multigrid -- --cmd 'cd ~/p/core' --cmd 'set mouse=a'";
@@ -263,10 +269,12 @@ in
       settings = {
         font = {
           normal.family = "ProFontWindows Nerd Font Mono";
-          size = 16.0;
+          size = 12.0;
           bold.style = "normal";
         };
-        draw_bold_text_with_bright_colors = true;
+        colors = {
+          draw_bold_text_with_bright_colors = true;
+        };
         env = {
           WINIT_X11_SCALE_FACTOR = "1.2";
         };
@@ -290,7 +298,7 @@ in
       extraConfig = ''
 return {
   font = wezterm.font("ProFontWindows Nerd Font Mono"),
-  font_size = 19.2,
+  font_size = 12,
   bold_brightens_ansi_colors = "BrightOnly",
   color_scheme = "Tokyo Night",
   window_padding = {
@@ -379,13 +387,15 @@ return {
     '';
   };
   wayland.windowManager.sway = {
-    enable = false;
-    config = {
-      modifier = "Mod4";
-      terminal = "alacritty";
-      startup = [{command = "firefox";}];
-    };
+    enable = true;
+    # wrapperFeatures.gtk = true;
+    # config = {
+      # modifier = "Mod4";
+      # terminal = "alacritty";
+      # startup = [{command = "firefox";}];
+    # };
   };
 
   nixpkgs.config.allowUnfree = true;
+  xdg.configFile."sway/config".source = lib.mkForce ./sway/config;
 }
