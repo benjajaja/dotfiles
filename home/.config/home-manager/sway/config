@@ -85,7 +85,7 @@ bindsym $mod+Shift+space floating toggle
 bindsym $mod+Up focus up
 bindsym $mod+a focus parent
 # bindsym $mod+b splith
-bindsym $mod+p exec "dmenu_path | bemenu"
+bindsym $mod+p exec "dmenu_path | bemenu | ${SHELL:-/bin/sh} &"
 bindsym $mod+e layout toggle split
 bindsym $mod+f fullscreen toggle
 # bindsym $mod+h focus left

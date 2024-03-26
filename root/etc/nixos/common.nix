@@ -300,11 +300,30 @@
     enable = true;
     settings = rec {
       default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet -t -r --asterisks --cmd \"${pkgs.sway}/bin/sway --unsupported-gpu\"";
-        user = "gipsy";
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet -t -r --asterisks -s \"/etc/tuigreeter/sessions\"";
       };
     };
   };
+  systemd.services.greetd.serviceConfig = {
+    Type = "idle";
+    StandardInput = "tty";
+    StandardOutput = "tty";
+    StandardError = "journal"; # Without this errors will spam on screen
+    # Without these bootlogs will spam on screen
+    TTYReset = true;
+    TTYVHangup = true;
+    TTYVTDisallocate = true;
+  };
+  environment.etc."tuigreeter/sessions/sway".text = ''
+    [Desktop Entry]
+    Name=Sway
+    Exec="${pkgs.sway}/bin/sway --unsupported-gpu"
+    '';
+  environment.etc."tuigreeter/sessions/bash".text = ''
+    [Desktop Entry]
+    Name=bash
+    Exec="${pkgs.bash}/bin/bash"
+    '';
 
   # services.pipewire = {
     # enable = true;
