@@ -48,9 +48,20 @@
     enable = true;
     packages = [ pkgs.dconf ];
   };
+  xdg.portal = {
+    enable = true;
+    wlr.enable = true;
+    # gtk portal needed to make gtk apps happy
+    # extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+  };
 
   services.gnome.gnome-keyring.enable = true;
   security.pam.services.gdm.enableGnomeKeyring = true;
+  security.pam.services.swaylock.text = ''
+    # PAM configuration file for the swaylock screen locker. By default, it includes
+    # the 'login' configuration file (see /etc/pam.d/login)
+    auth include login
+  '';
   security.polkit.enable = true;
   services.upower.enable = true;
   services.gvfs.enable = true;
@@ -92,7 +103,9 @@
   virtualisation.docker.enable = true;
 
   services.logind = {
+    lidSwitch = "suspend"; # also default
     lidSwitchDocked = "ignore";
+    lidSwitchExternalPower = "suspend";
   };
 
   # List packages installed in system profile. To search, run:
@@ -121,6 +134,7 @@
     light
     gnome.adwaita-icon-theme
     gimp
+    greetd.tuigreet
 
     gnumake
     gcc
@@ -153,7 +167,7 @@
       defaultSession = "none+xmonad";
       gdm.enable = false;
       lightdm = {
-          enable = true;
+          enable = false;
           greeters.mini = {
             enable = true;
             user = "gipsy";
@@ -189,6 +203,7 @@
   console.useXkbConfig = true;
 
   environment.variables = {
+    # QT_QPA_PLATFORM = "wayland";
     # dpi
     #GDK_SCALE = "2";
     #GDK_DPI_SCALE = "0.5";
@@ -219,7 +234,7 @@
       '';
     };
     dconf.enable = true;
-    light.enable = false;
+    light.enable = true;
     neovim = {
       enable = true;
       package = pkgs.neovim-unwrapped;
@@ -249,7 +264,11 @@
     ssh = {
       startAgent = true;
     };
+    hyprland = {
+      enable = true;
+    };
   };
+  qt.platformTheme = "qt5ct";
 
   services.blueman.enable = true;
 
@@ -268,6 +287,30 @@
       # fcitx-engines = self.fcitx5;
     # })
   # ];
+
+  # kanshi systemd service
+  systemd.user.services.kanshi = {
+    description = "kanshi daemon";
+    serviceConfig = {
+      Type = "simple";
+      ExecStart = ''${pkgs.kanshi}/bin/kanshi -c kanshi_config_file'';
+    };
+  };
+  services.greetd = {
+    enable = true;
+    settings = rec {
+      default_session = {
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet -t -r --asterisks --cmd \"${pkgs.sway}/bin/sway --unsupported-gpu\"";
+        user = "gipsy";
+      };
+    };
+  };
+
+  # services.pipewire = {
+    # enable = true;
+    # alsa.enable = true;
+    # pulse.enable = true;
+  # };
 
   system.stateVersion = "22.05"; # Did you read the comment?
 }

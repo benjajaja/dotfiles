@@ -44,7 +44,7 @@ in
     };
     modesetting.enable = true;
     # ensure the kernel doesn't tear down the card/driver prior to X startup due to the card powering down.
-    nvidiaPersistenced = true;
+    nvidiaPersistenced = false; # disable for wayland
   };
   # now set up reverse PRIME by configuring the NVIDIA provider's outputs as a source for the 
   # amdgpu. you'll need to get these providers from `xrandr --listproviders` AFTER switching to the 
