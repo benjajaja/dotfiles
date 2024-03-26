@@ -41,16 +41,16 @@ let g:NERDTrimTrailingWhitespace = 1
 set nostartofline
 set colorcolumn=100
 
-nnoremap <silent>    <C-PageUp> :BufferLineCyclePrev<CR>
-nnoremap <silent>    <C-PageDown> :BufferLineCycleNext<CR>
-nnoremap <silent>    <C-K> :BufferLineCyclePrev<CR>
-nnoremap <silent>    <C-J> :BufferLineCycleNext<CR>
-nnoremap <silent>    <C-H> :BufferLineMovePrev<CR>
-nnoremap <silent>    <C-L> :BufferLineMoveNext<CR>
-
-nnoremap <silent>    <C-C> :Bdelete<CR>
-
-nnoremap <silent> <C-Q> :Neotree focus buffers<CR>
+" nnoremap <silent>    <C-PageUp> :BufferLineCyclePrev<CR>
+" nnoremap <silent>    <C-PageDown> :BufferLineCycleNext<CR>
+" nnoremap <silent>    <C-K> :BufferLineCyclePrev<CR>
+" nnoremap <silent>    <C-J> :BufferLineCycleNext<CR>
+" nnoremap <silent>    <C-H> :BufferLineMovePrev<CR>
+" nnoremap <silent>    <C-L> :BufferLineMoveNext<CR>
+"
+" nnoremap <silent>    <C-C> :Bwipeout<CR>
+"
+" nnoremap <silent> <C-Q> :NeotreeShowToggle buffers<CR>
 " nnoremap <silent> <C-A> :SidebarNvimFocus<CR>
 
 map <F4>   :call NextColorScheme()<CR>
@@ -63,10 +63,10 @@ set mouse=r
 " let g:ctrlp_show_hidden = 1
 
 " search selected text with //
-vnoremap // y/\V<C-r>=escape(@",'/\')<CR><CR>
+" vnoremap // y/\V<C-r>=escape(@",'/\')<CR><CR>
 
 " leader key
-let mapleader=";"
+" let mapleader=";"
 
 " Always show the signcolumn, otherwise it would shift the text each time
 " diagnostics appear/become resolved.
@@ -80,9 +80,9 @@ endif
 " remap 'mark' to gm
 nnoremap gm m
 " M to delete to end of line and yank
-nmap M <Plug>MoveMotionEndOfLinePlug
+" nmap M <Plug>MoveMotionEndOfLinePlug
 
-let g:EasyClipShareYanks = 1
+" let g:EasyClipShareYanks = 1
 
 let g:go_fmt_command = "golines"
 let g:go_fmt_options = {
@@ -95,3 +95,6 @@ let g:go_fmt_options = {
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 " delays and poor user experience.
 set updatetime=300
+
+iabbrev iferr if err != nil { return err }
+

@@ -37,6 +37,7 @@ in
   home.packages = with pkgs; [
     htop
     docker-compose
+    oxker
     xclip
     xbindkeys
 
@@ -72,8 +73,9 @@ in
     alacritty
     contour
     ctx
-    kitty
     wezterm
+    ueberzugpp
+    tmux
 
     # programs
     qutebrowser
@@ -93,36 +95,62 @@ in
     gomuks
     iamb
     ncdu
+    gnupg
+    awscli
+    file # joshuto file preview mimetype
+    exiftool # joshuto file preview
 
     # dev
+    nodejs_18
+    nodePackages.pnpm
+    nodePackages.yarn
+    nodePackages.typescript-language-server
+    go
     gopls
     gotestsum
-    pre-commit
+    #pre-commit
     terraform
     cypress
     tree-sitter
     bat
     nodePackages.prettier
     nodePackages.eslint
-    # vscode
+    vscode
     nodePackages.serverless
     git-recent
     ripgrep
+    sd
     fd
-    python311
-    python311Packages.pip
-    python311Packages.pip-tools
-    python311Packages.setuptools
+    #python311
+    #python311Packages.pip
+    #python311Packages.pip-tools
+    #python311Packages.setuptools
+    #python311Packages.virtualenv
+    #python311Packages.nodeenv
     # pandas
-    python311Packages.numpy
+    #python311Packages.numpy
+    #python312
+    python312
+    #python312Packages.pip
+    #(python312.withPackages (ps: with ps; [
+      #pip
+      #pip-tools
+      #setuptools
+      #virtualenv
+      #nodeenv
+      #numpy
+      #pandas
+    #]))
     google-cloud-sdk
     dbeaver
     nil
     postgresql
+    ruff
 
     # apps
     slack-term
     unzip
+    zip
     unar
     losslesscut-bin
     vlc
@@ -132,6 +160,8 @@ in
     libsForQt5.neochat
     gtk3
     lmms
+    menyoki
+    blender
 
     # hobby dev
     rustc
@@ -148,17 +178,25 @@ in
     pkg-config
     elmPackages.elm-language-server
     elmPackages.elm-test
+    elmPackages.elm-format
+    # wine
+    wine64
 
     # debug / unusual
     glxinfo
     vulkan-tools
     xorg.xkbcomp
     xorg.xev
+    xorg.xwd
+    imagemagick
+    xvfb-run
+    xdummy
     binutils # a bunch of helper bins, a lot of build tools need some
 
     # games
     dolphin-emu
     python39Packages.ds4drv
+    ryujinx
   ];
 
   home.file = {
@@ -188,7 +226,11 @@ in
     bash = {
       enable = true;
       bashrcExtra = ''
-        PATH="$PATH:/home/$USER/go/bin:/home/$USER/.cargo/bin"
+        PATH="$HOME/venvs/default/bin:$HOME/.local/bin:$PATH:/home/$USER/go/bin:/home/$USER/.cargo/bin"
+        function find_and_replace() {
+          set -e
+          find . -type f -name @1 -exec sed -i @2 {} \;
+        }
       '';
       sessionVariables = {
         EDITOR = "nvim";
@@ -210,6 +252,7 @@ in
         set show-mode-in-prompt on
         set vi-cmd-mode-string "\1\e[2 q\2"
         set vi-ins-mode-string "\1\e[6 q\2"
+        # eval "$(direnv hook bash)"
       '';
     };
     readline = {
@@ -233,7 +276,42 @@ in
         env = {
           WINIT_X11_SCALE_FACTOR = "1.2";
         };
+        keyboard.bindings = [
+          { key = "K"; mods = "Control|Shift"; action = "ScrollPageUp"; }
+          { key = "J"; mods = "Control|Shift"; action = "ScrollPageDown"; }
+        ];
       };
+    };
+    kitty = {
+      enable = true;
+      font = {
+        name = "ProFontWindows Nerd Font Mono";
+        size = 19.2;
+      };
+      # theme = "Tokyo Night";
+      # theme = "Cyberpunk";
+    };
+    wezterm = {
+      enable = true;
+      extraConfig = ''
+return {
+  font = wezterm.font("ProFontWindows Nerd Font Mono"),
+  font_size = 19.2,
+  bold_brightens_ansi_colors = "BrightOnly",
+  color_scheme = "Tokyo Night",
+  window_padding = {
+    left = 4,
+    right = 4,
+    top = 0,
+    bottom = 4,
+  },
+  enable_tab_bar = false,
+  cursor_blink_rate = 400,
+  cursor_thickness = 2,
+  cursor_blink_ease_in = "Constant",
+  cursor_blink_ease_out = "EaseOut",
+}
+      '';
     };
     git = {
       enable = true;
@@ -243,6 +321,30 @@ in
           pff = "pull --ff-only";
           psu = "push -u origin HEAD";
       };
+      includes = [{
+        contents = {
+# [gpg]
+	# format = ssh
+# [user]
+	# signingKey = /home/gipsy/.ssh/id_ed25519.pub
+# [commit]
+	# gpgsign = true
+          gpg = {
+            format = "ssh";
+          };
+          user = {
+            signingkey = "/home/gipsy/.ssh/id_ed25519.pub";
+          };
+          commit = {
+            gpgSign = true;
+          };
+        };
+      }];
+    };
+    direnv = {
+      enable = true;
+      # enableBashIntegration = true; # see note on other shells below
+      nix-direnv.enable = true;
     };
   };
 
@@ -290,4 +392,6 @@ in
       startup = [{command = "firefox";}];
     };
   };
+
+  nixpkgs.config.allowUnfree = true;
 }

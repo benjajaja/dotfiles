@@ -1,7 +1,7 @@
 { config, pkgs, lib, vimUtils, ... }:
 
 let
-  easyclip = pkgs.vimUtils.buildVimPluginFrom2Nix {
+  easyclip = pkgs.vimUtils.buildVimPlugin {
     pname = "easyclip";
     version = "2022-01-23";
     src =  pkgs.fetchFromGitHub {
@@ -11,17 +11,17 @@ let
       sha256 = "sha256-KBHC95cswqsQinMze/nlI43WZkXMXrDuTfK3z4hHYPg=";
     };
   };
-  # sidebar-nvim = pkgs.vimUtils.buildVimPluginFrom2Nix {
-    # pname = "sidebar-nvim";
-    # version = "2023-03-17";
-    # src =  pkgs.fetchFromGitHub {
-      # owner = "sidebar-nvim";
-      # repo = "sidebar.nvim";
-      # rev = "990ce5f562c9125283ccac5473235b1a56fea6dc";
-      # sha256 = "sha256-/6q/W7fWXlJ2B9o4v+0gg2QjhzRC/Iws+Ez6yyL1bqI=";
-    # };
-  # };
-  nebulous-nvim = pkgs.vimUtils.buildVimPluginFrom2Nix {
+  sidebar-nvim = pkgs.vimUtils.buildVimPlugin {
+    pname = "sidebar-nvim";
+    version = "2024-02-02";
+    src =  pkgs.fetchFromGitHub {
+      owner = "sidebar-nvim";
+      repo = "sidebar.nvim";
+      rev = "5695712eef6288fff667343c4ae77c54911bdb1b";
+      sha256 = "sha256-TCj5TUtEgTjT0WBR8usCcWT+b+w8ac+M6KAfMxIKItw=";
+    };
+  };
+  nebulous-nvim = pkgs.vimUtils.buildVimPlugin {
     pname = "nebulous-nvim";
     version = "2022-01-23";
     src =  pkgs.fetchFromGitHub {
@@ -31,7 +31,7 @@ let
       sha256 = "sha256-88xkhhVVpWHCMBfUcUgYshHm+OM5yjMnqwNtsUV21No=";
     };
   };
-  midnight-nvim = pkgs.vimUtils.buildVimPluginFrom2Nix {
+  midnight-nvim = pkgs.vimUtils.buildVimPlugin {
     pname = "midnight-nvim";
     version = "2022-01-23";
     src =  pkgs.fetchFromGitHub {
@@ -41,7 +41,7 @@ let
       sha256 = "sha256-NmBQty0TweUhmERFu/tf0nmAydr1UujAbIkijyixnec=";
     };
   };
-  nightvision-nvim = pkgs.vimUtils.buildVimPluginFrom2Nix {
+  nightvision-nvim = pkgs.vimUtils.buildVimPlugin {
     pname = "nightvision-nvim";
     version = "2022-01-23";
     src =  pkgs.fetchFromGitHub {
@@ -52,7 +52,7 @@ let
     };
   };
 
-  vimrc = builtins.readFile ./vimrc;
+  # vimrc = builtins.readFile ./vimrc;
   lsp_lua = builtins.readFile ./lsp.lua;
   cmp_lua = builtins.readFile ./cmp.lua;
   nvim_lua = builtins.readFile ./nvim.lua;
@@ -71,8 +71,8 @@ in {
         vim-surround
         nerdcommenter
         camelcasemotion
-        # sidebar-nvim
-        # neo-tree-nvim
+        sidebar-nvim
+        neo-tree-nvim
 
         nvim-lspconfig
         cmp-nvim-lsp
@@ -95,6 +95,8 @@ in {
         null-ls-nvim
         typescript-nvim
 
+        dressing-nvim
+
         tokyonight-nvim
         dracula-nvim
         kanagawa-nvim
@@ -106,11 +108,10 @@ in {
         changeColorScheme-vim
       ];
       extraConfig = ''
-${vimrc}
 lua << EOF
+${nvim_lua}
 ${cmp_lua}
 ${lsp_lua}
-${nvim_lua}
 EOF
       '';
     };

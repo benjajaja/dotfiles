@@ -16,7 +16,7 @@ rustPlatform.buildRustPackage rec {
 
   cargoHash = "sha256-IPoc3wD0Ar9Ix0bdZG/q3DKZncgzGu8Qe/I5J51GzFg=";
 
-  nativeBuildInputs = [ freetype pkgconfig expat ];
+  nativeBuildInputs = [ freetype pkg-config expat ];
   
   buildInputs = [ freetype expat fontconfig ];
 

@@ -17,10 +17,10 @@ rustPlatform.buildRustPackage rec {
 
   cargoHash = "sha256-16nmnhDWXxYcKbklDxMA7mlqlrzvaYBFekfLHad7qt8=";
 
-  nativeBuildInputs = [ pkgconfig ];
+  nativeBuildInputs = [ pkg-config ];
   
   buildInputs = [ openssl openssl.dev perl ];
-  PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkgconfig";
+  PKG_CONFIG_PATH = "${pkgs.openssl.dev}/lib/pkg-config";
 
   doCheck = false;
 }

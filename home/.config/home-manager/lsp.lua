@@ -10,6 +10,17 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
+format_on_save = true
+function toggle_format_on_save()
+  format_on_save = not format_on_save
+  if format_on_save then
+    print("Autoformatting on save enabled")
+  else
+    print("Autoformatting on save disabled")
+  end
+end
+vim.cmd("command! ToggleFormatOnSave lua toggle_format_on_save()")
+
 local on_attach = function(client, bufnr)
 
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
@@ -17,12 +28,12 @@ local on_attach = function(client, bufnr)
 
   -- Mappings.
   local opts = { noremap=true, silent=true }
-  buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   -- buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  buf_set_keymap('n', 'ga', '<Cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-  buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  buf_set_keymap('n', 'gi', '<cmd>lua org_imports()<CR>', opts)
+  buf_set_keymap('n', 'ga', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+  buf_set_keymap('n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  -- buf_set_keymap('n', '<Leader>fi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  buf_set_keymap('n', '<Leader>ii', '<cmd>lua org_imports()<CR>', opts)
   buf_set_keymap('n', '<C-i>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
   buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
   buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
@@ -43,16 +54,23 @@ local on_attach = function(client, bufnr)
           group = augroup,
           buffer = bufnr,
           callback = function()
-              vim.lsp.buf.format({
-                  timeout_ms = 2000,
-                  filter = function(client)
-                      return client.name ~= "tsserver"
-                  end,
-                  bufnr = bufnr,
-              })
+              if format_on_save then
+                print("Autoformatting...")
+                vim.lsp.buf.format({
+                    timeout_ms = 2000,
+                    filter = function(client)
+                        return client.name ~= "tsserver"
+                    end,
+                    bufnr = bufnr,
+                })
+              else
+                print("Autoformat is disbled.")
+              end
           end,
       })
   end
+
+  if vim.lsp.buf.inlay_hint then vim.lsp.buf.inlay_hint(bufnr, true) end
 end
 
 nvim_lsp.gopls.setup{
@@ -117,74 +135,8 @@ function org_imports(wait_ms)
   end
 end
 
--- nvim_lsp.tsserver.setup({
-    -- capabilities = capabilities,
-    -- init_options = require("nvim-lsp-ts-utils").init_options,
-    -- on_attach = function(client, bufnr)
-        -- local ts_utils = require("nvim-lsp-ts-utils")
-        -- defaults
-        -- ts_utils.setup({
-            -- debug = false,
-            -- disable_commands = false,
-            -- enable_import_on_completion = true,
-            -- import all
-            -- import_all_timeout = 5000, -- ms
-            -- lower numbers = higher priority
-            -- import_all_priorities = {
-                -- same_file = 1, -- add to existing import statement
-                -- local_files = 2, -- git files or files with relative path markers
-                -- buffer_content = 3, -- loaded buffer content
-                -- buffers = 4, -- loaded buffer names
-            -- },
-            -- import_all_scan_buffers = 100,
-            -- import_all_select_source = false,
-            -- if false will avoid organizing imports
-            -- always_organize_imports = true,
-
-            -- filter diagnostics
-            -- filter_out_diagnostics_by_severity = {},
-            -- filter_out_diagnostics_by_code = {},
-
-            -- inlay hints
-            -- auto_inlay_hints = false,
-            -- inlay_hints_highlight = "Comment",
-            -- inlay_hints_priority = 200, -- priority of the hint extmarks
-            -- inlay_hints_throttle = 150, -- throttle the inlay hint request
-            -- inlay_hints_format = { -- format options for individual hint kind
-                -- Type = {},
-                -- Parameter = {},
-                -- Enum = {},
-                -- Example format customization for `Type` kind:
-                -- Type = {
-                --     highlight = "Comment",
-                --     text = function(text)
-                --         return "->" .. text:sub(2)
-                --     end,
-                -- },
-            -- },
-
-            -- update imports on file move
-            -- update_imports_on_move = true,
-            -- require_confirmation_on_move = true,
-            -- watch_dir = nil,
-        -- })
-
-        -- required to fix code action ranges and filter diagnostics
-        -- ts_utils.setup_client(client)
-
-        -- no default maps, so you may want to define some here
-        -- local opts = { silent = true }
-        -- vim.api.nvim_buf_set_keymap(bufnr, "n", "gs", ":TSLspOrganize<CR>", opts)
-        -- vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", ":TSLspRenameFile<CR>", opts)
-        -- vim.api.nvim_buf_set_keymap(bufnr, "n", "gi", ":TSLspImportAll<CR>", opts)
-
-        -- default to null-ls for formatting, suppress prompt
-        -- client.server_capabilities.document_formatting = false
-        -- client.server_capabilities.document_range_formatting = false
-        -- on_attach(client, bufnr)
-    -- end,
--- })
-require("typescript").setup({
+local typescript = require("typescript")
+typescript.setup({
     disable_commands = false, -- prevent the plugin from creating Vim commands
     debug = false, -- enable debug logging for commands
     go_to_source_definition = {
@@ -193,23 +145,36 @@ require("typescript").setup({
     server = { -- pass options to lspconfig's setup method
       on_attach = function(client, bufnr)
         on_attach(client, bufnr)
-        -- no default maps, so you may want to define some here
-        local opts = { silent = true }
+
+        local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+        local opts = { noremap=false, silent=true }
+        buf_set_keymap('n', 'gd', '<cmd>lua go_to_source_definition_typescript()<CR>', opts)
+        buf_set_keymap('n', '<Leader>ii', '<cmd>lua org_imports_typescript()<CR>', opts)
+
         -- vim.api.nvim_buf_set_keymap(bufnr, "n", "gs", ":TSLspOrganize<CR>", opts)
         -- vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", ":TSLspRenameFile<CR>", opts)
-        vim.api.nvim_buf_set_keymap(bufnr, "n", "gi", '<Cmd>lua org_imports_typescript()<CR>', opts)
         -- vim.api.nvim_buf_set_keymap(bufnr, "n", "gd", '<Cmd>:TypescriptGoToSourceDefinition<CR>', opts)
         client.resolved_capabilities.document_formatting = false
+        -- print("on_attach typescript done1")
         client.resolved_capabilities.document_range_formatting = false
+        -- print("on_attach typescript done2")
         client.server_capabilities.document_formatting = false
+        -- print("on_attach typescript done3")
         client.server_capabilities.document_range_formatting = false
+        -- print("on_attach typescript done4")
+
       end,
     },
 })
 
-function org_imports_typescript(wait_ms)
-  require("typescript").actions.addMissingImports()
-  require("typescript").actions.organizeImports()
+function org_imports_typescript()
+  typescript.actions.addMissingImports()
+  typescript.actions.organizeImports()
+  vim.lsp.buf.format()
+end
+
+function go_to_source_definition_typescript()
+  typescript.goToSourceDefinition(vim.api.nvim_get_current_win(), {})
 end
 
 require('rust-tools').setup({
@@ -267,11 +232,12 @@ nvim_lsp.elmls.setup({
 
 local null_ls = require("null-ls")
 null_ls.setup({
-    debug = true,
+    debug = false,
     capabilities = capabilities,
+    on_attach = on_attach,
     sources = {
-        null_ls.builtins.diagnostics.eslint, -- eslint or eslint_d
-        null_ls.builtins.code_actions.eslint, -- eslint or eslint_d
+        -- null_ls.builtins.diagnostics.eslint, -- eslint or eslint_d
+        -- null_ls.builtins.code_actions.eslint, -- eslint or eslint_d
         -- null_ls.builtins.formatting.eslint, -- prettier, eslint, eslint_d, or prettierd
         null_ls.builtins.formatting.prettier, -- prettier, eslint, eslint_d, or prettierd
         -- require("typescript.extensions.null-ls.code-actions"),

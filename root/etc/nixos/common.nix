@@ -122,14 +122,8 @@
     gnome.adwaita-icon-theme
     gimp
 
-    nodejs
-    yarn
-    go
-    nodePackages.typescript-language-server
-
     gnumake
     gcc
-    awscli
     ssm-session-manager-plugin
     vcprompt
 
@@ -201,7 +195,8 @@
     #_JAVA_OPTIONS = "-Dsun.java2d.uiScale=2";
   };
 
-  fonts.fonts = with pkgs; [
+  # fonts.packages = with pkgs; [
+  fonts.packages = with pkgs; [
     fira-code fira-mono
     (nerdfonts.override { fonts = [
       "FiraCode"

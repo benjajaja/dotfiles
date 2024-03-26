@@ -19,7 +19,7 @@ in
 
   cargoHash = "sha256-NaV3cSGFdMEmV0X5b81Z0HMRnaw44B8AwEZgatBYi9o=";
 
-  nativeBuildInputs = [ pkgs.openssl pkgs.pkgconfig ];
+  nativeBuildInputs = [ pkgs.openssl pkgs.pkg-config ];
   
   buildInputs = [ pkgs.openssl ];
 
