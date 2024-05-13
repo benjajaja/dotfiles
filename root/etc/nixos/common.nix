@@ -268,6 +268,13 @@
       # fcitx-engines = self.fcitx5;
     # })
   # ];
+  programs.nix-ld = {
+    enable = true;
+    libraries = with pkgs; [
+      stdenv.cc.cc.lib
+      zlib # numpy
+    ];
+  };
 
   system.stateVersion = "22.05"; # Did you read the comment?
 }

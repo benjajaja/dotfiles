@@ -39,7 +39,7 @@ myLayoutHook =
 myWorkspaces = [ "1", "2", "3", "4", "5", "6", "7", "8", "9" ]
 
 myModmask = mod4Mask -- ralt
-myTerminal = "alacritty"
+myTerminal = "wezterm"
 
 -- necessary?
 setFullscreenSupported :: X ()

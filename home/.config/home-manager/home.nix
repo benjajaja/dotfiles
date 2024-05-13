@@ -226,7 +226,9 @@ in
     bash = {
       enable = true;
       bashrcExtra = ''
-        PATH="$HOME/venvs/default/bin:$HOME/.local/bin:$PATH:/home/$USER/go/bin:/home/$USER/.cargo/bin"
+        export GRIT_INSTALL="$HOME/.grit"
+        PATH="$HOME/venvs/default/bin:$HOME/.local/bin:$PATH:/home/$USER/go/bin:/home/$USER/.cargo/bin:$GRIT_INSTALL/bin"
+        export LD_LIBRARY_PATH=$NIX_LD_LIBRARY_PATH
         function find_and_replace() {
           set -e
           find . -type f -name @1 -exec sed -i @2 {} \;
