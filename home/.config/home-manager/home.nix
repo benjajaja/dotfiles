@@ -108,6 +108,7 @@ in
     go
     gopls
     gotestsum
+    delve
     #pre-commit
     terraform
     cypress

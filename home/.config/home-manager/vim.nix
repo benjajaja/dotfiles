@@ -94,6 +94,10 @@ in {
         plenary-nvim
         null-ls-nvim
         typescript-nvim
+        go-nvim
+        nvim-dap
+        nvim-dap-ui
+        nvim-dap-go
 
         dressing-nvim
 

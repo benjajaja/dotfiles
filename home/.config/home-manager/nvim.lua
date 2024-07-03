@@ -190,3 +190,20 @@ require("sidebar-nvim").setup({
       ignore_terminal = false, -- whether to show terminal buffers in the list
     },
 })
+
+require('dap-go').setup()
+local dap, dapui = require("dap"), require("dapui")
+require('dap.ext.vscode').load_launchjs(nil, {})
+dapui.setup()
+dap.listeners.after.event_initialized["dapui_config"]=function()
+  dapui.open()
+end
+vim.keymap.set('n', '<leader>dui', dapui.toggle, {})
+vim.keymap.set('n', '<leader>dt', dap.toggle_breakpoint, {})
+vim.keymap.set('n', '<leader>dc', dap.continue, {})
+vim.keymap.set('n', '<leader>dso', dap.step_over, {})
+vim.keymap.set('n', '<leader>dsi', dap.step_into, {})
+vim.keymap.set('n', '<leader>de', dapui.eval, {})
+_G.dap = dap -- to run e.g. :lua dap.continue()
+
+
