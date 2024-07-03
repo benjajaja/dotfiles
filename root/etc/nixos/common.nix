@@ -268,6 +268,19 @@
       # fcitx-engines = self.fcitx5;
     # })
   # ];
+
+  services.auto-cpufreq.settings = {
+    enable = true;
+    battery = {
+       governor = "powersave";
+       turbo = "never";
+    };
+    charger = {
+       governor = "performance";
+       turbo = "auto";
+    };
+  };
+
   programs.nix-ld = {
     enable = true;
     libraries = with pkgs; [
