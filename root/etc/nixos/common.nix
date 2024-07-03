@@ -133,20 +133,24 @@
     }).run
   ];
 
+  services.libinput = {
+      enable = true;
+      touchpad = {
+        disableWhileTyping = true;
+        tapping = false;
+        clickMethod = "buttonareas";
+      };
+  };
+
   services.xserver = {
     enable = true;
     dpi = 150;
 
     # custom xkb is loaded by home-manager, this is fallback
-    layout = "us";
-    xkbVariant = "";
-    xkbOptions = "caps:swapescape,altwin:swap_lalt_lwin";
-
-    libinput = {
-      enable = true;
-      touchpad.disableWhileTyping = true;
-      touchpad.tapping = false;
-      touchpad.clickMethod = "buttonareas";
+    xkb = {
+      variant = "";
+      options = "caps:swapescape,altwin:swap_lalt_lwin";
+      layout = "us";
     };
 
     displayManager = {

@@ -74,23 +74,18 @@ in
     contour
     ctx
     wezterm
-    ueberzugpp
     tmux
 
     # programs
-    qutebrowser
     pista
     dmitri
-    neovide
     tig
-    tdesktop
     chromium
     libreoffice
     inkscape
     transmission-gtk
     gnome_mplayer
     gnomecast
-    nheko
     fractal
     gomuks
     iamb
@@ -143,22 +138,18 @@ in
       #pandas
     #]))
     google-cloud-sdk
-    dbeaver
+    dbeaver-bin
     nil
     postgresql
     ruff
+    uv
 
     # apps
-    slack-term
     unzip
     zip
     unar
     losslesscut-bin
     vlc
-    signal-desktop
-    quaternion
-    mirage-im
-    libsForQt5.neochat
     gtk3
     lmms
     menyoki

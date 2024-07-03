@@ -76,7 +76,7 @@ main = do
         spawnOn "2" (myTerminal ++ " --working-directory ~/p/core")
         spawnOn "3" myTerminal
         spawnOn "3" myTerminal
-        spawnOn "5" (myTerminal ++ " -e iamb")
+        --spawnOn "5" (myTerminal ++ " -e iamb")
         -- sendMessage ToggleStruts -- hide strut on first workspace
         windows (greedyViewOnScreen 1 "4")
     }
