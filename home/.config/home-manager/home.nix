@@ -298,7 +298,7 @@ in
       extraConfig = ''
 return {
   font = wezterm.font("ProFontWindows Nerd Font Mono"),
-  font_size = 12,
+  -- font_size = 14,
   bold_brightens_ansi_colors = "BrightOnly",
   color_scheme = "Tokyo Night",
   window_padding = {

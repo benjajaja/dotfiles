@@ -54,6 +54,12 @@ in
   '';
 
 
+  environment.etc."tuigreeter/sessions/sway".text = ''
+    [Desktop Entry]
+    Name=Sway
+    Exec="${pkgs.sway}/bin/sway --unsupported-gpu"
+    '';
+
   services.autorandr = {
     enable = true;
     profiles = {
@@ -105,5 +111,24 @@ in
      # hardware.nvidia.powerManagement.enable = lib.mkForce false;
    # };
   # };
+
+  #environment.etc."kanshi/thinkpad".text = ''
+    #profile mobile {
+            #output eDP-1 enable scale 1.5 mode 1920x1200
+    #}
+
+    #profile docked {
+            #output eDP-1 disable
+            #output DP-2 mode 2560x1440@144Hz scale 1.25
+    #}
+    #'';
+  # kanshi systemd service
+  #systemd.user.services.kanshi = {
+    #description = "kanshi daemon";
+    #serviceConfig = {
+      #Type = "simple";
+      #ExecStart = ''${pkgs.kanshi}/bin/kanshi -c /etc/kanshi/thinkpad'';
+    #};
+  #};
 }
 

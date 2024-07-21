@@ -62,6 +62,10 @@
     # the 'login' configuration file (see /etc/pam.d/login)
     auth include login
   '';
+  # Enabling this option allows any program run by the "users" group to request real-time priority.
+  security.pam.loginLimits = [
+    { domain = "@users"; item = "rtprio"; type = "-"; value = 1; }
+  ];
   security.polkit.enable = true;
   services.upower.enable = true;
   services.gvfs.enable = true;
@@ -165,6 +169,8 @@
     grim
     slurp
     bemenu
+    kanshi
+    wdisplays
     # xdg-utils
 
     # wm session
@@ -415,14 +421,6 @@
     ];
   };
 
-  # kanshi systemd service
-  systemd.user.services.kanshi = {
-    description = "kanshi daemon";
-    serviceConfig = {
-      Type = "simple";
-      ExecStart = ''${pkgs.kanshi}/bin/kanshi -c kanshi_config_file'';
-    };
-  };
   services.greetd = {
     enable = true;
     settings = rec {
@@ -444,7 +442,7 @@
   environment.etc."tuigreeter/sessions/sway".text = ''
     [Desktop Entry]
     Name=Sway
-    Exec="${pkgs.sway}/bin/sway --unsupported-gpu"
+    Exec="${pkgs.sway}/bin/sway"
     '';
   environment.etc."tuigreeter/sessions/bash".text = ''
     [Desktop Entry]
