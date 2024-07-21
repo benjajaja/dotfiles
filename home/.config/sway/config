@@ -98,7 +98,7 @@ bindsym $mod+s layout stacking
 bindsym $mod+space focus mode_toggle
 bindsym $mod+v splitv
 bindsym $mod+w layout tabbed
-bindsym $mod+b exec swaymsg bar mode toggle
+bindsym $mod+b bar mode toggle
 
 mode "resize" {
   bindsym Down resize grow height 10 px
@@ -114,6 +114,7 @@ mode "resize" {
 }
 
 bar {
+    #mode invisible
     swaybar_command swaybar
     # Use swayrbar as status command with some logging output which
     # is redirected to /tmp/swayrbar.log.  Be sure to only redirect
