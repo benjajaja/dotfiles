@@ -397,5 +397,5 @@ return {
   };
 
   nixpkgs.config.allowUnfree = true;
-  xdg.configFile."sway/config".source = lib.mkForce ./sway/config;
+  #xdg.configFile."sway/config".source = lib.mkForce ./sway/config;
 }
