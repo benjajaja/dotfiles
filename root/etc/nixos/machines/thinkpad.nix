@@ -42,12 +42,12 @@
   # custom.falcon.enable = true;
   environment.etc."kanshi/thinkpad".text = ''
     profile mobile {
-            output eDP-1 enable scale 1.5 mode 1920x1200
+            output eDP-1 enable scale 1 mode 1920x1200
     }
 
     profile docked {
             output eDP-1 disable
-            output DP-2 mode 2560x1440@144Hz scale 1.25
+            output DP-2 mode 2560x1440@144Hz scale 1.5
     }
     '';
   # kanshi systemd service

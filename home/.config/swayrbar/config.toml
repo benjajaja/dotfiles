@@ -60,6 +60,21 @@ WheelDown = [
 ]
 
 [[modules]]
+name = "pactl"
+instance = "1"
+format = "Mic {volume_source:{:3}}%{muted_source}"
+html_escape = true
+
+[modules.on_click]
+Right = ["pavucontrol"]
+Left = [
+    "pactl",
+    "set-source-mute",
+    "@DEFAULT_SOURCE@",
+    "toggle",
+]
+
+[[modules]]
 name = "nmcli"
 instance = "0"
 format = "Net: {name} {signal:{:3}} {bars}"

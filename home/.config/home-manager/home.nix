@@ -26,8 +26,9 @@ let
 
     text = ''
       export QT_QPA_PLATFORM=wayland
+      export QT_QPA_PLATFORM_PLUGIN_PATH="${qt5.qtbase.bin}/lib/qt-${qt5.qtbase.version}/plugins/platforms";
       # dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP XDG_SESSION_TYPE NIXOS_OZONE_WL MOZ_ENABLE_WAYLAND SDL_VIDEODRIVER _JAVA_AWT_WM_NONREPARENTING XDG_SESSION_DESKTOP; systemctl --user start sway-session.target
-      dbus-update-activation-environment --systemd WAYLAND_DISPLAY QT_QPA_PLATFORM=wayland XDG_CURRENT_DESKTOP=sway DISPLAY SWAYSOCK
+      dbus-update-activation-environment --systemd WAYLAND_DISPLAY QT_QPA_PLATFORM=wayland QT_QPA_PLATFORM_PLUGIN_PATH="${qt5.qtbase.bin}/lib/qt-${qt5.qtbase.version}/plugins/platforms" XDG_CURRENT_DESKTOP=sway DISPLAY SWAYSOCK
       # systemctl --user stop pipewire pipewire-media-session xdg-desktop-portal xdg-desktop-portal-wlr
       # systemctl --user start pipewire pipewire-media-session xdg-desktop-portal xdg-desktop-portal-wlr
     '';
@@ -91,7 +92,6 @@ in
     flameshot
     xfce.xfce4-clipman-plugin
     dunst
-    pavucontrol
     udiskie
     mate.mate-applets
     brightnessctl
@@ -124,6 +124,8 @@ in
     awscli
     file # joshuto file preview mimetype
     exiftool # joshuto file preview
+    postgresql # for pg_dump
+    dbeaver-bin
 
     # dev
     nodejs_18
@@ -229,9 +231,11 @@ in
       sessionVariables = {
         EDITOR = "nvim";
         MOZ_ENABLE_WAYLAND=1;
+        NIXOS_OZONE_WL = "1";
         SDL_VIDEODRIVER=wayland;
         _JAVA_AWT_WM_NONREPARENTING=1;
         QT_QPA_PLATFORM=wayland;
+        QT_QPA_PLATFORM_PLUGIN_PATH="${qt5.qtbase.bin}/lib/qt-${qt5.qtbase.version}/plugins/platforms";
         XDG_CURRENT_DESKTOP=sway;
         XDG_SESSION_DESKTOP=sway;
       };
@@ -288,10 +292,33 @@ in
       enable = true;
       font = {
         name = "ProFontWindows Nerd Font Mono";
-        size = 19.2;
+        size = 12;
+      };
+      settings = {
+        shell_integration = "no-cursor";
+        cursor_shape = "block";
+        cursor_shape_unfocused = "hollow";
+        scrollback_lines = 10000;
       };
       # theme = "Tokyo Night";
       # theme = "Cyberpunk";
+    };
+    foot = {
+      enable = true;
+      settings = {
+        main = {
+          #term = "xterm-256color";
+          font = "ProFontWindows Nerd Font Mono:size=12";
+          #dpi-aware = "yes";
+        };
+        mouse = {
+          hide-when-typing = "yes";
+        };
+        cursor = {
+          style = "block";
+          unfocused-style = "hollow";
+        };
+      };
     };
     wezterm = {
       enable = true;
@@ -386,15 +413,15 @@ return {
       export QT_AUTO_SCREEN_SCALE_FACTOR=1
     '';
   };
-  wayland.windowManager.sway = {
-    enable = true;
+  #wayland.windowManager.sway = {
+    #enable = true;
     # wrapperFeatures.gtk = true;
     # config = {
       # modifier = "Mod4";
       # terminal = "alacritty";
       # startup = [{command = "firefox";}];
     # };
-  };
+  #};
 
   nixpkgs.config.allowUnfree = true;
   #xdg.configFile."sway/config".source = lib.mkForce ./sway/config;

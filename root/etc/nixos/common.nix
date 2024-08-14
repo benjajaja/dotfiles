@@ -161,7 +161,6 @@
     swayidle
     swaybg
     kickoff
-    foot
     cagebreak
     swayrbar
     swayr
@@ -185,6 +184,7 @@
     xfce.xfce4-clipman-plugin
     dunst
     pavucontrol
+    pulsemixer
     udiskie
     mate.mate-applets
     brightnessctl
@@ -223,8 +223,6 @@
 
     bat
     tree-sitter
-    dbeaver-bin
-    postgresql # for pg_dump
 
     ripgrep
     sd
@@ -281,7 +279,6 @@
 
     displayManager = {
       startx.enable = true;
-      defaultSession = "none+xmonad";
       lightdm = {
           enable = false;
           greeters.mini = {
@@ -314,16 +311,17 @@
       };
     };
   };
+  services.displayManager = {
+    defaultSession = "none+xmonad";
+  };
 
   # does not work together with altgr-intl, but home-manager sets proper X keymap
   console.useXkbConfig = true;
 
   environment.variables = {
-    # QT_QPA_PLATFORM = "wayland";
-    # dpi
-    #GDK_SCALE = "2";
-    #GDK_DPI_SCALE = "0.5";
-    #_JAVA_OPTIONS = "-Dsun.java2d.uiScale=2";
+    #QT_QPA_PLATFORM = "wayland";
+    MOZ_ENABLE_WAYLAND = "1";
+    NIXOS_OZONE_WL = "1";
   };
 
   # fonts.packages = with pkgs; [
@@ -425,7 +423,7 @@
     enable = true;
     settings = rec {
       default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet -t -r --asterisks -s \"/etc/tuigreeter/sessions\"";
+        command = "${pkgs.greetd.tuigreet}/bin/tuigreet -t -r --remember-session --asterisks -s \"/etc/tuigreeter/sessions\"";
       };
     };
   };

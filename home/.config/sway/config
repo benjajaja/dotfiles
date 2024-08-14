@@ -12,7 +12,7 @@ set $font "ProFontWindows Nerd Font Mono"
 set $orange #f0e68c
 
 output eDP-2 {
-  scale 1.5
+  scale 1
   bg ~/Pictures/skull_on_fire.jpg center
 }
 
@@ -47,7 +47,7 @@ bindsym $mod+8 workspace number 8
 bindsym $mod+9 workspace number 9
 # bindsym $mod+Down focus down
 # bindsym $mod+Left focus left
-bindsym $mod+Shift+Return exec wezterm
+bindsym $mod+Shift+Return exec kitty
 # bindsym $mod+Right focus right
 bindsym $mod+Shift+1 move container to workspace number 1
 bindsym $mod+Shift+2 move container to workspace number 2
@@ -62,7 +62,7 @@ bindsym $mod+Shift+9 move container to workspace number 9
 # bindsym $mod+Shift+Left move left
 # bindsym $mod+Shift+Right move right
 # bindsym $mod+Shift+Up move up
-bindsym $mod+Shift+e reload
+bindsym $mod+Shift+a exec "swaymsg reload; sleep 1; systemctl --user restart kanshi"
 bindsym $mod+Shift+q exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
 # bindsym $mod+Shift+h move left
 # bindsym $mod+Shift+j move down
@@ -79,39 +79,40 @@ bindsym $mod+Period nop decrement_masters
 bindsym $mod+h resize shrink width 10px
 bindsym $mod+l resize grow width 10px
 
-bindsym $mod+Shift+minus move scratchpad
+#bindsym $mod+Shift+minus move scratchpad
 bindsym $mod+Shift+c kill
-bindsym $mod+Shift+space floating toggle
-bindsym $mod+Up focus up
-bindsym $mod+a focus parent
+bindsym $mod+Shift+g floating toggle
+#bindsym $mod+Up focus up
+#bindsym $mod+a focus parent
 # bindsym $mod+b splith
 bindsym $mod+p exec "dmenu_path | bemenu | ${SHELL:-/bin/sh} &"
-bindsym $mod+e layout toggle split
-bindsym $mod+f fullscreen toggle
+#bindsym $mod+e layout toggle split
+bindsym $mod+v fullscreen toggle
+bindsym $mod+Shift+v exec "QT_QPA_PLATFORM=wayland flameshot launcher; sleep 1; swaymsg fullscreen off"
 # bindsym $mod+h focus left
 # bindsym $mod+j focus right
 # bindsym $mod+k focus left
 # bindsym $mod+l focus right
-bindsym $mod+minus scratchpad show
-bindsym $mod+r modk resize
-bindsym $mod+s layout stacking
-bindsym $mod+space focus mode_toggle
-bindsym $mod+v splitv
-bindsym $mod+w layout tabbed
-bindsym $mod+b bar mode toggle
+#bindsym $mod+minus scratchpad show
+#bindsym $mod+r modk resize
+#bindsym $mod+s layout stacking
+#bindsym $mod+space focus mode_toggle
+#bindsym $mod+v splitv
+#bindsym $mod+w layout tabbed
+#bindsym $mod+b bar mode toggle
 
-mode "resize" {
-  bindsym Down resize grow height 10 px
-  bindsym Escape mode default
-  bindsym Left resize shrink width 10 px
-  bindsym Return mode default
-  bindsym Right resize grow width 10 px
-  bindsym Up resize shrink height 10 px
-  bindsym h resize shrink width 10 px
+#mode "resize" {
+  #bindsym Down resize grow height 10 px
+  #bindsym Escape mode default
+  #bindsym Left resize shrink width 10 px
+  #bindsym Return mode default
+  #bindsym Right resize grow width 10 px
+  #bindsym Up resize shrink height 10 px
+  #bindsym h resize shrink width 10 px
   #bindsym j resize grow height 10 px
   #bindsym k resize shrink height 10 px
-  bindsym l resize grow width 10 px
-}
+  #bindsym l resize grow width 10 px
+#}
 
 bar {
     #mode invisible
@@ -165,7 +166,7 @@ bindsym XF86MonBrightnessUp exec light -A 10
 bindsym XF86AudioRaiseVolume exec 'pactl set-sink-volume @DEFAULT_SINK@ +1%'
 bindsym XF86AudioLowerVolume exec 'pactl set-sink-volume @DEFAULT_SINK@ -1%'
 bindsym XF86AudioMute exec 'pactl set-sink-mute @DEFAULT_SINK@ toggle'
-
+bindsym XF86AudioMicMute exec 'pactl set-source-mute @DEFAULT_SOURCE@ toggle'
 
 # Lock screen in 9min30sec
 # Turn screen off in 10min (so 30sec after lock screen)
@@ -184,9 +185,10 @@ for_window [app_id=".*"] inhibit_idle fullscreen
 
 # exec "dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP XDG_SESSION_TYPE NIXOS_OZONE_WL MOZ_ENABLE_WAYLAND SDL_VIDEODRIVER _JAVA_AWT_WM_NONREPARENTING XDG_SESSION_DESKTOP; systemctl --user start sway-session.target"
 exec "dbus-sway-environment"
-exec "flameshot"
+#exec "flameshot"
 
 exec "firefox"
 
 # give sway a little time to startup before starting kanshi.
+exec "systemctl --user restart kanshi.service"
 exec "sleep 1; systemctl --user restart kanshi.service"
