@@ -10,8 +10,8 @@ rustPlatform.buildRustPackage rec {
   src = fetchFromGitHub {
     owner = "benjajaja";
     repo = "pista";
-    rev = "68d5f434f5b7c5625719a9fe6c2e82edfe376f50";
-    sha256 = "sha256-FlWDKz5B/sC+VCtJNmtCJTkxzeOJOMT9gZlG6UVGzKU=";
+    rev = "27353d287548774a13bfd0064f39dedf79c2ca34";
+    sha256 = "sha256-A2y30kEJVMVEvYrAG0B9Frlk9qOe4p1359exeeKwNG8=";
     fetchSubmodules = true;
   };
 

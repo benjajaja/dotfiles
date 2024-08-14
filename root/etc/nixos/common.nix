@@ -7,6 +7,7 @@
 {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.settings.auto-optimise-store = true;
+  nix.settings.trusted-users = ["root" "@wheel"];
   imports =
     [ # Include the results of the hardware scan.
       /etc/nixos/hardware-configuration.nix

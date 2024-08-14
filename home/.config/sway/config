@@ -88,6 +88,7 @@ bindsym $mod+Shift+g floating toggle
 bindsym $mod+p exec "dmenu_path | bemenu | ${SHELL:-/bin/sh} &"
 #bindsym $mod+e layout toggle split
 bindsym $mod+v fullscreen toggle
+bindsym $mod+x nop fullscreen
 bindsym $mod+Shift+v exec "QT_QPA_PLATFORM=wayland flameshot launcher; sleep 1; swaymsg fullscreen off"
 # bindsym $mod+h focus left
 # bindsym $mod+j focus right
@@ -95,7 +96,7 @@ bindsym $mod+Shift+v exec "QT_QPA_PLATFORM=wayland flameshot launcher; sleep 1; 
 # bindsym $mod+l focus right
 #bindsym $mod+minus scratchpad show
 #bindsym $mod+r modk resize
-#bindsym $mod+s layout stacking
+#bindsym $mod+x layout stacking
 #bindsym $mod+space focus mode_toggle
 #bindsym $mod+v splitv
 #bindsym $mod+w layout tabbed
@@ -121,7 +122,7 @@ bar {
     # is redirected to /tmp/swayrbar.log.  Be sure to only redirect
     # stderr because the swaybar protocol requires the status_command
     # to emit JSON to stdout which swaybar reads.
-    status_command env RUST_BACKTRACE=1 RUST_LOG=swayr=debug swayrbar 2> /tmp/swayrbar.log
+    status_command env RUST_BACKTRACE=1 RUST_LOG=swayr=debug /home/gipsy/.cargo/bin/swayrbar 2> /tmp/swayrbar.log
     position top
     font $font 12
     height 20

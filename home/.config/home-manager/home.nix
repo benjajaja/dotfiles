@@ -168,6 +168,7 @@ in
     nil
     ruff
     uv
+    devenv
 
     # hobby dev
     rustc
