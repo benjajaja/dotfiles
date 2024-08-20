@@ -7,6 +7,8 @@ let
   pista = pkgs.callPackage ./pista.nix {};
   dmitri = pkgs.callPackage ./dmitri.nix {};
   git-recent = pkgs.callPackage ./git-recent.nix {};
+  go = pkgs.callPackage ./go.nix {};
+
   # iamb = pkgs.callPackage ./iamb.nix {};
   iamb = (builtins.getFlake "github:benjajaja/iamb/nix").packages.x86_64-linux.default;
   swaymonad = (builtins.getFlake "github:nicolasavru/swaymonad").packages.x86_64-linux.swaymonad;
@@ -117,7 +119,6 @@ in
     gnome_mplayer
     gnomecast
     fractal
-    gomuks
     iamb
     ncdu
     gnupg
@@ -132,8 +133,8 @@ in
     nodePackages.pnpm
     nodePackages.yarn
     nodePackages.typescript-language-server
-    go
-    gopls
+    go.go
+    #go.gopls
     gotestsum
     delve
     #pre-commit
