@@ -163,7 +163,7 @@
     swaybg
     kickoff
     cagebreak
-    swayrbar
+    #swayrbar
     swayr
     playerctl
     grim

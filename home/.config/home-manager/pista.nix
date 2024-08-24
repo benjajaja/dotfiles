@@ -8,10 +8,10 @@ rustPlatform.buildRustPackage rec {
   version = "0.1.2";
 
   src = fetchFromGitHub {
-    owner = "benjajaja";
+    owner = "oppiliappan";
     repo = "pista";
-    rev = "27353d287548774a13bfd0064f39dedf79c2ca34";
-    sha256 = "sha256-A2y30kEJVMVEvYrAG0B9Frlk9qOe4p1359exeeKwNG8=";
+    rev = "378535f3e7e138110b6225616e0dc61066a5605a";
+    sha256 = "sha256-FlWDKz5B/sC+VCtJNmtCJTkxzeOJOMT9gZlG6UVGzKU=";
     fetchSubmodules = true;
   };
 
