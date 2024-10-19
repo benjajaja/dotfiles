@@ -33,4 +33,29 @@ in
     #'';
     #GOTOOLCHAIN="go1.23.0";
   #});
+  delve = pkgs.delve.overrideAttrs (oldAttrs: rec {
+    version = "1.23.0";
+    src = fetchFromGitHub {
+      owner = "go-delve";
+      repo = "delve";
+      rev = "v${version}";
+      hash = "sha256-LtrPcYyuobHq6O3/vBKLTOMZfpYL7P3mtGfVqCMV9iM=";
+    };
+    #src = fetchFromGitHub {
+      #owner = "golang";
+      #repo = "tools";
+      #rev = "gopls/v${version}";
+      #hash = "sha256-imGIzpoQ8mOkVTaT+ajf05zj84vco8V02u/Ln4nEh3A=";
+    #};
+    #nativeBuildInputs = [ go123 pkgs.git pkgs.cacert ];
+    #vendorHash = "xxx";
+    #deleteVendor = true;
+    #proxyVendor = true;
+    #doCheck = true;
+    #checkPhase = ''
+      #go version
+      #false
+    #'';
+    #GOTOOLCHAIN="go1.23.0";
+  });
 }

@@ -11,6 +11,16 @@ let
       sha256 = "sha256-KBHC95cswqsQinMze/nlI43WZkXMXrDuTfK3z4hHYPg=";
     };
   };
+  sectional-couch = pkgs.vimUtils.buildVimPlugin {
+    pname = "sectional-couch";
+    version = "2024-08-29";
+    src =  pkgs.fetchFromGitHub {
+      owner = "Boolean263";
+      repo = "sectional-couch.vim";
+      rev = "6e5128c754871ec8496607a5a268b651c8a70f23";
+      sha256 = "sha256-9lvAVNwzFyCSDNL2Mop+3n3HTha1j4FDX3C9XQYjIt8=";
+    };
+  };
   sidebar-nvim = pkgs.vimUtils.buildVimPlugin {
     pname = "sidebar-nvim";
     version = "2024-02-02";
@@ -73,6 +83,7 @@ in {
         camelcasemotion
         sidebar-nvim
         neo-tree-nvim
+        sectional-couch
 
         nvim-lspconfig
         cmp-nvim-lsp
@@ -80,7 +91,7 @@ in {
         cmp-path
         cmp-cmdline
         nvim-cmp
-        cmp-vsnip
+        #cmp-vsnip
         vim-vsnip
         telescope-nvim
         telescope-zf-native-nvim

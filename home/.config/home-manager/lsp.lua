@@ -291,3 +291,11 @@ require('illuminate').configure({
 -- end
 --
 -- vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]
+
+nvim_lsp.pyright.setup({
+    on_attach = function(client, bufnr)
+        -- Add custom settings or keybindings here if needed
+        -- For example, this could be your common `on_attach` for all LSPs
+    end,
+    capabilities = capabilities, -- If you have capabilities configured for autocompletion, etc.
+})

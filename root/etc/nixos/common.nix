@@ -34,10 +34,6 @@
 
   # Enable networking
   networking.networkmanager.enable = true;
-  networking.extraHosts =
-  ''
-    192.168.1.131 shield
-  '';
 
   # Set your time zone.
   time.timeZone = "Atlantic/Canary";
@@ -110,7 +106,7 @@
   services.logind = {
     lidSwitch = "suspend"; # also default
     lidSwitchDocked = "ignore";
-    lidSwitchExternalPower = "suspend";
+    lidSwitchExternalPower = "ignore";
   };
 
   # List packages installed in system profile. To search, run:
@@ -128,6 +124,10 @@
     pciutils
     refind
     efibootmgr
+    ethtool
+    usbutils
+    traceroute
+    iperf
 
     lightlocker
     inputplug
@@ -149,6 +149,8 @@
        # withPrimus = true;
        extraPkgs = pkgs: [ glxinfo ];
     }).run
+    steamcmd
+    steam-tui
 
     htop
     docker-compose
@@ -375,6 +377,7 @@
     };
     steam = {
       enable = true;
+      gamescopeSession.enable = true;
     };
     ssh = {
       startAgent = true;

@@ -123,6 +123,8 @@ in
     ncdu
     gnupg
     awscli
+    _1password
+    jq
     file # joshuto file preview mimetype
     exiftool # joshuto file preview
     postgresql # for pg_dump
@@ -136,7 +138,7 @@ in
     go.go
     #go.gopls
     gotestsum
-    delve
+    go.delve
     #pre-commit
     terraform
     cypress
@@ -188,6 +190,7 @@ in
     elmPackages.elm-language-server
     elmPackages.elm-test
     elmPackages.elm-format
+    pyright
     # wine
     wine64
 
@@ -301,6 +304,9 @@ in
         cursor_shape = "block";
         cursor_shape_unfocused = "hollow";
         scrollback_lines = 10000;
+        bold_text_in_bright_colors = true;
+        italic_text = true;
+        #background = "#282c34";
       };
       # theme = "Tokyo Night";
       # theme = "Cyberpunk";
