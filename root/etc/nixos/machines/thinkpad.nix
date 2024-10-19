@@ -1,11 +1,23 @@
 { config, pkgs, lib, fetchurl, ... }:
 
+let
+  r8152-kernel-module = pkgs.callPackage ./r8152.nix {
+    # Make sure the module targets the same kernel as your system is using.
+    kernel = config.boot.kernelPackages.kernel;
+  };
+in
 {
   imports = [ 
     ../common.nix
     ./falcon.nix
   ];
   boot.initrd.kernelModules = [ "i915" ];
+  boot.kernelModules = [];
+  boot.extraModulePackages = [
+    (r8152-kernel-module.overrideAttrs (_: {
+      patches = [ ./r8152.patch ];
+    }))
+  ];
 
   hardware.cpu.intel.updateMicrocode = true;
   hardware.ksm.enable = true;
