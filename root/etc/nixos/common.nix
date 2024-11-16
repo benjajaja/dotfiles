@@ -74,8 +74,8 @@
 
   sound.enable = true;
   hardware.pulseaudio.enable = true;
-
   hardware.bluetooth.enable = true;
+  hardware.keyboard.qmk.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.gipsy = {
@@ -127,7 +127,9 @@
     ethtool
     usbutils
     traceroute
+    inetutils
     iperf
+    unrar
 
     lightlocker
     inputplug
