@@ -4,6 +4,8 @@ if not ok then
 end
 local nvim_lsp = require('lspconfig')
 
+--require('vim.lsp.log').set_level('debug')
+
 -- local capabilities = vim.lsp.protocol.make_client_capabilities()
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -74,9 +76,9 @@ local on_attach = function(client, bufnr)
 end
 
 nvim_lsp.gopls.setup{
-	cmd = {'gopls'},
-	-- for postfix snippets and analyzers
-	capabilities = capabilities,
+  cmd = {'gopls'},
+  -- for postfix snippets and analyzers
+  capabilities = capabilities,
   settings = {
     gopls = {
       analyses = {
@@ -86,7 +88,7 @@ nvim_lsp.gopls.setup{
      staticcheck = true,
     },
   },
-	on_attach = on_attach,
+  on_attach = on_attach,
 }
 
 function goimports(timeoutms)
@@ -299,3 +301,8 @@ nvim_lsp.pyright.setup({
     end,
     capabilities = capabilities, -- If you have capabilities configured for autocompletion, etc.
 })
+
+--vim.lsp.handlers['textDocument/completion'] = function(err, result, ctx, config)
+    --print(vim.inspect(result))
+    --return vim.lsp.handlers['textDocument/completion'](err, result, ctx, config)
+--end

@@ -141,7 +141,6 @@ in
     go.delve
     #pre-commit
     terraform
-    cypress
     nodePackages.prettier
     nodePackages.eslint
     vscode
@@ -157,7 +156,7 @@ in
     #python311Packages.numpy
     #python312
     python312
-    #python312Packages.pip
+    #python312Packages.virtualenv
     #(python312.withPackages (ps: with ps; [
       #pip
       #pip-tools
@@ -170,7 +169,7 @@ in
     google-cloud-sdk
     nil
     ruff
-    uv
+    #uv
     devenv
 
     # hobby dev
@@ -360,12 +359,6 @@ return {
       };
       includes = [{
         contents = {
-# [gpg]
-	# format = ssh
-# [user]
-	# signingKey = /home/gipsy/.ssh/id_ed25519.pub
-# [commit]
-	# gpgsign = true
           gpg = {
             format = "ssh";
           };
@@ -377,11 +370,70 @@ return {
           };
         };
       }];
+      extraConfig = {
+        sendemail.smtpserver = "smtp.gmail.com";
+        sendemail.smtpserverport = "587";
+        sendemail.smtpencryption = "tls";
+        sendemail.smtpuser = "ste3ls@gmail.com";
+      };
     };
+
     direnv = {
       enable = true;
       # enableBashIntegration = true; # see note on other shells below
       nix-direnv.enable = true;
+    };
+
+    firefox = {
+      enable = false;
+      policies = {
+        DisableTelemetry = true;
+        DisableFirefoxStudies = true;
+        EnableTrackingProtection = {
+          Value = true;
+          Locked = true;
+          Cryptomining = true;
+          Fingerprinting = true;
+        };
+        DisablePocket = true;
+        DisableFirefoxAccounts = true;
+        DisableAccounts = true;
+        DisableFirefoxScreenshots = true;
+        OverrideFirstRunPage = "";
+        OverridePostUpdatePage = "";
+        DontCheckDefaultBrowser = true;
+        DisplayMenuBar = "never"; # alternatives: "always", "never" or "default-on"
+        SearchBar = "unified";
+        PasswordManagerEnabled = true;
+      };
+      profiles.default = {
+        #userChrome = builtins.readFile ./userChrome.css;
+        settings = {
+          #"apz.overscroll.enabled" = true;
+          "browser.aboutConfig.showWarning" = false;
+          #"general.autoScroll" = true;
+          #"toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+        };
+        #bookmarks = [
+          #{
+            #name = "wikipedia";
+            #tags = ["wiki"];
+            #keyword = "wiki";
+            #url = "https://en.wikipedia.org/wiki/Special:Search?search=%s&amp;go=Go";
+          #}
+          #{
+            #name = "Samwise PRs";
+            #keyword = "sam";
+            #url = "https://github.com/monasticventures/samwise/pulls";
+          #}
+          #{
+            #name = "Hacker News Search";
+            #tags = ["news" "tech"];
+            #keyword = "hn";
+            #url = "https://hn.algolia.com/?q=%s";
+          #}
+        #];
+      };
     };
   };
 

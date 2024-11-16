@@ -87,7 +87,7 @@ in {
 
         nvim-lspconfig
         cmp-nvim-lsp
-        cmp-buffer
+        #cmp-buffer
         cmp-path
         cmp-cmdline
         nvim-cmp
@@ -95,9 +95,9 @@ in {
         vim-vsnip
         telescope-nvim
         telescope-zf-native-nvim
-        nvim-lsputils
+        #nvim-lsputils
         nvim-treesitter.withAllGrammars
-        cmp-treesitter
+        #cmp-treesitter
         rust-tools-nvim
         vim-illuminate
         persistence-nvim
@@ -105,12 +105,12 @@ in {
         plenary-nvim
         null-ls-nvim
         typescript-nvim
-        go-nvim
+        #go-nvim
         nvim-dap
         nvim-dap-ui
         nvim-dap-go
 
-        dressing-nvim
+        #dressing-nvim
 
         tokyonight-nvim
         dracula-nvim

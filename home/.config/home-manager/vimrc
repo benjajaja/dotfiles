@@ -26,7 +26,8 @@ set shiftwidth=2
 set expandtab
 set ruler
 filetype plugin indent on
-autocmd FileType go setlocal noexpandtab shiftwidth=4 softtabstop=4 tabstop=4 shiftwidth=4 omnifunc=lsp#complete
+autocmd FileType go setlocal noexpandtab shiftwidth=4 softtabstop=4 tabstop=4 shiftwidth=4
+" omnifunc=lsp#complete
 
 " show whitespace anomalies
 " set list
