@@ -184,7 +184,6 @@ exec swayidle -w \
 for_window [class=".*"] inhibit_idle fullscreen
 for_window [app_id=".*"] inhibit_idle fullscreen
 
-# exec "dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP XDG_SESSION_TYPE NIXOS_OZONE_WL MOZ_ENABLE_WAYLAND SDL_VIDEODRIVER _JAVA_AWT_WM_NONREPARENTING XDG_SESSION_DESKTOP; systemctl --user start sway-session.target"
 exec "dbus-sway-environment"
 #exec "flameshot"
 

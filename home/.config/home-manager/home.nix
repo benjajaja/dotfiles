@@ -28,9 +28,10 @@ let
 
     text = ''
       export QT_QPA_PLATFORM=wayland
-      export QT_QPA_PLATFORM_PLUGIN_PATH="${qt5.qtbase.bin}/lib/qt-${qt5.qtbase.version}/plugins/platforms";
+      export QT_QPA_PLATFORM_PLUGIN_PATH="${qt5.qtbase.bin}/lib/qt-${qt5.qtbase.version}/plugins/platforms"
+      export SDL_VIDEODRIVER=wayland
       # dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP XDG_SESSION_TYPE NIXOS_OZONE_WL MOZ_ENABLE_WAYLAND SDL_VIDEODRIVER _JAVA_AWT_WM_NONREPARENTING XDG_SESSION_DESKTOP; systemctl --user start sway-session.target
-      dbus-update-activation-environment --systemd WAYLAND_DISPLAY QT_QPA_PLATFORM=wayland QT_QPA_PLATFORM_PLUGIN_PATH="${qt5.qtbase.bin}/lib/qt-${qt5.qtbase.version}/plugins/platforms" XDG_CURRENT_DESKTOP=sway DISPLAY SWAYSOCK
+      dbus-update-activation-environment --systemd WAYLAND_DISPLAY QT_QPA_PLATFORM=wayland QT_QPA_PLATFORM_PLUGIN_PATH="${qt5.qtbase.bin}/lib/qt-${qt5.qtbase.version}/plugins/platforms" XDG_CURRENT_DESKTOP=sway DISPLAY SWAYSOCK SDL_VIDEODRIVER=wayland
       # systemctl --user stop pipewire pipewire-media-session xdg-desktop-portal xdg-desktop-portal-wlr
       # systemctl --user start pipewire pipewire-media-session xdg-desktop-portal xdg-desktop-portal-wlr
     '';
