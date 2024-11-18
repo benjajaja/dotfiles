@@ -9,21 +9,72 @@ vim.o.mouse = "r"
 vim.o.signcolumn = "number"
 vim.o.updatetime = 300
 
--- tabs vs. spaces:
--- vim.o.softtabstop = 2
--- vim.o.tabstop = 2
--- vim.o.shiftwidth = 2
--- vim.o.expandtab = true
--- vim.o.ruler = true
--- Enable filetype detection
--- vim.cmd('filetype plugin indent on')
--- Set options for Go files
--- vim.api.nvim_exec([[
-  -- augroup GoSettings
-    -- autocmd!
-    -- autocmd FileType go setlocal noexpandtab shiftwidth=4 softtabstop=4 tabstop=4 omnifunc=lsp#complete
-  -- augroup END
--- ]], false)
+-- Enable syntax highlighting
+vim.cmd('syntax enable')
+
+-- Set general options
+vim.o.termguicolors = true
+vim.o.guifont = "ProFontWindows Nerd Font Mono:h16"
+vim.o.title = true
+vim.o.hidden = true
+vim.o.number = true
+vim.o.cursorline = true
+
+-- Tabs and spaces
+vim.o.softtabstop = 2
+vim.o.tabstop = 2
+vim.o.shiftwidth = 2
+vim.o.expandtab = true
+vim.o.ruler = true
+
+-- Enable filetype-specific settings and indentation
+vim.cmd('filetype plugin indent on')
+
+-- FileType-specific settings for Go
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'go',
+  callback = function()
+    vim.opt_local.expandtab = false
+    vim.opt_local.shiftwidth = 4
+    vim.opt_local.softtabstop = 4
+    vim.opt_local.tabstop = 4
+  end,
+})
+
+-- NERDCommenter settings
+vim.g.NERDSpaceDelims = 1
+vim.g.NERDCommentEmptyLines = 1
+vim.g.NERDTrimTrailingWhitespace = 1
+
+-- Don't jump to the start of the line when changing buffers
+vim.o.startofline = false
+
+-- Set the color column
+vim.o.colorcolumn = "100"
+
+-- Mapping to change color scheme
+vim.api.nvim_set_keymap('n', '<F4>', ':call NextColorScheme()<CR>', { noremap = true, silent = true })
+
+-- Enable mouse in insert and replace modes
+vim.o.mouse = 'r'
+
+-- Set sign column to display line numbers
+vim.o.signcolumn = "number"
+
+-- Remap 'mark' to 'gm'
+vim.api.nvim_set_keymap('n', 'gm', 'm', { noremap = true })
+
+-- Go formatting settings
+vim.g.go_fmt_command = "golines"
+vim.g.go_fmt_options = { golines = "-m 100" }
+
+-- Set a shorter update time
+vim.o.updatetime = 300
+
+-- Abbreviation for common pattern
+vim.cmd('iabbrev iferr if err != nil { return err }')
+
+-- ------------------
 
 vim.g.mapleader = ';'
 vim.g.EasyClipShareYanks  = 1
@@ -37,14 +88,6 @@ require'nvim-treesitter.configs'.setup {
 vim.api.nvim_set_var("lsp_utils_location_opts", {
   height = 30,
 });
-
--- TODO: change from <cmd> to calling lua?
--- vim.keymap.set('n', '<C-PageUp>', '<cmd>:BufferLineCyclePrev<CR>')
--- vim.keymap.set('n', '<C-PageDown>', '<cmd>:BufferLineCycleNext<CR>')
--- vim.keymap.set('n', '<C-K>', '<cmd>:BufferLineCyclePrev<CR>')
--- vim.keymap.set('n', '<C-J>', '<cmd>:BufferLineCycleNext<CR>')
--- vim.keymap.set('n', '<C-H>', '<cmd>:BufferLineMovePrev<CR>')
--- vim.keymap.set('n', '<C-L>', '<cmd>:BufferLineMoveNext<CR>')
 
 vim.keymap.set('n', '<C-K>', '<cmd>:bprev<CR>')
 vim.keymap.set('n', '<C-J>', '<cmd>:bnext<CR>')
@@ -115,81 +158,13 @@ local persistence = require("persistence")
 persistence.setup()
 vim.keymap.set('n', '<leader>rs', persistence.load, {})
 
-
--- require("dracula").setup({
-  -- transparent_bg = false,
-  -- italic_comment = true,
--- })
 require("tokyonight").setup({
   style = "night", -- The theme comes in three styles, `storm`, `moon`, a darker variant `night` and `day`
   transparent = false, -- Enable this to disable setting the background color
   keywords = { italic = false, bold = true }
 })
--- require("nebulous").setup {
-  -- variant = "twilight",
-  -- disable = {
-    -- background = true,
-    -- endOfBuffer = false,
-    -- terminal_colors = false,
-  -- },
-  -- italic = {
-    -- comments   = true,
-    -- keywords   = false,
-    -- functions  = false,
-    -- variables  = false,
-  -- },
-  -- custom_colors = {
-    -- BufferInactiveMod = { fg = "#8c7912" },
-    -- BufferCurrentMod = { fg = "#c9b153" },
-    -- LspReferenceRead = { bg = '#36383F' },
-    -- LspReferenceText = { bg = '#36383F' },
-    -- LspReferenceWrite = { bg = '#36383F' },
-  -- },
--- }
 vim.cmd[[colorscheme tokyonight]]
 
--- require("bufferline").setup{
-  -- options = {
-    -- separator_style = "slant",
-    -- show_close_icon = false,
-    -- sort_by = 'insert_after_current' |'insert_at_end' | 'id' | 'extension' | 'relative_directory' | 'directory' | 'tabs' | function(buffer_a, buffer_b)
-                -- return buffer_a.modified > buffer_b.modified
-            -- end
-    -- sort_by = 'insert_after_current',
-  -- }
--- }
-
--- require("neo-tree").setup({
-  -- close_if_last_window = true,
-  -- window = {
-    -- position = "right",
-    -- width = "60",
-  -- },
-  -- buffers = {
-    -- show_unloaded = false,
-  -- },
--- })
-
--- vim.cmd[[:Neotree show buffers right]]
-require("sidebar-nvim").setup({
-    open = false,
-    side = "right",
-    initial_width = 40,
-    -- hide_statusline = false,
-    update_interval = 100,
-    sections = { "buffers", "diagnostics" },
-    -- section_separator = {"", "-----", ""},
-    -- section_title_separator = {""},
-    -- containers = {
-        -- attach_shell = "/bin/sh", show_all = true, interval = 5000,
-    -- },
-    -- datetime = { format = "%a %b %d, %H:%M", clocks = { { name = "local" } } },
-    -- todos = { ignored_paths = { "~" } },
-    buffers = {
-      ignore_not_loaded = true, -- whether to ignore not loaded buffers
-      ignore_terminal = false, -- whether to show terminal buffers in the list
-    },
-})
 
 require('dap-go').setup()
 local dap, dapui = require("dap"), require("dapui")
