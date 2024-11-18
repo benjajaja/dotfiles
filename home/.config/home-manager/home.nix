@@ -29,9 +29,9 @@ let
     text = ''
       export QT_QPA_PLATFORM=wayland
       export QT_QPA_PLATFORM_PLUGIN_PATH="${qt5.qtbase.bin}/lib/qt-${qt5.qtbase.version}/plugins/platforms"
-      export SDL_VIDEODRIVER=wayland
+      #export SDL_VIDEODRIVER=wayland
       # dbus-update-activation-environment --systemd DISPLAY WAYLAND_DISPLAY SWAYSOCK XDG_CURRENT_DESKTOP XDG_SESSION_TYPE NIXOS_OZONE_WL MOZ_ENABLE_WAYLAND SDL_VIDEODRIVER _JAVA_AWT_WM_NONREPARENTING XDG_SESSION_DESKTOP; systemctl --user start sway-session.target
-      dbus-update-activation-environment --systemd WAYLAND_DISPLAY QT_QPA_PLATFORM=wayland QT_QPA_PLATFORM_PLUGIN_PATH="${qt5.qtbase.bin}/lib/qt-${qt5.qtbase.version}/plugins/platforms" XDG_CURRENT_DESKTOP=sway DISPLAY SWAYSOCK SDL_VIDEODRIVER=wayland
+      dbus-update-activation-environment --systemd WAYLAND_DISPLAY QT_QPA_PLATFORM=wayland QT_QPA_PLATFORM_PLUGIN_PATH="${qt5.qtbase.bin}/lib/qt-${qt5.qtbase.version}/plugins/platforms" XDG_CURRENT_DESKTOP=sway DISPLAY SWAYSOCK
       # systemctl --user stop pipewire pipewire-media-session xdg-desktop-portal xdg-desktop-portal-wlr
       # systemctl --user start pipewire pipewire-media-session xdg-desktop-portal xdg-desktop-portal-wlr
     '';
@@ -232,6 +232,7 @@ in
           set -e
           find . -type f -name @1 -exec sed -i @2 {} \;
         }
+        export SDL_VIDEODRIVER=wayland # steam?
       '';
       sessionVariables = {
         EDITOR = "nvim";
@@ -474,15 +475,6 @@ return {
       export QT_AUTO_SCREEN_SCALE_FACTOR=1
     '';
   };
-  #wayland.windowManager.sway = {
-    #enable = true;
-    # wrapperFeatures.gtk = true;
-    # config = {
-      # modifier = "Mod4";
-      # terminal = "alacritty";
-      # startup = [{command = "firefox";}];
-    # };
-  #};
 
   nixpkgs.config.allowUnfree = true;
   #xdg.configFile."sway/config".source = lib.mkForce ./sway/config;

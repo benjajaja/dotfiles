@@ -160,23 +160,6 @@
     xclip
     xbindkeys
 
-    # wayland
-    sway
-    swaylock-effects
-    swayidle
-    swaybg
-    kickoff
-    cagebreak
-    #swayrbar
-    swayr
-    playerctl
-    grim
-    slurp
-    bemenu
-    kanshi
-    wdisplays
-    # xdg-utils
-
     # wm session
     hsetroot
     trayer
@@ -417,12 +400,42 @@
     };
   };
 
-  programs.nix-ld = {
-    enable = true;
-    libraries = with pkgs; [
-      stdenv.cc.cc.lib
-      zlib # numpy
-    ];
+  programs = {
+    nix-ld = {
+      enable = true;
+      libraries = with pkgs; [
+        stdenv.cc.cc.lib
+        zlib # numpy
+      ];
+    };
+    sway = {
+      enable = true;
+      wrapperFeatures.gtk = true; # so that gtk works properly
+      extraPackages = with pkgs; [
+        swaylock-effects
+        swayidle
+        swaybg
+        #swayrbar
+        swayr
+        bemenu
+        kanshi
+        grim
+        kickoff
+        cagebreak
+        playerctl
+        slurp
+        wdisplays
+        wl-clipboard
+        wf-recorder
+      ];
+      extraSessionCommands = ''
+        export SDL_VIDEODRIVER=wayland
+        export QT_QPA_PLATFORM=wayland
+        export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
+        export _JAVA_AWT_WM_NONREPARENTING=1
+        export MOZ_ENABLE_WAYLAND=1
+      '';
+    };
   };
 
   services.greetd = {
