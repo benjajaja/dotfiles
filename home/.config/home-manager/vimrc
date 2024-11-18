@@ -1,17 +1,5 @@
 syntax enable
-" highlight ColorColumn guifg=#440000
 set termguicolors
-" colorscheme dracula
-" hi Normal guibg=#000000 ctermbg=0
-" hi TabLineSel guifg=#ffffff ctermbg=green
-" hi TabLineFill guifg=#888888 guibg=#440000
-" hi MatchParen cterm=NONE ctermfg=green ctermbg=lightgreen
-
-" hi BufferCurrent guifg=#c0865c
-" hi BufferCurrentMod guifg=#c0865c
-" hi BufferInactiveMod guifg=#695b40
-
-" set guifontsize = 16
 set guifont=ProFontWindows\ Nerd\ Font\ Mono:h16
 
 set title
@@ -27,11 +15,6 @@ set expandtab
 set ruler
 filetype plugin indent on
 autocmd FileType go setlocal noexpandtab shiftwidth=4 softtabstop=4 tabstop=4 shiftwidth=4
-" omnifunc=lsp#complete
-
-" show whitespace anomalies
-" set list
-" set listchars=tab:>-,trail:~,extends:>,precedes:<
 
 " nerdcommenter
 let g:NERDSpaceDelims = 1
@@ -42,56 +25,17 @@ let g:NERDTrimTrailingWhitespace = 1
 set nostartofline
 set colorcolumn=100
 
-" nnoremap <silent>    <C-PageUp> :BufferLineCyclePrev<CR>
-" nnoremap <silent>    <C-PageDown> :BufferLineCycleNext<CR>
-" nnoremap <silent>    <C-K> :BufferLineCyclePrev<CR>
-" nnoremap <silent>    <C-J> :BufferLineCycleNext<CR>
-" nnoremap <silent>    <C-H> :BufferLineMovePrev<CR>
-" nnoremap <silent>    <C-L> :BufferLineMoveNext<CR>
-"
-" nnoremap <silent>    <C-C> :Bwipeout<CR>
-"
-" nnoremap <silent> <C-Q> :NeotreeShowToggle buffers<CR>
-" nnoremap <silent> <C-A> :SidebarNvimFocus<CR>
-
 map <F4>   :call NextColorScheme()<CR>
 
 set mouse=r
 
-" let g:ctrlp_map = '<c-p>'
-" let g:ctrlp_cmd = 'CtrlP'
-" let g:ctrlp_custom_ignore = 'node_modules\|git'
-" let g:ctrlp_show_hidden = 1
-
-" search selected text with //
-" vnoremap // y/\V<C-r>=escape(@",'/\')<CR><CR>
-
-" leader key
-" let mapleader=";"
-
-" Always show the signcolumn, otherwise it would shift the text each time
-" diagnostics appear/become resolved.
-if has("patch-8.1.1564")
-  " Recently vim can merge signcolumn and number column into one
-  set signcolumn=number
-else
-  set signcolumn=yes
-endif
+set signcolumn=number
 
 " remap 'mark' to gm
 nnoremap gm m
-" M to delete to end of line and yank
-" nmap M <Plug>MoveMotionEndOfLinePlug
-
-" let g:EasyClipShareYanks = 1
 
 let g:go_fmt_command = "golines"
-let g:go_fmt_options = {
-    \ 'golines': '-m 100',
-    \ }
-
-" moved to lua
-" autocmd BufWritePre *.go,*.ts,*.elm,*.rs lua vim.lsp.buf.format()
+let g:go_fmt_options = {'golines': '-m 100' }
 
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 " delays and poor user experience.
