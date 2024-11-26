@@ -137,37 +137,39 @@ function org_imports(wait_ms)
   end
 end
 
-local typescript = require("typescript")
-typescript.setup({
-    disable_commands = false, -- prevent the plugin from creating Vim commands
-    debug = false, -- enable debug logging for commands
-    go_to_source_definition = {
-        fallback = true, -- fall back to standard LSP definition on failure
-    },
-    server = { -- pass options to lspconfig's setup method
-      on_attach = function(client, bufnr)
-        on_attach(client, bufnr)
+require("typescript-tools").setup {
+  on_attach = on_attach,
+  settings = {
+  }
+}
 
-        local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-        local opts = { noremap=false, silent=true }
-        buf_set_keymap('n', 'gd', '<cmd>lua go_to_source_definition_typescript()<CR>', opts)
-        buf_set_keymap('n', '<Leader>ii', '<cmd>lua org_imports_typescript()<CR>', opts)
+--local typescript = require("typescript")
+--typescript.setup({
+    --disable_commands = false, -- prevent the plugin from creating Vim commands
+    --debug = false, -- enable debug logging for commands
+    --go_to_source_definition = {
+        --fallback = true, -- fall back to standard LSP definition on failure
+    --},
+    --server = { -- pass options to lspconfig's setup method
+      --on_attach = function(client, bufnr)
+        --on_attach(client, bufnr)
+
+        --local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+        --local opts = { noremap=false, silent=true }
+        --buf_set_keymap('n', 'gd', '<cmd>lua go_to_source_definition_typescript()<CR>', opts)
+        --buf_set_keymap('n', '<Leader>ii', '<cmd>lua org_imports_typescript()<CR>', opts)
 
         -- vim.api.nvim_buf_set_keymap(bufnr, "n", "gs", ":TSLspOrganize<CR>", opts)
         -- vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", ":TSLspRenameFile<CR>", opts)
         -- vim.api.nvim_buf_set_keymap(bufnr, "n", "gd", '<Cmd>:TypescriptGoToSourceDefinition<CR>', opts)
-        client.resolved_capabilities.document_formatting = false
-        -- print("on_attach typescript done1")
-        client.resolved_capabilities.document_range_formatting = false
-        -- print("on_attach typescript done2")
-        client.server_capabilities.document_formatting = false
-        -- print("on_attach typescript done3")
-        client.server_capabilities.document_range_formatting = false
-        -- print("on_attach typescript done4")
+        --client.resolved_capabilities.document_formatting = false
+        --client.resolved_capabilities.document_range_formatting = false
+        --client.server_capabilities.document_formatting = false
+        --client.server_capabilities.document_range_formatting = false
 
-      end,
-    },
-})
+      --end,
+    --},
+--})
 
 function org_imports_typescript()
   typescript.actions.addMissingImports()

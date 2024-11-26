@@ -87,7 +87,7 @@ in {
 
         nvim-lspconfig
         cmp-nvim-lsp
-        #cmp-buffer
+        cmp-buffer
         cmp-path
         cmp-cmdline
         nvim-cmp
@@ -104,7 +104,8 @@ in {
 
         plenary-nvim
         null-ls-nvim
-        typescript-nvim
+        #typescript-nvim
+        typescript-tools-nvim
         #go-nvim
         nvim-dap
         nvim-dap-ui

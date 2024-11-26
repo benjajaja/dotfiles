@@ -35,9 +35,13 @@ xkb_keymap {
     // Some spanish symbols
     key <AE10> { [0, parenright, dead_abovering, rightsinglequotemark ] };
     key <AB05> { [b, B, trademark ] };
-    // key <AC03> { [d, D, section ] };
-    // key <AB02> { [x, X, multiply, X ]};
     key <AE01> { [1, exclam, exclamdown, onesuperior ] };
+
+    key <AB02> { [x, X, multiply, x ] };
+    key <AD05> { [t, T, infinity, t ] };
+    key <AC04> { [f, F, similarequal, f ] };
+    key <AC05> { [g, G, notequal, g ] };
+    key <AC03> { [d, D, section, d ] };
   };
   xkb_geometry  { include "pc(pc104)" };
 };

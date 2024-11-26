@@ -64,6 +64,10 @@ vim.o.signcolumn = "number"
 -- Remap 'mark' to 'gm'
 vim.api.nvim_set_keymap('n', 'gm', 'm', { noremap = true })
 
+-- Remap [[ to [m and ]] to ]m
+vim.api.nvim_set_keymap('n', '[[', '[m', { noremap = true })
+vim.api.nvim_set_keymap('n', ']]', ']m', { noremap = true })
+
 -- Go formatting settings
 vim.g.go_fmt_command = "golines"
 vim.g.go_fmt_options = { golines = "-m 100" }
