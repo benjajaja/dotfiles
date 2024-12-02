@@ -130,6 +130,7 @@ in
     exiftool # joshuto file preview
     postgresql # for pg_dump
     dbeaver-bin
+    eza
 
     # dev
     nodejs_18

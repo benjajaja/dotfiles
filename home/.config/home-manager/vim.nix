@@ -84,6 +84,7 @@ in {
         sidebar-nvim
         neo-tree-nvim
         sectional-couch
+        substitute-nvim
 
         nvim-lspconfig
         cmp-nvim-lsp
