@@ -41,7 +41,6 @@ xkb_keymap {
     key <AD05> { [t, T, infinity, t ] };
     key <AC04> { [f, F, similarequal, f ] };
     key <AC05> { [g, G, notequal, g ] };
-    key <AC03> { [d, D, section, d ] };
   };
   xkb_geometry  { include "pc(pc104)" };
 };
