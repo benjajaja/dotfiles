@@ -7,7 +7,8 @@ local nvim_lsp = require('lspconfig')
 --require('vim.lsp.log').set_level('debug')
 
 -- local capabilities = vim.lsp.protocol.make_client_capabilities()
-local capabilities = require("cmp_nvim_lsp").default_capabilities()
+-- local capabilities = require("cmp_nvim_lsp").default_capabilities()
+local capabilities = require('blink.cmp').get_lsp_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})

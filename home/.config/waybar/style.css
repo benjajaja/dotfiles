@@ -1,0 +1,73 @@
+* {
+  font-family: "ProFontWindows Nerd Font Mono";
+  font-size: 16px;
+  min-height: 0;
+}
+
+@import "theme.css";
+
+button {
+  border: none;
+  border-radius: 0;
+}
+
+window#waybar {
+  background: @main-bg;
+}
+
+tooltip {
+  background: @main-bg;
+  border: solid;
+  border-width: 1.5px;
+  border-color: @main-fg;
+}
+tooltip label {
+  color: @main-fg;
+  font-weight: normal;
+  margin: 0.25px;
+}
+
+#workspaces,
+#window,
+#memory,
+#clock,
+#bluetooth,
+#pulseaudio,
+#battery {
+  opacity: 1;
+  color: @main-fg;
+  margin-bottom: 0;
+  padding: 0 4px;
+  text-shadow: 0 0 2px @main-sh;
+}
+
+#workspaces button {
+  color: @secondary-fg;
+  padding: 0;
+  margin: 0;
+  border: 0;
+  text-shadow: 0 0 2px @secondary-sh;
+}
+#workspaces button:hover {
+  color: @secondary-fg;
+  background: none;
+}
+#workspaces button.visible {
+  color: @main-fg;
+}
+
+#window {
+  color: @main-di;
+  text-shadow: none;
+}
+
+#pulseaudio:not(.source-muted).input {
+  color: white;
+  background: red;
+  box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.5);
+}
+
+#clock {
+  color: @main-di;
+  text-shadow: none;
+}

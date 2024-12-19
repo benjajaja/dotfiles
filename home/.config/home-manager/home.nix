@@ -5,7 +5,6 @@ let
     ${pkgs.xorg.xkbcomp}/bin/xkbcomp ${./xkb/layout.xkb} $out
   '';
   pista = pkgs.callPackage ./pista.nix {};
-  dmitri = pkgs.callPackage ./dmitri.nix {};
   git-recent = pkgs.callPackage ./git-recent.nix {};
   go = pkgs.callPackage ./go.nix {};
 
@@ -119,20 +118,19 @@ in
 
     # programs
     pista
-    dmitri
     tig
     chromium
     libreoffice
     inkscape
-    transmission-gtk
-    gnome_mplayer
+    transmission_3-gtk # transmission_4-gtk
+    celluloid
     gnomecast
     fractal
     iamb
     ncdu
     gnupg
     awscli
-    _1password
+    _1password-cli
     jq
     file # joshuto file preview mimetype
     exiftool # joshuto file preview
@@ -204,7 +202,6 @@ in
     wine64
 
     pista
-    dmitri
     mdfried.packages.${pkgs.system}.defaultPackage
   ];
 

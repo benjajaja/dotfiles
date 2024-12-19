@@ -1,0 +1,111 @@
+{
+  "layer": "top",
+  "height": 10,
+  "spacing": 5,
+  "margin-top": 0,
+  "margin-right": 0,
+  "margin-left": 0,
+
+  "modules-left": ["sway/workspaces", "tray"],
+
+  "modules-center": ["sway/window"],
+
+  "modules-right": [
+    "disk",
+    "temperature",
+    "backlight",
+    "custom/memory",
+    "pulseaudio#output",
+    "pulseaudio#input",
+    "battery",
+    "clock",
+  ],
+
+  "sway/workspaces": {
+    "disable-scroll": true,
+    "active-only": false,
+    "all-outputs": true,
+    "warp-on-scroll": false,
+    "format": "{icon}",
+    // "format-icons": {
+    // "1": "<span >󰈹</span>",
+    // "2": "<span ></span>",
+    // "3": "<span ></span>",
+    // "4": "<span ></span>",
+    // "5": "<span ></span>",
+    // "6": "<span >6</span>",
+    // "7": "<span >7</span>",
+    // "8": "<span >8</span>",
+    // "9": "<span >󱄅</span>",
+    // },
+  },
+
+  "sway/window": {
+    "format": "{app_id}",
+    "separate-outputs": true,
+    "icon": false,
+  },
+
+  "tray": {
+    "icon-size": 15,
+    "spacing": 2,
+  },
+
+  "disk": {
+    "format": " {free}",
+    "interval": 20,
+  },
+
+  "temperature": {
+    "tooltip": false,
+    "thermal-zone": 2,
+    "hwmon-path": "/sys/class/hwmon/hwmon1/temp1_input",
+    "critical-threshold": 70,
+    "format": "󱃃 {temperatureC}°C",
+    "format-critical": "󰔐 {temperatureC}°C",
+  },
+
+  "pulseaudio#output": {
+    "format": "{icon} {volume}%",
+    "format-muted": " OFF",
+    "format-icons": {
+      "default": ["󰸈", "󰖀", "󰕾"],
+    },
+    "max-volume": 100,
+    "scroll-step": 2,
+    "smooth-scrolling-threshold": 1,
+    "on-click": "wpctl set-mute @DEFAULT_SINK@ toggle",
+    "on-click-middle": "pavucontrol",
+  },
+  "pulseaudio#input": {
+    "format-source": "󰍬 {volume}%",
+    "format-source-muted": "󰍭 OFF",
+    "format": "{format_source}",
+    "scroll-step": 1,
+    "smooth-scrolling-threshold": 1,
+    "max-volume": 100,
+    "on-click": "wpctl set-mute @DEFAULT_SOURCE@ toggle",
+    "on-click-middle": "pavucontrol",
+    "on-scroll-up": "wpctl set-volume @DEFAULT_SOURCE@ 1%+",
+    "on-scroll-down": "wpctl set-volume @DEFAULT_SOURCE@ 1%-",
+  },
+
+  "battery": {
+    "interval": 1,
+    "states": {
+      "good": 99,
+      "warning": 30,
+      "critical": 20,
+    },
+    "format-icons": ["󰂎", "󰁺", "󰁻", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+    "format": "{icon} {capacity}%",
+    "tooltip": false,
+  },
+
+  "clock": {
+    "timezone": "Atlantic/Canary",
+    "format": "{:%a %d %b %H:%M:%S}",
+    "tooltip": false,
+    "interval": 1,
+  },
+}

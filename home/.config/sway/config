@@ -117,47 +117,8 @@ bindsym $mod+Shift+v exec "grim -g \"$(slurp)\" - | swappy -f -"
 #}
 
 bar {
-    #mode invisible
-    swaybar_command swaybar
-    # Use swayrbar as status command with some logging output which
-    # is redirected to /tmp/swayrbar.log.  Be sure to only redirect
-    # stderr because the swaybar protocol requires the status_command
-    # to emit JSON to stdout which swaybar reads.
-    status_command env RUST_BACKTRACE=1 RUST_LOG=swayr=debug /home/gipsy/.cargo/bin/swayrbar 2> /tmp/swayrbar.log
-    position top
-    font $font 12
-    height 20
-    # mode hide
-    # modifier $mod
-
-    colors {
-        statusline #f8c500
-        background #222222ff
-        focused_workspace $orange #f8c500 #000000
-    }
+    swaybar_command waybar
 }
-# bar swaybar_command waybar
-# bar {
-  # font pango:monospace 12.000000
-  # mode dock
-  # hidden_state hide
-  # position top
-  # status_command /nix/store/jjr77v4k50y7z4yirmym48wwcbly94dg-i3status-2.14/bin/i3status
-  # swaybar_command /nix/store/bwkmlm76q6rmznw21468yyi0qjb68fy9-sway-1.8.1/bin/swaybar
-  # workspace_buttons yes
-  # strip_workspace_numbers no
-  # tray_output primary
-  # colors {
-    # background #000000
-    # statusline #ffffff
-    # separator #666666
-    # focused_workspace #4c7899 #285577 #ffffff
-    # active_workspace #333333 #5f676a #ffffff
-    # inactive_workspace #333333 #222222 #888888
-    # urgent_workspace #2f343a #900000 #ffffff
-    # binding_mode #2f343a #900000 #ffffff
-  # }
-# }
 
 # set minimum brightness
 exec "light -N 5" 
@@ -168,7 +129,7 @@ bindsym XF86MonBrightnessUp exec light -A 10
 bindsym XF86AudioRaiseVolume exec 'pactl set-sink-volume @DEFAULT_SINK@ +1%'
 bindsym XF86AudioLowerVolume exec 'pactl set-sink-volume @DEFAULT_SINK@ -1%'
 bindsym XF86AudioMute exec 'pactl set-sink-mute @DEFAULT_SINK@ toggle'
-bindsym XF86AudioMicMute exec 'pactl set-source-mute @DEFAULT_SOURCE@ toggle'
+bindsym XF86AudioMicMute exec 'wpctl set-mute @DEFAULT_SOURCE@ toggle'
 
 # Lock screen in 9min30sec
 # Turn screen off in 10min (so 30sec after lock screen)

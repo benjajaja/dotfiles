@@ -1,0 +1,6 @@
+@define-color main-fg #f8c500;
+@define-color main-bg #11111b;
+@define-color main-sh rgba(240, 230, 140, 0.5); /* #f0e68c */
+@define-color main-di #898135;
+@define-color secondary-fg #2c8229;
+@define-color secondary-sh rgba(44, 139, 41, 0.75);

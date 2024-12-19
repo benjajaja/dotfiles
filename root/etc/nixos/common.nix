@@ -72,8 +72,7 @@
   services.printing.enable = true;
   services.autorandr.enable = true;
 
-  sound.enable = true;
-  hardware.pulseaudio.enable = true;
+  hardware.pulseaudio.enable = false;
   hardware.bluetooth.enable = true;
   hardware.keyboard.qmk.enable = true;
 
@@ -89,6 +88,10 @@
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
+  # Some insecure package
+  nixpkgs.config.permittedInsecurePackages = [
+    "olm-3.2.16"
+  ];
 
   nixpkgs.config.packageOverrides = pkgs: {
     steam = pkgs.steam.override {
@@ -138,7 +141,7 @@
     arandr
     xfce.thunar
     light
-    gnome.adwaita-icon-theme
+    adwaita-icon-theme
     gimp
     greetd.tuigreet
 
@@ -152,7 +155,6 @@
        extraPkgs = pkgs: [ glxinfo ];
     }).run
     steamcmd
-    steam-tui
 
     htop
     docker-compose
@@ -195,8 +197,6 @@
     chromium
     libreoffice
     inkscape
-    transmission-gtk
-    gnome_mplayer
     gnomecast
     nheko
     fractal
@@ -414,7 +414,7 @@
         swaylock-effects
         swayidle
         swaybg
-        #swayrbar
+        waybar
         swayr
         bemenu
         kanshi

@@ -13,17 +13,12 @@ in
   ];
   boot.initrd.kernelModules = [ "i915" ];
   boot.kernelModules = [];
-  boot.extraModulePackages = [
-    (r8152-kernel-module.overrideAttrs (_: {
-      patches = [ ./r8152.patch ];
-    }))
-  ];
 
   hardware.cpu.intel.updateMicrocode = true;
   hardware.ksm.enable = true;
   hardware.enableAllFirmware = true;
   hardware.enableRedistributableFirmware = true;
-  hardware.opengl = {
+  hardware.graphics = {
     enable = true;
     extraPackages = with pkgs; [
       intel-media-driver # LIBVA_DRIVER_NAME=iHD
