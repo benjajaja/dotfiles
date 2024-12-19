@@ -89,7 +89,8 @@ bindsym $mod+p exec "dmenu_path | bemenu | ${SHELL:-/bin/sh} &"
 #bindsym $mod+e layout toggle split
 bindsym $mod+v fullscreen toggle
 bindsym $mod+x nop fullscreen
-bindsym $mod+Shift+v exec "QT_QPA_PLATFORM=wayland flameshot launcher; sleep 1; swaymsg fullscreen off"
+# bindsym $mod+Shift+v exec "QT_QPA_PLATFORM=wayland flameshot launcher; sleep 1; swaymsg fullscreen off"
+bindsym $mod+Shift+v exec "grim -g \"$(slurp)\" - | swappy -f -"
 # bindsym $mod+h focus left
 # bindsym $mod+j focus right
 # bindsym $mod+k focus left

@@ -61,6 +61,11 @@ in
             output eDP-1 disable
             output DP-2 mode 2560x1440@144Hz scale 1.5
     }
+
+    profile docked-open {
+            output eDP-1 enable scale 1 mode 1920x1200
+            output DP-2 mode 2560x1440@144Hz scale 1.5
+    }
     '';
   # kanshi systemd service
   systemd.user.services.kanshi = {

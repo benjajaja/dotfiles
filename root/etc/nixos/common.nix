@@ -168,7 +168,6 @@
     pasystray
     cbatticon
     mictray
-    flameshot
     xfce.xfce4-clipman-plugin
     dunst
     pavucontrol

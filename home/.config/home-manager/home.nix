@@ -56,6 +56,9 @@ let
       gsettings set $gnome_schema gtk-theme 'Dracula'
     '';
   };
+
+  mdfried = builtins.getFlake "github:benjajaja/mdfried?rev=037b59c38b36a11d3463a3f7cd072df1f25f7005"; # Replace with the GitHub flake URL
+
 in
 {
   imports = [
@@ -93,6 +96,9 @@ in
     cbatticon
     mictray
     flameshot
+    swappy
+    grim
+    slurp
     xfce.xfce4-clipman-plugin
     dunst
     udiskie
@@ -101,12 +107,14 @@ in
     gvfs
     samba
     rubik
+    obs-studio
 
     # terminals
     alacritty
     contour
     ctx
     wezterm
+    konsole
     tmux
 
     # programs
@@ -197,6 +205,7 @@ in
 
     pista
     dmitri
+    mdfried.packages.${pkgs.system}.defaultPackage
   ];
 
   home.file = {
@@ -308,7 +317,8 @@ in
         scrollback_lines = 10000;
         bold_text_in_bright_colors = true;
         italic_text = true;
-        #background = "#282c34";
+        # background = "#282c34";
+        background = "#1c1a23";
       };
       # theme = "Tokyo Night";
       # theme = "Cyberpunk";
