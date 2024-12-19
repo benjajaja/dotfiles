@@ -65,6 +65,7 @@ let
   # vimrc = builtins.readFile ./vimrc;
   lsp_lua = builtins.readFile ./lsp.lua;
   cmp_lua = builtins.readFile ./cmp.lua;
+  blink_lua = builtins.readFile ./blink.lua;
   nvim_lua = builtins.readFile ./nvim.lua;
 in {
   programs = {
@@ -87,21 +88,15 @@ in {
         substitute-nvim
 
         nvim-lspconfig
-        cmp-nvim-lsp
-        cmp-buffer
-        cmp-path
-        cmp-cmdline
-        nvim-cmp
-        #cmp-vsnip
         vim-vsnip
         telescope-nvim
         telescope-zf-native-nvim
         #nvim-lsputils
         nvim-treesitter.withAllGrammars
-        #cmp-treesitter
         rust-tools-nvim
         vim-illuminate
         persistence-nvim
+        blink-cmp
 
         plenary-nvim
         null-ls-nvim
@@ -127,8 +122,8 @@ in {
       extraConfig = ''
 lua << EOF
 ${nvim_lua}
-${cmp_lua}
 ${lsp_lua}
+${blink_lua}
 EOF
       '';
     };
