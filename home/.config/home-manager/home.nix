@@ -341,7 +341,8 @@ in
       enable = true;
       extraConfig = ''
 return {
-  font = wezterm.font("ProFontWindows Nerd Font Mono"),
+  front_end = "WebGpu",
+  font = wezterm.font("ProFontWindows Nerd Font"),
   -- font_size = 14,
   bold_brightens_ansi_colors = "BrightOnly",
   color_scheme = "Tokyo Night",

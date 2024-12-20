@@ -10,6 +10,8 @@ set $mod Mod4
 
 set $font "ProFontWindows Nerd Font Mono"
 set $orange #f0e68c
+set $bemenu 'bemenu -b -p ">_" --fn "$font"'
+set $bemenu 'dmenu_path | bemenu -b -l 100 --fixed-height -f --counter always -p "RUN" --fn "ProFontWindows Nerd Font Mono" --tf "#f8c500" --ff "$orange" --nf "#2c8229" --af "#46ad06" --hf "#f8c500"'
 
 output eDP-2 {
   scale 1
@@ -85,7 +87,7 @@ bindsym $mod+Shift+g floating toggle
 #bindsym $mod+Up focus up
 #bindsym $mod+a focus parent
 # bindsym $mod+b splith
-bindsym $mod+p exec "dmenu_path | bemenu | ${SHELL:-/bin/sh} &"
+bindsym $mod+p exec "dmenu_path | $bemenu | ${SHELL:-/bin/sh} &"
 #bindsym $mod+e layout toggle split
 bindsym $mod+v fullscreen toggle
 bindsym $mod+x nop fullscreen

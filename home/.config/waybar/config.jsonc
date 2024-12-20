@@ -76,9 +76,10 @@
     "smooth-scrolling-threshold": 1,
     "on-click": "wpctl set-mute @DEFAULT_SINK@ toggle",
     "on-click-middle": "pavucontrol",
+    "tooltip": false,
   },
   "pulseaudio#input": {
-    "format-source": "󰍬 {volume}%",
+    "format-source": "󰍬 ON ",
     "format-source-muted": "󰍭 OFF",
     "format": "{format_source}",
     "scroll-step": 1,
@@ -88,6 +89,7 @@
     "on-click-middle": "pavucontrol",
     "on-scroll-up": "wpctl set-volume @DEFAULT_SOURCE@ 1%+",
     "on-scroll-down": "wpctl set-volume @DEFAULT_SOURCE@ 1%-",
+    "tooltip": false,
   },
 
   "battery": {
