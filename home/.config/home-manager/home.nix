@@ -56,7 +56,8 @@ let
     '';
   };
 
-  mdfried = builtins.getFlake "github:benjajaja/mdfried?rev=037b59c38b36a11d3463a3f7cd072df1f25f7005"; # Replace with the GitHub flake URL
+  mdfried = builtins.getFlake "github:benjajaja/mdfried/v0.2.0";
+  ghostty = builtins.getFlake "github:ghostty-org/ghostty/v1.0.0";
 
 in
 {
@@ -115,6 +116,8 @@ in
     wezterm
     konsole
     tmux
+    ghostty.packages.${pkgs.system}.default
+    enlightenment.terminology
 
     # programs
     pista
@@ -123,6 +126,8 @@ in
     libreoffice
     inkscape
     transmission_3-gtk # transmission_4-gtk
+    transmission-remote-gtk
+    jackett
     celluloid
     gnomecast
     fractal
