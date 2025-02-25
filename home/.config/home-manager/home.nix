@@ -6,9 +6,7 @@ let
   '';
   pista = pkgs.callPackage ./pista.nix {};
   git-recent = pkgs.callPackage ./git-recent.nix {};
-  go = pkgs.callPackage ./go.nix {};
 
-  # iamb = pkgs.callPackage ./iamb.nix {};
   iamb = (builtins.getFlake "github:benjajaja/iamb/nix").packages.x86_64-linux.default;
   swaymonad = (builtins.getFlake "github:nicolasavru/swaymonad").packages.x86_64-linux.swaymonad;
   # pandas = pkgs.callPackage ./pandas.nix {};
@@ -56,9 +54,8 @@ let
     '';
   };
 
-  mdfried = builtins.getFlake "github:benjajaja/mdfried/v0.2.0";
+  mdfried = builtins.getFlake "github:benjajaja/mdfried/v0.9.0";
   ghostty = builtins.getFlake "github:ghostty-org/ghostty/v1.0.0";
-
 in
 {
   imports = [
@@ -81,6 +78,10 @@ in
 
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
+
+  nixpkgs.overlays = [
+    (import ./overlays.nix)
+  ];
 
   home.packages = with pkgs; [
     swaymonad
@@ -142,16 +143,17 @@ in
     postgresql # for pg_dump
     dbeaver-bin
     eza
+    parquet-tools
+    zed-editor
 
     # dev
     nodejs_18
     nodePackages.pnpm
     nodePackages.yarn
     nodePackages.typescript-language-server
-    go.go
-    #go.gopls
-    gotestsum
-    go.delve
+    go
+    gopls
+    delve
     #pre-commit
     terraform
     nodePackages.prettier
@@ -184,6 +186,7 @@ in
     ruff
     #uv
     devenv
+    gh
 
     # hobby dev
     rustc
@@ -207,7 +210,7 @@ in
     wine64
 
     pista
-    mdfried.packages.${pkgs.system}.defaultPackage
+    mdfried.packages.${pkgs.system}.default
   ];
 
   home.file = {

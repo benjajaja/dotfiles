@@ -10,8 +10,7 @@ set $mod Mod4
 
 set $font "ProFontWindows Nerd Font Mono"
 set $orange #f0e68c
-set $bemenu 'bemenu -b -p ">_" --fn "$font"'
-set $bemenu 'dmenu_path | bemenu -b -l 100 --fixed-height -f --counter always -p "RUN" --fn "ProFontWindows Nerd Font Mono" --tf "#f8c500" --ff "$orange" --nf "#2c8229" --af "#46ad06" --hf "#f8c500"'
+set $bemenu 'dmenu_path | bemenu -b -l 20 --fixed-height -f --counter always -p "RUN" --fn "ProFontWindows Nerd Font Mono" --tf "#f8c500" --ff "#f0e68c" --nf "#2c8229" --af "#46ad06" --hf "#f8c500" --bdr "#ff8888" -B 2 | ${SHELL:-/bin/sh} &'
 
 output eDP-2 {
   scale 1
@@ -21,7 +20,7 @@ output eDP-2 {
 font $font 8.000000
 floating_modifier $mod
 default_border pixel 2
-default_floating_border pixel 2
+default_floating_border pixel 1
 hide_edge_borders none
 focus_wrapping no
 focus_follows_mouse yes
@@ -83,16 +82,16 @@ bindsym $mod+l resize grow width 10px
 
 #bindsym $mod+Shift+minus move scratchpad
 bindsym $mod+Shift+c kill
-bindsym $mod+Shift+g floating toggle
+bindsym $mod+Shift+t floating toggle
 #bindsym $mod+Up focus up
 #bindsym $mod+a focus parent
 # bindsym $mod+b splith
-bindsym $mod+p exec "dmenu_path | $bemenu | ${SHELL:-/bin/sh} &"
+bindsym $mod+p exec $bemenu
 #bindsym $mod+e layout toggle split
 bindsym $mod+v fullscreen toggle
 bindsym $mod+x nop fullscreen
 # bindsym $mod+Shift+v exec "QT_QPA_PLATFORM=wayland flameshot launcher; sleep 1; swaymsg fullscreen off"
-bindsym $mod+Shift+v exec "grim -g \"$(slurp)\" - | swappy -f -"
+bindsym $mod+Shift+v exec 'grim -g "$(slurp)" - | swappy -f -'
 # bindsym $mod+h focus left
 # bindsym $mod+j focus right
 # bindsym $mod+k focus left
