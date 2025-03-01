@@ -80,7 +80,7 @@
   users.users.gipsy = {
     isNormalUser = true;
     description = "gipsy";
-    extraGroups = [ "networkmanager" "wheel" "docker" "disk" "audio" "video" ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "disk" "audio" "video" "adbusers" "kvm" ];
     packages = with pkgs; [
     ];
   };
@@ -242,6 +242,7 @@
     menyoki
     blender
 
+    android-studio
   ];
 
   services.libinput = {
@@ -387,8 +388,9 @@
     # })
   # ];
 
+  services.power-profiles-daemon.enable = false;
+  services.auto-cpufreq.enable = true;
   services.auto-cpufreq.settings = {
-    enable = true;
     battery = {
        governor = "powersave";
        turbo = "never";
@@ -435,6 +437,7 @@
         export MOZ_ENABLE_WAYLAND=1
       '';
     };
+    adb.enable = true;
   };
 
   services.greetd = {
