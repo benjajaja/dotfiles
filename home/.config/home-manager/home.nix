@@ -170,7 +170,7 @@ in
     # pandas
     #python311Packages.numpy
     #python312
-    python312
+    python313
     #python312Packages.virtualenv
     #(python312.withPackages (ps: with ps; [
       #pip
@@ -394,6 +394,7 @@ return {
         sendemail.smtpserverport = "587";
         sendemail.smtpencryption = "tls";
         sendemail.smtpuser = "ste3ls@gmail.com";
+        rerere.enabled = true;
       };
     };
 

@@ -4,6 +4,9 @@
 
 { config, pkgs, lib, ... }:
 
+# let
+  # niri = (builtins.getFlake "github:sodiboo/niri-flake").packages.x86_64-linux.default;
+# in
 {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.settings.auto-optimise-store = true;
@@ -116,6 +119,7 @@
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     nano # leave this as last resort editor!
+    niri
     wget
     git
     killall
@@ -458,6 +462,11 @@
     TTYVHangup = true;
     TTYVTDisallocate = true;
   };
+  environment.etc."tuigreeter/sessions/niri".text = ''
+    [Desktop Entry]
+    Name=Niri
+    Exec="${pkgs.niri}/bin/niri"
+    '';
   environment.etc."tuigreeter/sessions/sway".text = ''
     [Desktop Entry]
     Name=Sway
