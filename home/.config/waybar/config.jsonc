@@ -6,9 +6,9 @@
   "margin-right": 0,
   "margin-left": 0,
 
-  "modules-left": ["sway/workspaces", "tray"],
+  "modules-left": ["niri/workspaces", "tray"],
 
-  "modules-center": ["sway/window"],
+  "modules-center": ["niri/window"],
 
   "modules-right": [
     "disk",
@@ -21,11 +21,7 @@
     "clock",
   ],
 
-  "sway/workspaces": {
-    "disable-scroll": true,
-    "active-only": false,
-    "all-outputs": true,
-    "warp-on-scroll": false,
+  "niri/workspaces": {
     "format": "{icon}",
     // "format-icons": {
     // "1": "<span >󰈹</span>",
@@ -40,10 +36,8 @@
     // },
   },
 
-  "sway/window": {
+  "niri/window": {
     "format": "{app_id}",
-    "separate-outputs": true,
-    "icon": false,
   },
 
   "tray": {

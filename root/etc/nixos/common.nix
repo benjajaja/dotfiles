@@ -4,9 +4,6 @@
 
 { config, pkgs, lib, ... }:
 
-# let
-  # niri = (builtins.getFlake "github:sodiboo/niri-flake").packages.x86_64-linux.default;
-# in
 {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.settings.auto-optimise-store = true;
@@ -75,7 +72,6 @@
   services.printing.enable = true;
   services.autorandr.enable = true;
 
-  hardware.pulseaudio.enable = false;
   hardware.bluetooth.enable = true;
   hardware.keyboard.qmk.enable = true;
 
@@ -120,6 +116,7 @@
   environment.systemPackages = with pkgs; [
     nano # leave this as last resort editor!
     niri
+    fuzzel
     wget
     git
     killall
@@ -239,15 +236,13 @@
     # media apps
     losslesscut-bin
     vlc
-    quaternion
-    libsForQt5.neochat
     gtk3
     lmms
     menyoki
     blender
-
-    android-studio
   ];
+
+  services.pulseaudio.enable = false;
 
   services.libinput = {
       enable = true;
@@ -317,15 +312,23 @@
   };
 
   # fonts.packages = with pkgs; [
+  # fonts.packages = with pkgs; [
+    # fira-code fira-mono
+    # (nerdfonts.override { fonts = [
+      # "FiraCode"
+      # "DroidSansMono"
+      # "ProFont"
+      # "Mononoki"
+      # "ShareTechMono"
+    # ]; })
+  # ];
   fonts.packages = with pkgs; [
     fira-code fira-mono
-    (nerdfonts.override { fonts = [
-      "FiraCode"
-      "DroidSansMono"
-      "ProFont"
-      "Mononoki"
-      "ShareTechMono"
-    ]; })
+    nerd-fonts.fira-code
+    nerd-fonts.droid-sans-mono
+    nerd-fonts.profont
+    nerd-fonts.mononoki
+    nerd-fonts.shure-tech-mono
   ];
 
   programs = {
@@ -465,7 +468,7 @@
   environment.etc."tuigreeter/sessions/niri".text = ''
     [Desktop Entry]
     Name=Niri
-    Exec="${pkgs.niri}/bin/niri"
+    Exec="${pkgs.niri}/bin/niri-session"
     '';
   environment.etc."tuigreeter/sessions/sway".text = ''
     [Desktop Entry]

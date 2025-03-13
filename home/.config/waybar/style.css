@@ -55,7 +55,7 @@ window#waybar {
   border: none;
   box-shadow: none;
 }
-#workspaces button.visible {
+#workspaces button.active {
   color: @main-fg;
 }
 

@@ -1,11 +1,5 @@
 { config, pkgs, lib, fetchurl, ... }:
 
-let
-  r8152-kernel-module = pkgs.callPackage ./r8152.nix {
-    # Make sure the module targets the same kernel as your system is using.
-    kernel = config.boot.kernelPackages.kernel;
-  };
-in
 {
   imports = [ 
     ../common.nix

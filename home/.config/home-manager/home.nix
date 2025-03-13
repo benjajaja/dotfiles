@@ -115,7 +115,7 @@ in
     contour
     ctx
     wezterm
-    konsole
+    kdePackages.konsole
     tmux
     ghostty.packages.${pkgs.system}.default
     enlightenment.terminology
