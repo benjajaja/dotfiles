@@ -116,6 +116,9 @@
   environment.systemPackages = with pkgs; [
     nano # leave this as last resort editor!
     niri
+    # starship
+
+    xwayland-satellite
     fuzzel
     wget
     git
@@ -231,7 +234,6 @@
     xdummy
     binutils # a bunch of helper bins, a lot of build tools need some
     xorg.xwd
-    imagemagick
 
     # media apps
     losslesscut-bin
@@ -333,13 +335,17 @@
 
   programs = {
     bash = {
+      # promptInit = ''
+        # eval "$(starship init bash)"
+      # '';
       shellAliases = {
         nv = "nvim";
       };
-      promptInit = ''
-        PROMPT_COLOR="1;31m"
-        let $UID && PROMPT_COLOR="1;32m"
-        PS1="\[\033[$PROMPT_COLOR\]\w:\$(vcprompt -f %b%m%u)> \[\033[0m\]"
+      interactiveShellInit = ''
+        set -o vi
+        set show-mode-in-prompt on
+        set vi-cmd-mode-string "\1\e[2 q\2"
+        set vi-ins-mode-string "\1\e[6 q\2"
       '';
     };
     dconf.enable = true;

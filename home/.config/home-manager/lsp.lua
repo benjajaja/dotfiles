@@ -230,24 +230,24 @@ require('rust-tools').setup({
   },
 })
 
-nvim_lsp.elmls.setup({
-    capabilities = capabilities,
-    on_attach = on_attach,
-})
+-- nvim_lsp.elmls.setup({
+    -- capabilities = capabilities,
+    -- on_attach = on_attach,
+-- })
 
-local null_ls = require("null-ls")
-null_ls.setup({
-    debug = false,
-    capabilities = capabilities,
-    on_attach = on_attach,
-    sources = {
+-- local null_ls = require("null-ls")
+-- null_ls.setup({
+    -- debug = false,
+    -- capabilities = capabilities,
+    -- on_attach = on_attach,
+    -- sources = {
         -- null_ls.builtins.diagnostics.eslint, -- eslint or eslint_d
         -- null_ls.builtins.code_actions.eslint, -- eslint or eslint_d
         -- null_ls.builtins.formatting.eslint, -- prettier, eslint, eslint_d, or prettierd
-        null_ls.builtins.formatting.prettier, -- prettier, eslint, eslint_d, or prettierd
+        -- null_ls.builtins.formatting.prettier, -- prettier, eslint, eslint_d, or prettierd
         -- require("typescript.extensions.null-ls.code-actions"),
-    },
-})
+    -- },
+-- })
 
 -- require'lspconfig'.nil_ls.setup{}
 

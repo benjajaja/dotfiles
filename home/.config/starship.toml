@@ -1,0 +1,236 @@
+# ~/.config/starship.toml
+add_newline = false
+
+# Configure directory display
+[directory]
+truncation_length = 3  # Shorten after 3 directories
+truncation_symbol = ""  # No symbol for truncation
+truncate_to_repo = false  # Only show directory relative to repo root
+style = "yellow"
+read_only = " 🔒"
+read_only_style = "red"
+home_symbol = "~"  # Don't display anything for home directory
+format = "[$path]($style)[$read_only]($read_only_style) "
+
+# Configure Git display
+[git_branch]
+format = "\\[[$branch]($style)"
+style = "bright-black"
+
+[git_status]
+format = "[$conflicted$deleted$renamed$modified$typechanged$staged$untracked$ahead$behind$diverged]($style)\\] "
+style = "red"
+ahead = "⇡"
+behind = "⇣"
+diverged = "⇕"
+untracked = "?"
+stashed = '^'
+modified = "!"
+staged = "+"
+renamed = "»"
+deleted = "×"
+
+# Configure prompt character
+[character]
+success_symbol = "[>](green)"
+error_symbol = "[>](green)" # annoying
+vimcmd_symbol = "[<](green)"
+
+# Other configurations you might want
+[cmd_duration]
+disabled = true
+min_time = 500
+format = "took [$duration](yellow) "
+
+# Disable all other modules - nothing else will show up
+# [custom]
+# disabled = true
+
+[aws]
+disabled = true
+
+[azure]
+disabled = true
+
+[buf]
+disabled = true
+
+[c]
+disabled = true
+
+[cmake]
+disabled = true
+
+[cobol]
+disabled = true
+
+[conda]
+disabled = true
+
+[container]
+disabled = true
+
+[dart]
+disabled = true
+
+[deno]
+disabled = true
+
+[docker_context]
+disabled = true
+
+[dotnet]
+disabled = true
+
+[elixir]
+disabled = true
+
+[elm]
+disabled = true
+
+[erlang]
+disabled = true
+
+[gcloud]
+disabled = true
+
+[git_commit]
+disabled = true
+
+[git_state]
+disabled = true
+
+[golang]
+disabled = true
+
+[guix_shell]
+disabled = true
+
+[haskell]
+disabled = true
+
+[haxe]
+disabled = true
+
+[helm]
+disabled = true
+
+[hg_branch]
+disabled = true
+
+[hostname]
+disabled = true
+
+[java]
+disabled = true
+
+[jobs]
+disabled = true
+
+[julia]
+disabled = true
+
+[kotlin]
+disabled = true
+
+[kubernetes]
+disabled = true
+
+[line_break]
+disabled = true
+
+[lua]
+disabled = true
+
+[memory_usage]
+disabled = true
+
+[meson]
+disabled = true
+
+[nim]
+disabled = true
+
+[nix_shell]
+disabled = true
+
+[nodejs]
+disabled = true
+
+[ocaml]
+disabled = true
+
+[openstack]
+disabled = true
+
+[package]
+disabled = true
+
+[perl]
+disabled = true
+
+[php]
+disabled = true
+
+[pulumi]
+disabled = true
+
+[purescript]
+disabled = true
+
+[python]
+disabled = true
+
+[raku]
+disabled = true
+
+[ruby]
+disabled = true
+
+[rust]
+disabled = true
+
+[scala]
+disabled = true
+
+[shell]
+disabled = true
+
+[shlvl]
+disabled = true
+
+[singularity]
+disabled = true
+
+[spack]
+disabled = true
+
+[status]
+disabled = true
+
+[sudo]
+disabled = true
+
+[swift]
+disabled = true
+
+[terraform]
+disabled = true
+
+[time]
+disabled = true
+
+[username]
+disabled = true
+
+[vagrant]
+disabled = true
+
+[vcsh]
+disabled = true
+
+[vlang]
+disabled = true
+
+[zig]
+disabled = true

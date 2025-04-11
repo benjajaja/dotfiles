@@ -35,7 +35,7 @@ input {
 }
 
 output "eDP-1" {
-  off
+    scale 1.5
 }
 output "DP-2" {
     mode "2560x1440@144"
@@ -51,6 +51,7 @@ layout {
         proportion 0.33333
         proportion 0.5
         proportion 0.66667
+        proportion 1.0
     }
 
     default-column-width { proportion 0.5; }
@@ -80,8 +81,18 @@ layout {
     }
 }
 
+spawn-at-startup "xwayland-satellite"
 spawn-at-startup "waybar"
 spawn-at-startup "firefox"
+spawn-at-startup "pasystray"
+
+spawn-at-startup "swayidle" "-w" "timeout" "1200" "swaylock --indicator --screenshots --effect-blur 5x5 --effect-vignette 0.5:0.5 --clock --font \"ProFontWindows Nerd Font Mono\" -f" "timeout" "1800" "niri msg action powerr-off-monitors" "resume" "niri msg action powerr-on-monitors" "timeout" "3600" "systemctl suspend" "before-sleep" "playerctl pause" "before-sleep" "swaylock --indicator --screenshots --effect-blur 5x5 --effect-vignette 0.5:0.5 --clock --font \"ProFontWindows Nerd Font Mono\" -f"
+
+
+environment {
+  QT_QPA_PLATFORM "wayland"
+  DISPLAY ":0"
+}
 
 prefer-no-csd
 
@@ -91,10 +102,59 @@ animations {
     // off
     // Slow down all animations by this factor. Values below 1 speed them up instead.
     slowdown 0.25
+    workspace-switch {
+      off
+    }
 }
 
 hotkey-overlay {
     skip-at-startup
+}
+
+cursor {
+    hide-when-typing
+    // hide-after-inactive-ms 1000 // ignores first wheel event :(
+}
+
+window-rule {
+    match app-id="firefox"
+    //match at-startup=true
+
+    // Properties that apply once upon window opening.
+    open-on-workspace "1"
+    open-maximized true
+
+    // Properties that apply continuously.
+    variable-refresh-rate true
+
+    border {
+        off
+    }
+}
+
+window-rule {
+    match app-id="chromium-browser"
+
+    open-maximized true
+
+    draw-border-with-background false
+    variable-refresh-rate true
+
+    border {
+        off
+    }
+}
+
+window-rule {
+    match app-id="neovide"
+
+    open-maximized true
+
+    draw-border-with-background false
+
+    border {
+        off
+    }
 }
 
 binds {
@@ -115,6 +175,7 @@ binds {
     // Suggested binds for running programs: terminal, app launcher, screen locker.
     Mod+Shift+Return { spawn "kitty"; }
     Mod+P { spawn "fuzzel"; }
+    Mod+Shift+N { spawn "neovide" "--" "--cmd" ":cd /home/gipsy/p/core" "--cmd" "set mouse=a"; }
     Super+Alt+L { spawn "swaylock"; }
 
     // You can also use a shell. Do this if you need pipes, multiple commands, etc.
@@ -286,9 +347,11 @@ binds {
     Mod+Space { switch-preset-column-width; }
     Mod+Shift+R { switch-preset-window-height; }
     Mod+Ctrl+R { reset-window-height; }
-    //Mod+F { maximize-column; }
-    Mod+F { fullscreen-window; }
+    Mod+F { maximize-column; }
+    Mod+G { toggle-window-floating; }
+    //Mod+F { fullscreen-window; }
     Mod+C { center-column; }
+    Mod+S { screenshot; }
 
     // Finer width adjustments.
     // This command can also:

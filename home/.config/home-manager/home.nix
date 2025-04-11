@@ -121,7 +121,8 @@ in
     enlightenment.terminology
 
     # programs
-    pista
+    starship
+    # pista
     tig
     chromium
     libreoffice
@@ -154,10 +155,10 @@ in
     go
     gopls
     delve
-    #pre-commit
+    pre-commit
     terraform
-    nodePackages.prettier
-    nodePackages.eslint
+    # nodePackages.prettier
+    # nodePackages.eslint
     vscode
     nodePackages.serverless
     git-recent
@@ -184,9 +185,10 @@ in
     google-cloud-sdk
     nil
     ruff
-    #uv
+    uv
     devenv
     gh
+    niv
 
     # hobby dev
     rustc
@@ -209,7 +211,6 @@ in
     # wine
     wine64
 
-    pista
     mdfried.packages.${pkgs.system}.default
   ];
 
@@ -261,23 +262,24 @@ in
         XDG_SESSION_DESKTOP=sway;
       };
       shellAliases = {
+        nv = "nvim";
         ne = "neovide --multigrid -- --cmd 'cd ~/p/core' --cmd 'set mouse=a'";
         xc = "xclip -selection clipboard";
         gow = "gotestsum --watch";
       };
       initExtra = ''
-        export PROMPT_CHAR=">"
-        export HIDE_HOME_CWD=1
-        export PROMPT_CHAR_COLOR="green"
-        export PROMPT_CHAR_ROOT_COLOR="green"
-        export SHORTEN_CWD=1
-        export CWD_COLOR="yellow"
-        export PS1='$(pista -m)'
+        #export PROMPT_CHAR=">"
+        #export HIDE_HOME_CWD=1
+        #export PROMPT_CHAR_COLOR="green"
+        #export PROMPT_CHAR_ROOT_COLOR="green"
+        #export SHORTEN_CWD=1
+        #export CWD_COLOR="yellow"
+        export PS1='\[\033[33m\]~\[\033[32m\] >\[\033[0m\] '
+        eval "$(starship init bash)"
         set -o vi
         set show-mode-in-prompt on
         set vi-cmd-mode-string "\1\e[2 q\2"
         set vi-ins-mode-string "\1\e[6 q\2"
-        # eval "$(direnv hook bash)"
       '';
     };
     readline = {
@@ -289,6 +291,111 @@ in
         set keyseq-timeout 50
       '';
     };
+    # starship = {
+      # enable = true;
+      # settings = {
+        # add_newline = false;
+        # directory = {
+          # truncation_length = 3;
+          # truncation_symbol = "";
+          # truncate_to_repo = false;
+          # style = "yellow";
+          # read_only = " 🔒";
+          # read_only_style = "red";
+          # home_symbol = "~";
+          # format = "[$path]($style)[$read_only]($read_only_style) ";
+        # };
+        # git_branch = {
+          # format = "\\[[$branch]($style)";
+          # style = "bright-black";
+        # };
+        # git_status = {
+          # format = "[$conflicted$deleted$renamed$modified$typechanged$staged$untracked]($style)\\]";
+          # style = "red";
+          # ahead = "⇡";
+          # behind = "⇣";
+          # diverged = "⇕";
+          # untracked = "?";
+          # stashed = "^";
+          # modified = "!";
+          # staged = "+";
+          # renamed = "»";
+          # deleted = "✘";
+        # };
+        # character = {
+          # success_symbol = " [>](green)";
+          # error_symbol = " [>](red)";
+          # vimcmd_symbol = " [<](green)";
+        # };
+        # cmd_duration = {
+          # min_time = 500;
+          # format = "took [$duration](yellow) ";
+        # };
+        # aws.disabled = true;
+        # azure.disabled = true;
+        # buf.disabled = true;
+        # c.disabled = true;
+        # cmake.disabled = true;
+        # cobol.disabled = true;
+        # conda.disabled = true;
+        # container.disabled = true;
+        # dart.disabled = true;
+        # deno.disabled = true;
+        # docker_context.disabled = true;
+        # dotnet.disabled = true;
+        # elixir.disabled = true;
+        # elm.disabled = true;
+        # erlang.disabled = true;
+        # gcloud.disabled = true;
+        # git_commit.disabled = true;
+        # git_state.disabled = true;
+        # golang.disabled = true;
+        # guix_shell.disabled = true;
+        # haskell.disabled = true;
+        # haxe.disabled = true;
+        # helm.disabled = true;
+        # hg_branch.disabled = true;
+        # hostname.disabled = true;
+        # java.disabled = true;
+        # jobs.disabled = true;
+        # julia.disabled = true;
+        # kotlin.disabled = true;
+        # kubernetes.disabled = true;
+        # line_break.disabled = true;
+        # lua.disabled = true;
+        # memory_usage.disabled = true;
+        # meson.disabled = true;
+        # nim.disabled = true;
+        # nix_shell.disabled = true;
+        # nodejs.disabled = true;
+        # ocaml.disabled = true;
+        # openstack.disabled = true;
+        # package.disabled = true;
+        # perl.disabled = true;
+        # php.disabled = true;
+        # pulumi.disabled = true;
+        # purescript.disabled = true;
+        # python.disabled = true;
+        # raku.disabled = true;
+        # ruby.disabled = true;
+        # rust.disabled = true;
+        # scala.disabled = true;
+        # shell.disabled = true;
+        # shlvl.disabled = true;
+        # singularity.disabled = true;
+        # spack.disabled = true;
+        # status.disabled = true;
+        # sudo.disabled = true;
+        # swift.disabled = true;
+        # terraform.disabled = true;
+        # time.disabled = true;
+        # username.disabled = true;
+        # vagrant.disabled = true;
+        # vcsh.disabled = true;
+        # vlang.disabled = true;
+        # zig.disabled = true;
+      # };
+    # };
     alacritty = {
       enable = true;
       settings = {
@@ -316,7 +423,7 @@ in
         size = 12;
       };
       settings = {
-        shell_integration = "no-cursor";
+        # shell_integration = "no-cursor";
         cursor_shape = "block";
         cursor_shape_unfocused = "hollow";
         scrollback_lines = 10000;
@@ -324,6 +431,10 @@ in
         italic_text = true;
         # background = "#282c34";
         background = "#1c1a23";
+      };
+      shellIntegration = {
+        enableBashIntegration = true;
+        mode = "no-cursor";
       };
       # theme = "Tokyo Night";
       # theme = "Cyberpunk";

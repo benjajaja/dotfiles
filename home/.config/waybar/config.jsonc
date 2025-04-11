@@ -6,7 +6,7 @@
   "margin-right": 0,
   "margin-left": 0,
 
-  "modules-left": ["niri/workspaces", "tray"],
+  "modules-left": ["niri/workspaces"],
 
   "modules-center": ["niri/window"],
 
@@ -15,6 +15,7 @@
     "temperature",
     "backlight",
     "custom/memory",
+    "tray",
     "pulseaudio#output",
     "pulseaudio#input",
     "battery",

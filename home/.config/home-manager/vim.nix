@@ -1,14 +1,14 @@
 { config, pkgs, lib, vimUtils, ... }:
 
 let
-  easyclip = pkgs.vimUtils.buildVimPlugin {
-    pname = "easyclip";
-    version = "2022-01-23";
+  cutlass = pkgs.vimUtils.buildVimPlugin {
+    pname = "vim-cutlass";
+    version = "2020-03-01";
     src =  pkgs.fetchFromGitHub {
       owner = "svermeulen";
-      repo = "vim-easyclip";
-      rev = "f1a3b95463402b30dd1e22dae7d0b6ea858db2df";
-      sha256 = "sha256-KBHC95cswqsQinMze/nlI43WZkXMXrDuTfK3z4hHYPg=";
+      repo = "vim-cutlass";
+      rev = "7afd649415541634c8ce317fafbc31cd19d57589";
+      sha256 = "sha256-j5W9q905ApDf3fvCIS4UwyHYnEZu5Ictn+6JkV/xjig=";
     };
   };
   sectional-couch = pkgs.vimUtils.buildVimPlugin {
@@ -78,7 +78,7 @@ in {
         bufferline-nvim
         bufdelete-nvim
         vim-repeat
-        easyclip
+        cutlass
         vim-surround
         nerdcommenter
         camelcasemotion

@@ -185,4 +185,27 @@ vim.keymap.set('n', '<leader>dsi', dap.step_into, {})
 vim.keymap.set('n', '<leader>de', dapui.eval, {})
 _G.dap = dap -- to run e.g. :lua dap.continue()
 
+if vim.g.neovide then
+  -- This is wrong, it's to match 1.5 scale which neovide doesn't pick up.
+  -- It makes it too small when the scale is 1.0, obviously.
+  vim.o.guifont = "ProFontWindows Nerd Font Mono:h12"
+  --vim.keymap.set('n', '<D-s>', ':w<CR>') -- Save
+  vim.keymap.set('n', '<C-v>', '"+P') -- Paste normal mode
+  vim.keymap.set('v', '<C-v>', '"+P') -- Paste visual mode
+  vim.keymap.set('c', '<C-v>', '<C-R>+') -- Paste command mode
+  vim.keymap.set('i', '<C-v>', '<ESC>l"+Pli') -- Paste insert mode
+end
+vim.keymap.set('v', '<C-c>', '"+y') -- Copy
+
+-- Cutlass
+vim.api.nvim_set_keymap('n', 'm', 'd', { noremap = true })
+vim.api.nvim_set_keymap('x', 'm', 'd', { noremap = true })
+vim.api.nvim_set_keymap('n', 'mm', 'dd', { noremap = true })
+vim.api.nvim_set_keymap('n', 'M', 'D', { noremap = true })
+
+-- Allow clipboard copy paste in neovim
+vim.api.nvim_set_keymap('', '<C-v>', '+p<CR>', { noremap = true, silent = true})
+vim.api.nvim_set_keymap('!', '<C-v>', '<C-R>+', { noremap = true, silent = true})
+vim.api.nvim_set_keymap('t', '<C-v>', '<C-R>+', { noremap = true, silent = true})
+vim.api.nvim_set_keymap('v', '<C-v>', '<C-R>+', { noremap = true, silent = true})
 
