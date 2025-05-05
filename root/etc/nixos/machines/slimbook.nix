@@ -17,8 +17,8 @@ in
 
   # services.xserver.xrandrHeads = [ "eDP-1" ];
   # boot.kernelPackages = "
-  services.xserver.videoDrivers = [ "nvidia" ];
-  boot.extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];
+  # services.xserver.videoDrivers = [ "nvidia" ];
+  # boot.extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];
 
   hardware = {
     enableAllFirmware = true;
@@ -49,61 +49,7 @@ in
   # now set up reverse PRIME by configuring the NVIDIA provider's outputs as a source for the 
   # amdgpu. you'll need to get these providers from `xrandr --listproviders` AFTER switching to the 
   # above config AND rebooting.
-  services.xserver.displayManager.sessionCommands = ''
-    ${pkgs.xorg.xrandr}/bin/xrandr --setprovideroutputsource NVIDIA-G0 "Unknown AMD Radeon GPU @ pci:0000:06:00.0"
-  '';
 
-
-  environment.etc."tuigreeter/sessions/sway".text = ''
-    [Desktop Entry]
-    Name=Sway
-    Exec="${pkgs.sway}/bin/sway --unsupported-gpu"
-    '';
-
-  services.autorandr = {
-    enable = true;
-    profiles = {
-      "default" = {
-        fingerprint = {
-          eDP-1 = "00ffffffffffff0009e57409000000001b1e0104a5221378070125a5534ba0270e505400000001010101010101010101010101010101403f00afa0a028503020360058c210000018000000fd0030a5f4f443010a202020202020000000fe00424f452043510a202020202020000000fe004e4531353651484d2d4e59320a01267013790000030114e5040184ff09ae002f001f009f0527000200050000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001890";
-        };
-        config = {
-          eDP-1 = {
-            enable = true;
-            crtc = 0;
-            primary = true;
-            position = "0x0";
-            mode = "2560x1440";
-            rate = "165.00";
-          };
-          HDMI-1-0.enable = false;
-        };
-      };
-      "hdmi" = {
-        fingerprint = {
-          eDP-1 = "00ffffffffffff0009e57409000000001b1e0104a5221378070125a5534ba0270e505400000001010101010101010101010101010101403f00afa0a028503020360058c210000018000000fd0030a5f4f443010a202020202020000000fe00424f452043510a202020202020000000fe004e4531353651484d2d4e59320a01267013790000030114e5040184ff09ae002f001f009f0527000200050000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001890";
-          HDMI-1-0 = "*";
-        };
-        config = {
-          eDP-1 = {
-            enable = true;
-            crtc = 0;
-            primary = true;
-            position = "0x0";
-            mode = "2560x1440";
-            rate = "165.00";
-          };
-          HDMI-1-0 = {
-            enable = true;
-            primary = false;
-            position = "2560x0";
-            mode = "1920x1080";
-            rate = "60.00";
-          };
-        };
-      };
-    };
-  };
   # specialisation = {
    # external-display.configuration = {
      # system.nixos.tags = [ "external-display" ];
@@ -112,18 +58,5 @@ in
    # };
   # };
 
-  environment.etc."kanshi/slimbook".text = ''
-    profile mobile {
-            output eDP-2 enable scale 1.5 mode 2560x1440@165Hz
-    }
-    '';
-  # kanshi systemd service
-  systemd.user.services.kanshi = {
-    description = "kanshi daemon";
-    serviceConfig = {
-      Type = "simple";
-      ExecStart = ''${pkgs.kanshi}/bin/kanshi -c /etc/kanshi/slimbook'';
-    };
-  };
 }
 

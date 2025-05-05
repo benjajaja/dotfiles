@@ -4,13 +4,9 @@ let
   compiledLayout = pkgs.runCommand "keyboard-layout" {} ''
     ${pkgs.xorg.xkbcomp}/bin/xkbcomp ${./xkb/layout.xkb} $out
   '';
-  pista = pkgs.callPackage ./pista.nix {};
   git-recent = pkgs.callPackage ./git-recent.nix {};
 
   iamb = (builtins.getFlake "github:benjajaja/iamb/nix").packages.x86_64-linux.default;
-  swaymonad = (builtins.getFlake "github:nicolasavru/swaymonad").packages.x86_64-linux.swaymonad;
-  # pandas = pkgs.callPackage ./pandas.nix {};
-  # gtk-demos = pkgs.callPackage ./gtk-demos.nix {};
 
   # bash script to let dbus know about important env variables and
   # propagate them to relevent services run at the end of sway config
@@ -55,7 +51,6 @@ let
   };
 
   mdfried = builtins.getFlake "github:benjajaja/mdfried/v0.9.0";
-  ghostty = builtins.getFlake "github:ghostty-org/ghostty/v1.0.0";
 in
 {
   imports = [
@@ -84,7 +79,6 @@ in
   ];
 
   home.packages = with pkgs; [
-    swaymonad
     dbus-sway-environment
     configure-gtk
 
@@ -109,6 +103,7 @@ in
     samba
     rubik
     obs-studio
+    emote
 
     # terminals
     alacritty
@@ -117,12 +112,11 @@ in
     wezterm
     kdePackages.konsole
     tmux
-    ghostty.packages.${pkgs.system}.default
+    ghostty
     enlightenment.terminology
 
     # programs
     starship
-    # pista
     tig
     chromium
     libreoffice
@@ -568,43 +562,5 @@ return {
     };
   };
 
-  xsession = {
-    enable = true;
-    windowManager.xmonad = {
-      enable = true;
-      enableContribAndExtras = true;
-      config = ./xmonad.hs;
-    };
-    initExtra = ''
-      hsetroot -extend $HOME/.config/wallpaper.png -gamma 0.5 &
-      xsetroot -cursor_name left_ptr
-      trayer --edge top --align right --SetPartialStrut true --transparent true --tint 0x000000 -l --height 32 --iconspacing 4 --expand false &
-      dunst &
-      nm-applet &
-      pasystray &
-      mictray &
-      xfce4-clipman &
-      cbatticon &
-      flameshot &
-      udiskie -t -a -n -f thunar &
-      blueman-applet &
-      light-locker --lock-after-screensaver=30 &
-      xset s 1800
-      { echo "XIDeviceEnabled XISlaveKeyboard" ; inputplug -d -c echo ; } |
-      while read event
-      do
-          case $event in
-          XIDeviceEnabled*XISlaveKeyboard*)
-              ${pkgs.xorg.xkbcomp}/bin/xkbcomp ${compiledLayout} $DISPLAY
-              ${pkgs.xorg.xset}/bin/xset r rate 200 40
-                  ;;
-          esac
-      done &
-      xbindkeys
-      export QT_AUTO_SCREEN_SCALE_FACTOR=1
-    '';
-  };
-
   nixpkgs.config.allowUnfree = true;
-  #xdg.configFile."sway/config".source = lib.mkForce ./sway/config;
 }

@@ -116,6 +116,7 @@
   environment.systemPackages = with pkgs; [
     nano # leave this as last resort editor!
     niri
+    waybar
     # starship
 
     xwayland-satellite
@@ -138,11 +139,9 @@
     iperf
     unrar
 
-    lightlocker
     inputplug
     firefox
     dmenu
-    arandr
     xfce.thunar
     light
     adwaita-icon-theme
@@ -163,37 +162,24 @@
     htop
     docker-compose
     oxker
-    xclip
-    xbindkeys
 
     # wm session
-    hsetroot
-    trayer
     networkmanagerapplet
     pa_applet
     pasystray
-    cbatticon
-    mictray
-    xfce.xfce4-clipman-plugin
     dunst
     pavucontrol
     pulsemixer
-    udiskie
-    mate.mate-applets
-    brightnessctl
     gvfs
     samba
     rubik
 
     # terminals
-    alacritty
-    contour
-    ctx
-    wezterm
-    ueberzugpp
-    tmux
+    kitty
+    xterm
 
     # programs
+    tmux
     qutebrowser
     neovide
     tig
@@ -226,22 +212,10 @@
     # debug / unusual
     glxinfo
     vulkan-tools
-    xorg.xkbcomp
     xorg.xev
-    xorg.xwd
     imagemagick
-    xvfb-run
-    xdummy
     binutils # a bunch of helper bins, a lot of build tools need some
     xorg.xwd
-
-    # media apps
-    losslesscut-bin
-    vlc
-    gtk3
-    lmms
-    menyoki
-    blender
   ];
 
   services.pulseaudio.enable = false;
@@ -255,51 +229,6 @@
       };
   };
 
-  services.xserver = {
-    enable = true;
-    dpi = 150;
-
-    # custom xkb is loaded by home-manager, this is fallback
-    xkb = {
-      variant = "";
-      options = "caps:swapescape,altwin:swap_lalt_lwin";
-      layout = "us";
-    };
-
-    displayManager = {
-      startx.enable = true;
-      lightdm = {
-          enable = false;
-          greeters.mini = {
-            enable = true;
-            user = "gipsy";
-            extraConfig = ''
-                [greeter]
-                show-password-label = true
-                password-label-text = PASSWORD:
-                password-alignment = left
-                password-input-width = 16
-                show-sys-info = true
-                [greeter-theme]
-                background-image = ""
-                background-color = "#601019"
-                font = "ProFont"
-                window-color = "#dd2137"
-                border-color = "#080800"
-                password-character = *
-            '';
-          };
-        };
-    };
-    desktopManager.gnome.enable = true;
-
-    windowManager = {
-      xmonad = {
-        enable = true;
-        enableContribAndExtras = true;
-      };
-    };
-  };
   services.displayManager = {
     defaultSession = "none+xmonad";
   };
@@ -313,17 +242,6 @@
     NIXOS_OZONE_WL = "1";
   };
 
-  # fonts.packages = with pkgs; [
-  # fonts.packages = with pkgs; [
-    # fira-code fira-mono
-    # (nerdfonts.override { fonts = [
-      # "FiraCode"
-      # "DroidSansMono"
-      # "ProFont"
-      # "Mononoki"
-      # "ShareTechMono"
-    # ]; })
-  # ];
   fonts.packages = with pkgs; [
     fira-code fira-mono
     nerd-fonts.fira-code
@@ -387,20 +305,6 @@
 
   services.udev.packages = with pkgs; [qmk-udev-rules];
   
-  # For ddcutils (monitors)
-  # services.udev.extraRules = "KERNEL==\"i2c-[0-9]*\", GROUP+=\"users\"";
-
-  # services.pgadmin = {
-    # enable = true;
-    # initialEmail = "benjamin.grosse@re-cap.com";
-  # };
-
-  # nixpkgs.overlays = [
-    # (self: super: {
-      # fcitx-engines = self.fcitx5;
-    # })
-  # ];
-
   services.power-profiles-daemon.enable = false;
   services.auto-cpufreq.enable = true;
   services.auto-cpufreq.settings = {
@@ -422,35 +326,6 @@
         zlib # numpy
       ];
     };
-    sway = {
-      enable = true;
-      wrapperFeatures.gtk = true; # so that gtk works properly
-      extraPackages = with pkgs; [
-        swaylock-effects
-        swayidle
-        swaybg
-        waybar
-        swayr
-        bemenu
-        kanshi
-        grim
-        kickoff
-        cagebreak
-        playerctl
-        slurp
-        wdisplays
-        wl-clipboard
-        wf-recorder
-      ];
-      extraSessionCommands = ''
-        export SDL_VIDEODRIVER=wayland
-        export QT_QPA_PLATFORM=wayland
-        export QT_WAYLAND_DISABLE_WINDOWDECORATION="1"
-        export _JAVA_AWT_WM_NONREPARENTING=1
-        export MOZ_ENABLE_WAYLAND=1
-      '';
-    };
-    adb.enable = true;
   };
 
   services.greetd = {
@@ -476,20 +351,10 @@
     Name=Niri
     Exec="${pkgs.niri}/bin/niri-session"
     '';
-  environment.etc."tuigreeter/sessions/sway".text = ''
-    [Desktop Entry]
-    Name=Sway
-    Exec="${pkgs.sway}/bin/sway"
-    '';
   environment.etc."tuigreeter/sessions/bash".text = ''
     [Desktop Entry]
     Name=bash
     Exec="${pkgs.bash}/bin/bash"
-    '';
-  environment.etc."tuigreeter/sessions/xorg".text = ''
-    [Desktop Entry]
-    Name=Xorg
-    Exec="${pkgs.xorg.xinit}/bin/startx"
     '';
 
   # services.pipewire = {
