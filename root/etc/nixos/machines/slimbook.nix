@@ -24,7 +24,6 @@ in
     enableAllFirmware = true;
     cpu.amd.updateMicrocode = true;
     opengl.enable = true;
-    opengl.driSupport = true;
     opengl.driSupport32Bit = true;
   };
 

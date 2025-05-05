@@ -142,7 +142,7 @@ in
     zed-editor
 
     # dev
-    nodejs_18
+    nodejs
     nodePackages.pnpm
     nodePackages.yarn
     nodePackages.typescript-language-server
