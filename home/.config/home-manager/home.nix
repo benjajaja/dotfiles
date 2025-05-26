@@ -50,7 +50,7 @@ let
     '';
   };
 
-  mdfried = builtins.getFlake "github:benjajaja/mdfried/v0.9.0";
+  mdfried = builtins.getFlake "github:benjajaja/mdfried/v0.12.0";
 in
 {
   imports = [
@@ -208,6 +208,7 @@ in
     wine64
 
     mdfried.packages.${pkgs.system}.default
+    glow
   ];
 
   home.file = {
@@ -414,19 +415,28 @@ in
     };
     kitty = {
       enable = true;
-      font = {
-        name = "ProFontWindows Nerd Font Mono";
-        size = 12;
-      };
+      # font = {
+        # name = "ProFontWindows Nerd Font Mono";
+        # size = 12;
+        # bold_font = "Mononoki Nerd Font Mono Bold";
+        # italic_font = "Mononoki Nerd Font Mono Italic";
+        # bold_italic_font = "Mononoki Nerd Font Mono Bold Italic";
+      # };
       settings = {
         # shell_integration = "no-cursor";
         cursor_shape = "block";
         cursor_shape_unfocused = "hollow";
         scrollback_lines = 10000;
-        bold_text_in_bright_colors = true;
-        italic_text = true;
+        # bold_text_in_bright_colors = true;
+        # italic_text = true;
         # background = "#282c34";
         background = "#1c1a23";
+        # font_family = "ProFontWindows Nerd Font Mono";
+        font_family = "EnvyCodeR Nerd Font Mono";
+        font_size = 12;
+        # bold_font = "Hurmit Nerd Font Mono";
+        # italic_font = "Hurmit Nerd Font Mono";
+        # bold_italic_font = "Hurmit Nerd Font Mono";
       };
       shellIntegration = {
         enableBashIntegration = true;

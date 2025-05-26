@@ -53,8 +53,12 @@
     enable = true;
     wlr.enable = true;
     # gtk portal needed to make gtk apps happy
-    # extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
-    config.common.default = "*";
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    config = {
+      common = {
+        default = [ "wlr" "gtk" ];  # Try wlr first, then fallback to gtk
+      };
+    };
   };
 
   services.gnome.gnome-keyring.enable = true;
@@ -143,11 +147,13 @@
     inetutils
     iperf
     unrar
+    nfs-utils
 
     inputplug
     firefox
     dmenu
     xfce.thunar
+    xfce.thunar-archive-plugin
     light
     adwaita-icon-theme
     gimp
@@ -248,12 +254,24 @@
   };
 
   fonts.packages = with pkgs; [
-    fira-code fira-mono
-    nerd-fonts.fira-code
+    fira-code
+    fira-mono
+    nerd-fonts.agave
     nerd-fonts.droid-sans-mono
+    nerd-fonts.envy-code-r
+    nerd-fonts.fira-code
+    nerd-fonts.hurmit
+    nerd-fonts.iosevka-term
+    nerd-fonts.monofur
     nerd-fonts.profont
     nerd-fonts.mononoki
     nerd-fonts.shure-tech-mono
+    nerd-fonts.terminess-ttf
+    nerd-fonts.ubuntu-mono
+    profont
+    termsyn
+    tamsyn
+    tamzen
   ];
 
   programs = {
@@ -368,6 +386,43 @@
     # pulse.enable = true;
   # };
   services.udisks2.enable = true;
+
+  # Enable NFS client support
+  services.rpcbind.enable = true;
+  
+  # Define the NFS mount
+  fileSystems."/mnt/router-ssd" = {
+    device = "192.168.8.1:/";
+    fsType = "nfs";
+    options = [ 
+      "nfsvers=4"
+      "rsize=8192" 
+      "wsize=8192" 
+      "hard" 
+      "intr" 
+    ];
+  };
+
+  systemd.services.backup-sync = {
+    description = "Sync Pictures and Documents to NFS";
+    script = ''
+      ${pkgs.rsync}/bin/rsync -av --delete /home/gipsy/Pictures/ /mnt/router-ssd/backup/Pictures/
+      ${pkgs.rsync}/bin/rsync -av --delete /home/gipsy/Documents/ /mnt/router-ssd/backup/Documents/
+    '';
+    serviceConfig = {
+      Type = "oneshot";
+      User = "gipsy";
+    };
+  };
+
+  systemd.timers.backup-sync = {
+    description = "Run backup sync daily";
+    wantedBy = [ "timers.target" ];
+    timerConfig = {
+      OnCalendar = "daily";
+      Persistent = true;  # Run if system was off during scheduled time
+    };
+  };
 
   system.stateVersion = "22.05"; # Did you read the comment?
 }
