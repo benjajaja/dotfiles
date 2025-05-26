@@ -96,7 +96,6 @@ in
     slurp
     xfce.xfce4-clipman-plugin
     dunst
-    udiskie
     mate.mate-applets
     brightnessctl
     gvfs
@@ -104,6 +103,9 @@ in
     rubik
     obs-studio
     emote
+    swayidle
+    swaylock-effects
+    wl-clipboard
 
     # terminals
     alacritty
@@ -560,6 +562,10 @@ return {
         #];
       };
     };
+  };
+
+  services = {
+    udiskie.enable = true;
   };
 
   nixpkgs.config.allowUnfree = true;

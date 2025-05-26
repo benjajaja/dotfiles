@@ -187,6 +187,7 @@ binds {
     // Suggested binds for running programs: terminal, app launcher, screen locker.
     Mod+Shift+Return { spawn "kitty"; }
     Mod+P { spawn "fuzzel"; }
+    Mod+Shift+P { spawn "emote"; }
     // Mod+Shift+N { spawn "neovide" "--" "--cmd" ":cd /home/gipsy/p/core" "--cmd" "set mouse=a"; }
     Super+Alt+L { spawn "swaylock"; }
 
@@ -404,5 +405,5 @@ binds {
 
     // Powers off the monitors. To turn them back on, do any input like
     // moving the mouse or pressing any other key.
-    Mod+Shift+P { power-off-monitors; }
+    // Mod+Shift+P { power-off-monitors; }
 }

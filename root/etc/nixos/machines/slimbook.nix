@@ -23,8 +23,7 @@ in
   hardware = {
     enableAllFirmware = true;
     cpu.amd.updateMicrocode = true;
-    opengl.enable = true;
-    opengl.driSupport32Bit = true;
+    graphics.enable = true;
   };
 
   environment.systemPackages = [ nvidia-offload ];

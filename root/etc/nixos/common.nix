@@ -15,9 +15,13 @@
     ];
 
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.systemd-boot.consoleMode = "2";
-  boot.loader.efi.canTouchEfiVariables = false;
+  boot.loader.systemd-boot = {
+    enable = true;
+    consoleMode = "keep";
+    configurationLimit = 5;
+    memtest86.enable = true;
+  };
+  boot.loader.efi.canTouchEfiVariables = true;
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
   boot.plymouth.enable = true;
   boot.supportedFilesystems = [ "ntfs" ];
@@ -39,7 +43,7 @@
   time.timeZone = "Atlantic/Canary";
 
   # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.utf8";
+  i18n.defaultLocale = "en_US.UTF-8";
 
   services.dbus = {
     enable = true;
@@ -50,6 +54,7 @@
     wlr.enable = true;
     # gtk portal needed to make gtk apps happy
     # extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    config.common.default = "*";
   };
 
   services.gnome.gnome-keyring.enable = true;
@@ -70,7 +75,7 @@
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
-  services.autorandr.enable = true;
+  services.autorandr.enable = false;
 
   hardware.bluetooth.enable = true;
   hardware.keyboard.qmk.enable = true;
@@ -362,6 +367,7 @@
     # alsa.enable = true;
     # pulse.enable = true;
   # };
+  services.udisks2.enable = true;
 
   system.stateVersion = "22.05"; # Did you read the comment?
 }
