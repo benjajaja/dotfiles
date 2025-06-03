@@ -6,7 +6,7 @@ workspace "5"
 workspace "6"
 workspace "7"
 workspace "8"
-//workspace "9" // automatically added?
+// workspace "9" // automatically added?
 
 input {
     keyboard {
@@ -34,10 +34,20 @@ input {
     focus-follows-mouse
 }
 
+gestures {
+    hot-corners {
+        off
+    }
+}
+
 output "eDP-1" {
     scale 1.5
 }
 output "DP-2" {
+    mode "2560x1440@144"
+    scale 1.5
+}
+output "DP-3" { // depends on usb-c ports
     mode "2560x1440@144"
     scale 1.5
 }
@@ -90,6 +100,12 @@ layout {
         // top 64
         // bottom 64
     }
+    background-color "transparent"
+}
+
+layer-rule {
+    match namespace="^wallpaper$"
+    place-within-backdrop true
 }
 
 spawn-at-startup "xwayland-satellite"
@@ -99,6 +115,7 @@ spawn-at-startup "firefox"
 spawn-at-startup "pasystray"
 
 spawn-at-startup "swayidle" "-w" "timeout" "1200" "swaylock --indicator --screenshots --effect-blur 5x5 --effect-vignette 0.5:0.5 --clock --font \"ProFontWindows Nerd Font Mono\" -f" "timeout" "1800" "niri msg action powerr-off-monitors" "resume" "niri msg action powerr-on-monitors" "timeout" "3600" "systemctl suspend" "before-sleep" "playerctl pause" "before-sleep" "swaylock --indicator --screenshots --effect-blur 5x5 --effect-vignette 0.5:0.5 --clock --font \"ProFontWindows Nerd Font Mono\" -f"
+spawn-at-startup "swaybg -m fill -i ~/Pictures/wallpaper_milkyway.jpg"
 
 
 environment {
@@ -109,6 +126,14 @@ environment {
 prefer-no-csd
 
 screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
+
+overview {
+    zoom 0.333
+    backdrop-color "#111111"
+    // workspace-shadow {
+      // off
+    // }
+}
 
 animations {
     // off
@@ -167,6 +192,11 @@ window-rule {
     border {
         off
     }
+}
+
+window-rule {
+    match app-id="nheko"
+    open-maximized true
 }
 
 binds {
@@ -347,6 +377,7 @@ binds {
     Mod+Shift+8 { move-column-to-workspace 8; }
     Mod+Shift+9 { move-column-to-workspace 9; }
 
+    Mod+Tab { open-overview; }
 
     // Alternatively, there are commands to move just a single window:
     // Mod+Ctrl+1 { move-window-to-workspace 1; }

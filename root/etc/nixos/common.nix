@@ -126,9 +126,12 @@
     nano # leave this as last resort editor!
     niri
     waybar
+    swaybg
     # starship
+    busybox
 
     xwayland-satellite
+    wdisplays
     fuzzel
     wget
     git
@@ -154,6 +157,7 @@
     dmenu
     xfce.thunar
     xfce.thunar-archive-plugin
+    nautilus
     light
     adwaita-icon-theme
     gimp
@@ -393,7 +397,7 @@
   # Define the NFS mount
   fileSystems."/mnt/router-ssd" = {
     device = "192.168.8.1:/";
-    fsType = "nfs";
+    fsType = "nfs4";
     options = [ 
       "nfsvers=4"
       "rsize=8192" 
@@ -408,6 +412,7 @@
     script = ''
       ${pkgs.rsync}/bin/rsync -av --delete /home/gipsy/Pictures/ /mnt/router-ssd/backup/Pictures/
       ${pkgs.rsync}/bin/rsync -av --delete /home/gipsy/Documents/ /mnt/router-ssd/backup/Documents/
+      ${pkgs.rsync}/bin/rsync -av --delete /home/gipsy/o/matrix/ /mnt/router-ssd/backup/matrix/
     '';
     serviceConfig = {
       Type = "oneshot";

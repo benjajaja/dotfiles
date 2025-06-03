@@ -263,6 +263,7 @@ in
         ne = "neovide --multigrid -- --cmd 'cd ~/p/core' --cmd 'set mouse=a'";
         xc = "xclip -selection clipboard";
         gow = "gotestsum --watch";
+        k = "fc -s";
       };
       initExtra = ''
         #export PROMPT_CHAR=">"

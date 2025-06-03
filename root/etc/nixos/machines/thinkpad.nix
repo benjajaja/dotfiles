@@ -21,21 +21,18 @@
 
   networking.hostName = "motherbase"; # Define your hostname.
 
-   environment.systemPackages = with pkgs; [
-     cloudflare-warp
-     #falcon-sensor
-   ];
-   systemd.services.cloudflare-warp = {
-     enable = true;
-     description = "Warp server";
-     path = [ pkgs.cloudflare-warp ];
-     unitConfig = {
-       Type = "simple";
-     };
-     serviceConfig = {
-       ExecStart = "${pkgs.cloudflare-warp}/bin/warp-svc";
-     };
-     #wantedBy = [ "multi-user.target" ];
-   };
-  # custom.falcon.enable = true;
+  environment.systemPackages = with pkgs; [
+    cloudflare-warp
+  ];
+  systemd.services.cloudflare-warp = {
+    enable = true;
+    description = "Warp server";
+    path = [ pkgs.cloudflare-warp ];
+    unitConfig = {
+      Type = "simple";
+    };
+    serviceConfig = {
+      ExecStart = "${pkgs.cloudflare-warp}/bin/warp-svc";
+    };
+  };
 }
