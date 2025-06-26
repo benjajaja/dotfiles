@@ -219,6 +219,7 @@
     ripgrep
     sd
     fd
+    fzf
 
     unzip
     zip

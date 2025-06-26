@@ -144,7 +144,7 @@ in
     zed-editor
 
     # dev
-    nodejs
+    nodejs_24
     nodePackages.pnpm
     nodePackages.yarn
     nodePackages.typescript-language-server
