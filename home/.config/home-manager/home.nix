@@ -183,6 +183,7 @@ in
     ruff
     uv
     devenv
+    mise
     gh
     niv
 

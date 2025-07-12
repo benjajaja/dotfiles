@@ -53,7 +53,7 @@
     enable = true;
     wlr.enable = true;
     # gtk portal needed to make gtk apps happy
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
+    extraPortals = [ pkgs.xdg-desktop-portal-gtk pkgs.xdg-desktop-portal-gnome pkgs.gnome-keyring ];
     config = {
       common = {
         default = [ "wlr" "gtk" ];  # Try wlr first, then fallback to gtk
@@ -324,7 +324,7 @@
       gamescopeSession.enable = true;
     };
     ssh = {
-      startAgent = true;
+      startAgent = false;
     };
   };
   qt.platformTheme = "qt5ct";
@@ -396,24 +396,24 @@
   services.rpcbind.enable = true;
   
   # Define the NFS mount
-  fileSystems."/mnt/router-ssd" = {
-    device = "192.168.8.1:/";
+  fileSystems."/mnt/ops" = {
+    device = "ops:/";
     fsType = "nfs4";
-    options = [ 
+    options = [
       "nfsvers=4"
-      "rsize=8192" 
-      "wsize=8192" 
-      "hard" 
-      "intr" 
+      "nofail"
+      "timeo=5"
+      "retrans=2"
+      "hard"
     ];
   };
 
   systemd.services.backup-sync = {
     description = "Sync Pictures and Documents to NFS";
     script = ''
-      ${pkgs.rsync}/bin/rsync -av --delete /home/gipsy/Pictures/ /mnt/router-ssd/backup/Pictures/
-      ${pkgs.rsync}/bin/rsync -av --delete /home/gipsy/Documents/ /mnt/router-ssd/backup/Documents/
-      ${pkgs.rsync}/bin/rsync -av --delete /home/gipsy/o/matrix/ /mnt/router-ssd/backup/matrix/
+      ${pkgs.rsync}/bin/rsync -av --delete /home/gipsy/Pictures/ /mnt/ops/backup/Pictures/
+      ${pkgs.rsync}/bin/rsync -av --delete /home/gipsy/Documents/ /mnt/ops/backup/Documents/
+      ${pkgs.rsync}/bin/rsync -av --delete /home/gipsy/o/matrix/ /mnt/ops/backup/matrix/
     '';
     serviceConfig = {
       Type = "oneshot";
