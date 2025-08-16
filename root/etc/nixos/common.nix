@@ -26,6 +26,7 @@
   boot.plymouth.enable = true;
   boot.supportedFilesystems = [ "ntfs" ];
   # boot.kernelModules = [ "i2c-dev" ]; # for ddcutils (monitors)
+  boot.blacklistedKernelModules = [ "dvb_usb_rtl28xxu" "rtl2832" "rtl2830" ]; # tinkering
 
   # A DBus service that allows applications to update firmware
   services.fwupd.enable = true;
@@ -88,9 +89,7 @@
   users.users.gipsy = {
     isNormalUser = true;
     description = "gipsy";
-    extraGroups = [ "networkmanager" "wheel" "docker" "disk" "audio" "video" "adbusers" "kvm" ];
-    packages = with pkgs; [
-    ];
+    extraGroups = [ "networkmanager" "wheel" "docker" "disk" "audio" "video" "adbusers" "kvm" "dialout" "plugdev"];
   };
   home-manager.useGlobalPkgs = true;
 
@@ -162,6 +161,9 @@
     adwaita-icon-theme
     gimp
     greetd.tuigreet
+    # nodejs_24
+    # nodePackages.pnpm
+    claude-code
 
     gnumake
     gcc
@@ -232,7 +234,27 @@
     imagemagick
     binutils # a bunch of helper bins, a lot of build tools need some
     xorg.xwd
+
+    # tinkering
+    arduino
+    arduino-cli
+    rtl-sdr
+    gqrx
+    rtl_433
+    esphome
+    (pkgs.python3.withPackages (ps: with ps; [
+      esptool
+      pyserial
+    ]))
   ];
+
+  services.udev.extraRules = ''
+    # CP210x (Silicon Labs) UART
+    SUBSYSTEM=="tty", ATTRS{idVendor}=="10c4", ATTRS{idProduct}=="ea60", GROUP="dialout", MODE="0666"
+
+    # CH340 chips
+    SUBSYSTEM=="tty", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="7523", GROUP="dialout", MODE="0666"
+  '';
 
   services.pulseaudio.enable = false;
 

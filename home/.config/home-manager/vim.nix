@@ -97,6 +97,7 @@ in {
         vim-illuminate
         persistence-nvim
         blink-cmp
+        no-neck-pain-nvim
 
         plenary-nvim
         null-ls-nvim
@@ -106,6 +107,7 @@ in {
         nvim-dap
         nvim-dap-ui
         nvim-dap-go
+        conform-nvim
 
         #dressing-nvim
 

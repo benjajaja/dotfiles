@@ -24,10 +24,9 @@ function toggle_format_on_save()
 end
 vim.cmd("command! ToggleFormatOnSave lua toggle_format_on_save()")
 
-local on_attach = function(client, bufnr)
+local set_lsp_keymaps = function(client, bufnr)
 
   local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-  local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
 
   -- Mappings.
   local opts = { noremap=true, silent=true }
@@ -49,8 +48,12 @@ local on_attach = function(client, bufnr)
   buf_set_keymap('n', 'gn', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
   buf_set_keymap('n', '<space>q', '<cmd>lua vim.lsp.diagnostic.set_loclist()<CR>', opts)
 
-
+  if vim.lsp.buf.inlay_hint then vim.lsp.buf.inlay_hint(bufnr, true) end
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+end
+
+local on_attach = function(client, bufnr)
+  set_lsp_keymaps(client, bufnr)
   if client.supports_method("textDocument/formatting") then
       vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
       vim.api.nvim_create_autocmd("BufWritePre", {
@@ -72,9 +75,24 @@ local on_attach = function(client, bufnr)
           end,
       })
   end
-
-  if vim.lsp.buf.inlay_hint then vim.lsp.buf.inlay_hint(bufnr, true) end
 end
+
+require("conform").setup({
+  formatters_by_ft = {
+    typescript = { "eslint_d", "prettier" },
+    typescriptreact = { "eslint_d", "prettier" },
+  },
+  formatters = {
+    eslint_d = {
+      args = { "--fix-to-stdout", "--stdin", "--stdin-filename", "$FILENAME" },
+    },
+  },
+  format_on_save = {
+    -- I recommend these options. See :help conform.format for details.
+    lsp_format = "fallback",
+    timeout_ms = 3000,
+  },
+})
 
 nvim_lsp.gopls.setup{
   cmd = {'gopls'},
@@ -91,36 +109,6 @@ nvim_lsp.gopls.setup{
   },
   on_attach = on_attach,
 }
-
-function goimports(timeoutms)
-  local context = { source = { organizeImports = true } }
-  vim.validate { context = { context, "t", true } }
-
-  local params = vim.lsp.util.make_range_params()
-  params.context = context
-
-  -- See the implementation of the textDocument/codeAction callback
-  -- (lua/vim/lsp/handler.lua) for how to do this properly.
-  local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, timeout_ms)
-  if not result or next(result) == nil then return end
-  local actions = result[1].result
-  if not actions then return end
-  local action = actions[1]
-
-  -- textDocument/codeAction can return either Command[] or CodeAction[]. If it
-  -- is a CodeAction, it can have either an edit, a command or both. Edits
-  -- should be executed first.
-  if action.edit or type(action.command) == "table" then
-    if action.edit then
-      vim.lsp.util.apply_workspace_edit(action.edit)
-    end
-    if type(action.command) == "table" then
-      vim.lsp.buf.execute_command(action.command)
-    end
-  else
-    vim.lsp.buf.execute_command(action)
-  end
-end
 
 function org_imports(wait_ms)
   local params = vim.lsp.util.make_range_params(nil, vim.lsp.util._get_offset_encoding())
@@ -139,48 +127,21 @@ function org_imports(wait_ms)
 end
 
 require("typescript-tools").setup {
-  on_attach = on_attach,
+  on_attach = function(client, bufnr)
+    set_lsp_keymaps(client, bufnr)
+    -- disable formatting, will use something else
+    client.server_capabilities.documentFormattingProvider = false
+    client.server_capabilities.documentRangeFormattingProvider = false
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      buffer = bufnr,
+      callback = function()
+        require("conform").format({ bufnr = bufnr })
+      end,
+    })
+  end,
   settings = {
   }
 }
-
---local typescript = require("typescript")
---typescript.setup({
-    --disable_commands = false, -- prevent the plugin from creating Vim commands
-    --debug = false, -- enable debug logging for commands
-    --go_to_source_definition = {
-        --fallback = true, -- fall back to standard LSP definition on failure
-    --},
-    --server = { -- pass options to lspconfig's setup method
-      --on_attach = function(client, bufnr)
-        --on_attach(client, bufnr)
-
-        --local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-        --local opts = { noremap=false, silent=true }
-        --buf_set_keymap('n', 'gd', '<cmd>lua go_to_source_definition_typescript()<CR>', opts)
-        --buf_set_keymap('n', '<Leader>ii', '<cmd>lua org_imports_typescript()<CR>', opts)
-
-        -- vim.api.nvim_buf_set_keymap(bufnr, "n", "gs", ":TSLspOrganize<CR>", opts)
-        -- vim.api.nvim_buf_set_keymap(bufnr, "n", "gr", ":TSLspRenameFile<CR>", opts)
-        -- vim.api.nvim_buf_set_keymap(bufnr, "n", "gd", '<Cmd>:TypescriptGoToSourceDefinition<CR>', opts)
-        --client.resolved_capabilities.document_formatting = false
-        --client.resolved_capabilities.document_range_formatting = false
-        --client.server_capabilities.document_formatting = false
-        --client.server_capabilities.document_range_formatting = false
-
-      --end,
-    --},
---})
-
-function org_imports_typescript()
-  typescript.actions.addMissingImports()
-  typescript.actions.organizeImports()
-  vim.lsp.buf.format()
-end
-
-function go_to_source_definition_typescript()
-  typescript.goToSourceDefinition(vim.api.nvim_get_current_win(), {})
-end
 
 require('rust-tools').setup({
   server = {
@@ -202,31 +163,11 @@ require('rust-tools').setup({
         diagnostics = {
           enable = true;
         },
-        -- checkOnSave = {
-					-- command = "clippy",
-					-- extraArgs = { "--all", "--", "-W", "clippy::all" },
-				-- },
-				-- rustfmt = {
-					-- extraArgs = { "+nightly" },
-				-- },
-				-- cargo = {
-					-- loadOutDirsFromCheck = true,
-				-- },
         procMacro = {
           enable = true,
         },
       }
     },
-    -- settings = {
-        -- to enable rust-analyzer settings visit:
-        -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
-        -- ["rust-analyzer"] = {
-            -- enable clippy on save
-            -- checkOnSave = {
-                -- command = "clippy"
-            -- }
-        -- }
-    -- }
   },
 })
 
@@ -234,22 +175,6 @@ require('rust-tools').setup({
     -- capabilities = capabilities,
     -- on_attach = on_attach,
 -- })
-
--- local null_ls = require("null-ls")
--- null_ls.setup({
-    -- debug = false,
-    -- capabilities = capabilities,
-    -- on_attach = on_attach,
-    -- sources = {
-        -- null_ls.builtins.diagnostics.eslint, -- eslint or eslint_d
-        -- null_ls.builtins.code_actions.eslint, -- eslint or eslint_d
-        -- null_ls.builtins.formatting.eslint, -- prettier, eslint, eslint_d, or prettierd
-        -- null_ls.builtins.formatting.prettier, -- prettier, eslint, eslint_d, or prettierd
-        -- require("typescript.extensions.null-ls.code-actions"),
-    -- },
--- })
-
--- require'lspconfig'.nil_ls.setup{}
 
 require('illuminate').configure({
     -- providers: provider used to get references in the buffer, ordered by priority
@@ -261,42 +186,6 @@ require('illuminate').configure({
 })
 
 
--- local bufnr = vim.api.nvim_buf_get_number(0)
---
--- vim.lsp.handlers['textDocument/codeAction'] = function(_, _, actions)
-    -- require('lsputil.codeAction').code_action_handler(nil, actions, nil, nil, nil)
--- end
---
--- vim.lsp.handlers['textDocument/references'] = function(_, _, result)
-    -- require('lsputil.locations').references_handler(nil, result, { bufnr = bufnr }, nil)
--- end
---
--- vim.lsp.handlers['textDocument/definition'] = function(_, method, result)
-    -- require('lsputil.locations').definition_handler(nil, result, { bufnr = bufnr, method = method }, nil)
--- end
---
--- vim.lsp.handlers['textDocument/declaration'] = function(_, method, result)
-    -- require('lsputil.locations').declaration_handler(nil, result, { bufnr = bufnr, method = method }, nil)
--- end
---
--- vim.lsp.handlers['textDocument/typeDefinition'] = function(_, method, result)
-    -- require('lsputil.locations').typeDefinition_handler(nil, result, { bufnr = bufnr, method = method }, nil)
--- end
---
--- vim.lsp.handlers['textDocument/implementation'] = function(_, method, result)
-    -- require('lsputil.locations').implementation_handler(nil, result, { bufnr = bufnr, method = method }, nil)
--- end
---
--- vim.lsp.handlers['textDocument/documentSymbol'] = function(_, _, result, _, bufn)
-    -- require('lsputil.symbols').document_handler(nil, result, { bufnr = bufn }, nil)
--- end
---
--- vim.lsp.handlers['textDocument/symbol'] = function(_, _, result, _, bufn)
-    -- require('lsputil.symbols').workspace_handler(nil, result, { bufnr = bufn }, nil)
--- end
---
--- vim.cmd [[autocmd BufWritePre * lua vim.lsp.buf.format()]]
-
 nvim_lsp.pyright.setup({
     on_attach = function(client, bufnr)
         -- Add custom settings or keybindings here if needed
@@ -304,11 +193,6 @@ nvim_lsp.pyright.setup({
     end,
     capabilities = capabilities, -- If you have capabilities configured for autocompletion, etc.
 })
-
---vim.lsp.handlers['textDocument/completion'] = function(err, result, ctx, config)
-    --print(vim.inspect(result))
-    --return vim.lsp.handlers['textDocument/completion'](err, result, ctx, config)
---end
 
 -- fix rust -32802: server cancelled the request
 -- https://github.com/neovim/neovim/issues/30985

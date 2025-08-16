@@ -6,7 +6,7 @@ let
   '';
   git-recent = pkgs.callPackage ./git-recent.nix {};
 
-  iamb = (builtins.getFlake "github:benjajaja/iamb/nix").packages.x86_64-linux.default;
+  iamb = (builtins.getFlake "github:ulyssa/iamb?ref=34d3b844af99315a84fbae554e4b20594ecefc66").packages.x86_64-linux.default;
 
   # bash script to let dbus know about important env variables and
   # propagate them to relevent services run at the end of sway config
@@ -144,40 +144,18 @@ in
     zed-editor
 
     # dev
-    nodejs_24
-    nodePackages.pnpm
-    nodePackages.yarn
-    nodePackages.typescript-language-server
+    # nodejs_24
+    # nodePackages.yarn
+    # nodePackages.typescript-language-server
     go
     gopls
     delve
     pre-commit
     terraform
-    # nodePackages.prettier
-    # nodePackages.eslint
     vscode
-    nodePackages.serverless
+    # nodePackages.serverless
     git-recent
-    #python311
-    #python311Packages.pip
-    #python311Packages.pip-tools
-    #python311Packages.setuptools
-    #python311Packages.virtualenv
-    #python311Packages.nodeenv
-    # pandas
-    #python311Packages.numpy
-    #python312
     python313
-    #python312Packages.virtualenv
-    #(python312.withPackages (ps: with ps; [
-      #pip
-      #pip-tools
-      #setuptools
-      #virtualenv
-      #nodeenv
-      #numpy
-      #pandas
-    #]))
     google-cloud-sdk
     nil
     ruff
@@ -247,6 +225,7 @@ in
           find . -type f -name @1 -exec sed -i @2 {} \;
         }
         export SDL_VIDEODRIVER=wayland # steam?
+        alias claude="/home/gipsy/.claude/local/claude"
       '';
       sessionVariables = {
         EDITOR = "nvim";
@@ -290,111 +269,6 @@ in
         set keyseq-timeout 50
       '';
     };
-    # starship = {
-      # enable = true;
-      # settings = {
-        # add_newline = false;
-        # directory = {
-          # truncation_length = 3;
-          # truncation_symbol = "";
-          # truncate_to_repo = false;
-          # style = "yellow";
-          # read_only = " 🔒";
-          # read_only_style = "red";
-          # home_symbol = "~";
-          # format = "[$path]($style)[$read_only]($read_only_style) ";
-        # };
-        # git_branch = {
-          # format = "\\[[$branch]($style)";
-          # style = "bright-black";
-        # };
-        # git_status = {
-          # format = "[$conflicted$deleted$renamed$modified$typechanged$staged$untracked]($style)\\]";
-          # style = "red";
-          # ahead = "⇡";
-          # behind = "⇣";
-          # diverged = "⇕";
-          # untracked = "?";
-          # stashed = "^";
-          # modified = "!";
-          # staged = "+";
-          # renamed = "»";
-          # deleted = "✘";
-        # };
-        # character = {
-          # success_symbol = " [>](green)";
-          # error_symbol = " [>](red)";
-          # vimcmd_symbol = " [<](green)";
-        # };
-        # cmd_duration = {
-          # min_time = 500;
-          # format = "took [$duration](yellow) ";
-        # };
-        # aws.disabled = true;
-        # azure.disabled = true;
-        # buf.disabled = true;
-        # c.disabled = true;
-        # cmake.disabled = true;
-        # cobol.disabled = true;
-        # conda.disabled = true;
-        # container.disabled = true;
-        # dart.disabled = true;
-        # deno.disabled = true;
-        # docker_context.disabled = true;
-        # dotnet.disabled = true;
-        # elixir.disabled = true;
-        # elm.disabled = true;
-        # erlang.disabled = true;
-        # gcloud.disabled = true;
-        # git_commit.disabled = true;
-        # git_state.disabled = true;
-        # golang.disabled = true;
-        # guix_shell.disabled = true;
-        # haskell.disabled = true;
-        # haxe.disabled = true;
-        # helm.disabled = true;
-        # hg_branch.disabled = true;
-        # hostname.disabled = true;
-        # java.disabled = true;
-        # jobs.disabled = true;
-        # julia.disabled = true;
-        # kotlin.disabled = true;
-        # kubernetes.disabled = true;
-        # line_break.disabled = true;
-        # lua.disabled = true;
-        # memory_usage.disabled = true;
-        # meson.disabled = true;
-        # nim.disabled = true;
-        # nix_shell.disabled = true;
-        # nodejs.disabled = true;
-        # ocaml.disabled = true;
-        # openstack.disabled = true;
-        # package.disabled = true;
-        # perl.disabled = true;
-        # php.disabled = true;
-        # pulumi.disabled = true;
-        # purescript.disabled = true;
-        # python.disabled = true;
-        # raku.disabled = true;
-        # ruby.disabled = true;
-        # rust.disabled = true;
-        # scala.disabled = true;
-        # shell.disabled = true;
-        # shlvl.disabled = true;
-        # singularity.disabled = true;
-        # spack.disabled = true;
-        # status.disabled = true;
-        # sudo.disabled = true;
-        # swift.disabled = true;
-        # terraform.disabled = true;
-        # time.disabled = true;
-        # username.disabled = true;
-        # vagrant.disabled = true;
-        # vcsh.disabled = true;
-        # vlang.disabled = true;
-        # zig.disabled = true;
-      # };
-    # };
     alacritty = {
       enable = true;
       settings = {
@@ -439,6 +313,10 @@ in
         # bold_font = "Hurmit Nerd Font Mono";
         # italic_font = "Hurmit Nerd Font Mono";
         # bold_italic_font = "Hurmit Nerd Font Mono";
+        "map ctrl+shift+page_up" = "scroll -24";
+        "map ctrl+shift+page_down" = "scroll 24";
+        "map ctrl+page_up" = "scroll -1";
+        "map ctrl+page_down" = "scroll 1";
       };
       shellIntegration = {
         enableBashIntegration = true;

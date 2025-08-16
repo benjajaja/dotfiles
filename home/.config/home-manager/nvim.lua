@@ -209,3 +209,17 @@ vim.api.nvim_set_keymap('!', '<C-v>', '<C-R>+', { noremap = true, silent = true}
 vim.api.nvim_set_keymap('t', '<C-v>', '<C-R>+', { noremap = true, silent = true})
 vim.api.nvim_set_keymap('v', '<C-v>', '<C-R>+', { noremap = true, silent = true})
 
+require("no-neck-pain").setup({
+  buffers = {
+    right = {
+      enabled = false,
+    },
+    scratchPad = {
+      enabled = true,
+      location = "~/Documents/",
+      bo = {
+        filetype = "md"
+      },
+    },
+  },
+})
