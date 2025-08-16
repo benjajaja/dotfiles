@@ -63,11 +63,12 @@
   };
 
   services.gnome.gnome-keyring.enable = true;
-  security.pam.services.gdm.enableGnomeKeyring = true;
+  # security.pam.services.gdm.enableGnomeKeyring = true;
+  security.pam.services.greetd.enableGnomeKeyring = true;
   security.pam.services.swaylock.text = ''
     # PAM configuration file for the swaylock screen locker. By default, it includes
     # the 'login' configuration file (see /etc/pam.d/login)
-    auth include login
+    auth include greetd
   '';
   # Enabling this option allows any program run by the "users" group to request real-time priority.
   security.pam.loginLimits = [
@@ -126,7 +127,7 @@
     niri
     waybar
     swaybg
-    # starship
+    starship
     busybox
 
     xwayland-satellite
@@ -303,13 +304,11 @@
 
   programs = {
     bash = {
-      # promptInit = ''
-        # eval "$(starship init bash)"
-      # '';
       shellAliases = {
         nv = "nvim";
       };
       interactiveShellInit = ''
+        eval "$(starship init bash)"
         set -o vi
         set show-mode-in-prompt on
         set vi-cmd-mode-string "\1\e[2 q\2"
@@ -348,6 +347,7 @@
     ssh = {
       startAgent = false;
     };
+    seahorse.enable = true;
   };
   qt.platformTheme = "qt5ct";
 

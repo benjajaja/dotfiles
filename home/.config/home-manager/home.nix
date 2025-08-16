@@ -118,7 +118,6 @@ in
     enlightenment.terminology
 
     # programs
-    starship
     tig
     chromium
     libreoffice
@@ -217,13 +216,8 @@ in
     bash = {
       enable = true;
       bashrcExtra = ''
-        export GRIT_INSTALL="$HOME/.grit"
-        PATH="$HOME/venvs/default/bin:$HOME/.local/bin:$PATH:/home/$USER/go/bin:/home/$USER/.cargo/bin:$GRIT_INSTALL/bin"
+        PATH="$HOME/venvs/default/bin:$HOME/.local/bin:$PATH:/home/$USER/go/bin:/home/$USER/.cargo/bin"
         export LD_LIBRARY_PATH=$NIX_LD_LIBRARY_PATH
-        function find_and_replace() {
-          set -e
-          find . -type f -name @1 -exec sed -i @2 {} \;
-        }
         export SDL_VIDEODRIVER=wayland # steam?
         alias claude="/home/gipsy/.claude/local/claude"
       '';
@@ -246,18 +240,16 @@ in
         k = "fc -s";
       };
       initExtra = ''
-        #export PROMPT_CHAR=">"
-        #export HIDE_HOME_CWD=1
-        #export PROMPT_CHAR_COLOR="green"
-        #export PROMPT_CHAR_ROOT_COLOR="green"
-        #export SHORTEN_CWD=1
-        #export CWD_COLOR="yellow"
-        export PS1='\[\033[33m\]~\[\033[32m\] >\[\033[0m\] '
         eval "$(starship init bash)"
         set -o vi
         set show-mode-in-prompt on
         set vi-cmd-mode-string "\1\e[2 q\2"
         set vi-ins-mode-string "\1\e[6 q\2"
+
+        function find_and_replace() {
+          set -e
+          find . -type f -name @1 -exec sed -i @2 {} \;
+        }
       '';
     };
     readline = {
