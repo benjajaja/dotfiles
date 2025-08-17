@@ -4,6 +4,10 @@
 
 { config, pkgs, lib, ... }:
 
+let
+  iamb = (builtins.getFlake "github:ulyssa/iamb?ref=34d3b844af99315a84fbae554e4b20594ecefc66").packages.x86_64-linux.default;
+  mdfried = builtins.getFlake "github:benjajaja/mdfried/v0.12.0";
+in
 {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.settings.auto-optimise-store = true;
@@ -144,8 +148,6 @@
     inxi
     xorg.xdpyinfo
     pciutils
-    refind
-    efibootmgr
     ethtool
     usbutils
     traceroute
@@ -163,9 +165,7 @@
     light
     adwaita-icon-theme
     gimp
-    greetd.tuigreet
-    # nodejs_24
-    # nodePackages.pnpm
+    tuigreet
     claude-code
 
     gnumake
@@ -178,12 +178,14 @@
        extraPkgs = pkgs: [ glxinfo ];
     }).run
     steamcmd
+    wine64
 
     htop
     docker-compose
-    oxker
 
     # wm session
+    hsetroot
+    trayer
     networkmanagerapplet
     pa_applet
     pasystray
@@ -193,30 +195,98 @@
     gvfs
     samba
     rubik
+    cbatticon
+    flameshot
+    swappy
+    grim
+    slurp
+    xfce.xfce4-clipman-plugin
+    mate.mate-applets
+    brightnessctl
+    obs-studio
+    emote
+    swayidle
+    swaylock-effects
+    wl-clipboard
 
     # terminals
     kitty
     xterm
+    contour
+    ctx
+    wezterm
+    kdePackages.konsole
+    ghostty
+    enlightenment.terminology
 
     # programs
     tmux
     qutebrowser
     neovide
     tig
-    tdesktop
     chromium
     libreoffice
     inkscape
     gnomecast
     nheko
     fractal
-    gomuks
     iamb
+    mdfried.packages.${pkgs.system}.default
+    glow
     ncdu
     gnupg
     awscli
     file # joshuto file preview mimetype
     exiftool # joshuto file preview
+    _1password-cli
+    jq
+    file # joshuto file preview mimetype
+    exiftool # joshuto file preview
+    postgresql # for pg_dump
+    dbeaver-bin
+    eza
+    parquet-tools
+    zed-editor
+    transmission_3-gtk # transmission_4-gtk
+    transmission-remote-gtk
+    celluloid
+    vscode
+    devenv
+    gh
+    niv
+
+    # work dev
+    go
+    gopls
+    delve
+    pre-commit
+    terraform
+    git-recent
+    python313
+    google-cloud-sdk
+    nil
+    ruff
+    uv
+    mise
+
+    # hobby dev
+    rustc
+    cargo
+    cargo-deny
+    cargo-watch
+    rust-analyzer
+    clippy
+    rustfmt
+    cargo-watch
+    cargo-readme
+    cargo-make
+    cargo-fuzz
+    cmake
+    pkg-config
+    elmPackages.elm-language-server
+    elmPackages.elm-test
+    elmPackages.elm-format
+    pyright
 
     bat
     tree-sitter
@@ -384,7 +454,7 @@
     enable = true;
     settings = rec {
       default_session = {
-        command = "${pkgs.greetd.tuigreet}/bin/tuigreet -t -r --remember-session --asterisks -s \"/etc/tuigreeter/sessions\"";
+        command = "${pkgs.tuigreet}/bin/tuigreet -t -r --remember-session --asterisks -s \"/etc/tuigreeter/sessions\"";
       };
     };
   };

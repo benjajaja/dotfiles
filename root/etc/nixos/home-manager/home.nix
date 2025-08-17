@@ -5,8 +5,6 @@ let
   '';
   git-recent = pkgs.callPackage ./git-recent.nix {};
 
-  iamb = (builtins.getFlake "github:ulyssa/iamb?ref=34d3b844af99315a84fbae554e4b20594ecefc66").packages.x86_64-linux.default;
-
   qt5 = pkgs.qt5;
   # bash script to let dbus know about important env variables and
   # propagate them to relevent services run at the end of sway config
@@ -50,7 +48,6 @@ let
     '';
   };
 
-  mdfried = builtins.getFlake "github:benjajaja/mdfried/v0.12.0";
 in
 {
   imports = [
@@ -74,123 +71,7 @@ in
   home.packages = with pkgs; [
     dbus-sway-environment
     configure-gtk
-
-    # wm session
-    hsetroot
-    trayer
-    networkmanagerapplet
-    pa_applet
-    pasystray
-    cbatticon
-    flameshot
-    swappy
-    grim
-    slurp
-    xfce.xfce4-clipman-plugin
-    dunst
-    mate.mate-applets
-    brightnessctl
-    gvfs
-    samba
-    rubik
-    obs-studio
-    emote
-    swayidle
-    swaylock-effects
-    wl-clipboard
-
-    # terminals
-    alacritty
-    contour
-    ctx
-    wezterm
-    kdePackages.konsole
-    tmux
-    ghostty
-    enlightenment.terminology
-
-    # programs
-    tig
-    chromium
-    libreoffice
-    inkscape
-    transmission_3-gtk # transmission_4-gtk
-    transmission-remote-gtk
-    jackett
-    celluloid
-    gnomecast
-    fractal
-    iamb
-    ncdu
-    gnupg
-    awscli
-    _1password-cli
-    jq
-    file # joshuto file preview mimetype
-    exiftool # joshuto file preview
-    postgresql # for pg_dump
-    dbeaver-bin
-    eza
-    parquet-tools
-    zed-editor
-
-    # dev
-    # nodejs_24
-    # nodePackages.yarn
-    # nodePackages.typescript-language-server
-    go
-    gopls
-    delve
-    pre-commit
-    terraform
-    vscode
-    # nodePackages.serverless
-    git-recent
-    python313
-    google-cloud-sdk
-    nil
-    ruff
-    uv
-    devenv
-    mise
-    gh
-    niv
-
-    # hobby dev
-    rustc
-    cargo
-    cargo-deny
-    cargo-watch
-    rust-analyzer
-    clippy
-    rustfmt
-    cargo-watch
-    cargo-readme
-    cargo-make
-    cargo-fuzz
-    cmake
-    pkg-config
-    elmPackages.elm-language-server
-    elmPackages.elm-test
-    elmPackages.elm-format
-    pyright
-    # wine
-    wine64
-
-    mdfried.packages.${pkgs.system}.default
-    glow
   ];
-
-  home.file = {
-    xbindkeysrc = {
-      enable = true;
-      target = ".xbindkeysrc";
-      text = ''
-        "dbus-send --dest=app.junker.mictray --type=method_call /app/junker/mictray app.junker.mictray.ToggleMute"
-           XF86AudioMicMute
-      '';
-    };
-  };
 
   gtk = {
     enable = true;
