@@ -7,6 +7,10 @@
 let
   iamb = (builtins.getFlake "github:ulyssa/iamb?ref=34d3b844af99315a84fbae554e4b20594ecefc66").packages.x86_64-linux.default;
   mdfried = builtins.getFlake "github:benjajaja/mdfried/v0.12.0";
+  git-recent = pkgs.callPackage ./git-recent.nix {};
+  # compiledLayout = pkgs.runCommand "keyboard-layout" {} ''
+    # ${pkgs.xorg.xkbcomp}/bin/xkbcomp ${./xkb/layout.xkb} $out
+  # '';
 in
 {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
