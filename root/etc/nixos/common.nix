@@ -92,6 +92,8 @@
     description = "gipsy";
     extraGroups = [ "networkmanager" "wheel" "docker" "disk" "audio" "video" "adbusers" "kvm" "dialout" "plugdev"];
   };
+
+  home-manager.users.gipsy = import ./home-manager/home.nix;
   home-manager.useGlobalPkgs = true;
 
   # Allow unfree packages

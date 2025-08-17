@@ -1,5 +1,4 @@
 { pkgs, ... }:
-with import <nixpkgs> {};
 let
   compiledLayout = pkgs.runCommand "keyboard-layout" {} ''
     ${pkgs.xorg.xkbcomp}/bin/xkbcomp ${./xkb/layout.xkb} $out
@@ -8,6 +7,7 @@ let
 
   iamb = (builtins.getFlake "github:ulyssa/iamb?ref=34d3b844af99315a84fbae554e4b20594ecefc66").packages.x86_64-linux.default;
 
+  qt5 = pkgs.qt5;
   # bash script to let dbus know about important env variables and
   # propagate them to relevent services run at the end of sway config
   # see
@@ -71,13 +71,6 @@ in
   # changes in each release.
   home.stateVersion = "22.05";
 
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
-
-  nixpkgs.overlays = [
-    (import ./overlays.nix)
-  ];
-
   home.packages = with pkgs; [
     dbus-sway-environment
     configure-gtk
@@ -89,7 +82,6 @@ in
     pa_applet
     pasystray
     cbatticon
-    mictray
     flameshot
     swappy
     grim
@@ -225,12 +217,12 @@ in
         EDITOR = "nvim";
         MOZ_ENABLE_WAYLAND=1;
         NIXOS_OZONE_WL = "1";
-        SDL_VIDEODRIVER=wayland;
+        SDL_VIDEODRIVER=pkgs.wayland;
         _JAVA_AWT_WM_NONREPARENTING=1;
-        QT_QPA_PLATFORM=wayland;
+        QT_QPA_PLATFORM=pkgs.wayland;
         QT_QPA_PLATFORM_PLUGIN_PATH="${qt5.qtbase.bin}/lib/qt-${qt5.qtbase.version}/plugins/platforms";
-        XDG_CURRENT_DESKTOP=sway;
-        XDG_SESSION_DESKTOP=sway;
+        XDG_CURRENT_DESKTOP=pkgs.niri;
+        XDG_SESSION_DESKTOP=pkgs.niri;
       };
       shellAliases = {
         nv = "nvim";
@@ -449,6 +441,4 @@ return {
   services = {
     udiskie.enable = true;
   };
-
-  nixpkgs.config.allowUnfree = true;
 }
