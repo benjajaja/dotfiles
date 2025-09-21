@@ -65,8 +65,11 @@
         set vi-ins-mode-string "\1\e[6 q\2"
 
         function find_and_replace() {
-          set -e
-          find . -type f -name @1 -exec sed -i @2 {} \;
+          local search="$1"
+          local replace="$2"
+          shift 2
+          
+          find "$@" -type f -exec grep -l "$search" {} \; -exec sh -c 'echo "Modifying: $1" && sed -i "s/'"$search"'/'"$replace"'/g" "$1"' _ {} \;
         }
       '';
     };
@@ -182,6 +185,7 @@ return {
       aliases = {
           pff = "pull --ff-only";
           psu = "push -u origin HEAD";
+          ccc = "commit --no-verify";
       };
       includes = [{
         contents = {

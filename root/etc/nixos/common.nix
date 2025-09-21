@@ -263,14 +263,12 @@ in
     go
     gopls
     delve
-    pre-commit
     terraform
     git-recent
     python313
     google-cloud-sdk
     nil
     ruff
-    uv
     mise
 
     # hobby dev
@@ -315,9 +313,11 @@ in
     # tinkering
     arduino
     arduino-cli
-    rtl-sdr
     gqrx
     rtl_433
+    rtl-sdr
+    rtl-ais
+    sdrpp
     esphome
     (pkgs.python3.withPackages (ps: with ps; [
       esptool
@@ -429,7 +429,7 @@ in
 
   services.blueman.enable = true;
 
-  services.udev.packages = with pkgs; [qmk-udev-rules];
+  services.udev.packages = with pkgs; [ qmk-udev-rules rtl-sdr ];
   
   services.power-profiles-daemon.enable = false;
   services.auto-cpufreq.enable = true;

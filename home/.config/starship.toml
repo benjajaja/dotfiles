@@ -152,7 +152,10 @@ disabled = true
 disabled = true
 
 [nix_shell]
-disabled = true
+disabled = false
+format = "$state"
+pure_msg = "[ ](blue)"
+impure_msg = "[ ](cyan)"
 
 [nodejs]
 disabled = true

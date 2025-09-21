@@ -68,6 +68,16 @@ vim.api.nvim_set_keymap('n', 'gm', 'm', { noremap = true })
 vim.api.nvim_set_keymap('n', '[[', '[m', { noremap = true })
 vim.api.nvim_set_keymap('n', ']]', ']m', { noremap = true })
 
+-- Close any floating windows (diagnostic vestiges)
+vim.api.nvim_set_keymap('n', '<leader>cc',
+  [[<cmd>lua for _, win in ipairs(vim.api.nvim_list_wins()) do
+       if vim.api.nvim_win_get_config(win).relative ~= "" then
+         vim.api.nvim_win_close(win, true)
+       end
+     end<CR>]],
+  { noremap = true, silent = true }
+)
+
 -- Go formatting settings
 vim.g.go_fmt_command = "golines"
 vim.g.go_fmt_options = { golines = "-m 100" }

@@ -87,10 +87,12 @@ require("conform").setup({
       args = { "--fix-to-stdout", "--stdin", "--stdin-filename", "$FILENAME" },
     },
   },
-  format_on_save = {
-    -- I recommend these options. See :help conform.format for details.
+  -- format_on_save = {
+    -- lsp_format = "fallback",
+    -- timeout_ms = 3000,
+  -- },
+  format_after_save = {
     lsp_format = "fallback",
-    timeout_ms = 3000,
   },
 })
 
