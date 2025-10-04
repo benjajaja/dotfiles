@@ -184,6 +184,7 @@ return {
       userEmail = "ste3ls@gmail.com";
       aliases = {
           pff = "pull --ff-only";
+          mff = "merge --ff-only";
           psu = "push -u origin HEAD";
           ccc = "commit --no-verify";
       };

@@ -159,6 +159,7 @@ in
     iperf
     unrar
     nfs-utils
+    imv
 
     inputplug
     firefox
@@ -258,6 +259,7 @@ in
     devenv
     gh
     niv
+    nodejs
 
     # work dev
     go
@@ -526,6 +528,36 @@ in
       OnCalendar = "daily";
       Persistent = true;  # Run if system was off during scheduled time
     };
+  };
+
+  xdg.mime.defaultApplications = {
+    # Common formats
+    "image/jpeg" = "imv.desktop";
+    "image/png" = "imv.desktop";
+    "image/gif" = "imv.desktop";
+    "image/webp" = "imv.desktop";
+    "image/svg+xml" = "imv.desktop";
+    
+    # Icons
+    "image/x-icon" = "imv.desktop";
+    "image/vnd.microsoft.icon" = "imv.desktop";
+    
+    # Legacy/specialized formats
+    "image/bmp" = "imv.desktop";
+    "image/tiff" = "imv.desktop";
+    "image/x-tiff" = "imv.desktop";
+    
+    # Raw/camera formats (if your viewer supports them)
+    "image/x-canon-cr2" = "imv.desktop";
+    "image/x-canon-crw" = "imv.desktop";
+    "image/x-nikon-nef" = "imv.desktop";
+    "image/x-sony-arw" = "imv.desktop";
+    
+    # Other formats
+    "image/x-pixmap" = "imv.desktop";        # XPM
+    "image/x-portable-pixmap" = "imv.desktop"; # PPM
+    "image/x-portable-graymap" = "imv.desktop"; # PGM
+    "image/x-portable-bitmap" = "imv.desktop";  # PBM
   };
 
   system.stateVersion = "22.05"; # Did you read the comment?

@@ -152,7 +152,7 @@ disabled = true
 disabled = true
 
 [nix_shell]
-disabled = false
+disabled = true
 format = "$state"
 pure_msg = "[ ](blue)"
 impure_msg = "[ ](cyan)"
