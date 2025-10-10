@@ -74,16 +74,12 @@ in {
       plugins = with pkgs.vimPlugins; [
         vim-nix
         nvim-web-devicons
-        # barbar-nvim
-        bufferline-nvim
         bufdelete-nvim
         vim-repeat
         cutlass
         vim-surround
         nerdcommenter
         camelcasemotion
-        sidebar-nvim
-        neo-tree-nvim
         sectional-couch
         substitute-nvim
 
