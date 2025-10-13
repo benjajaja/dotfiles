@@ -81,10 +81,14 @@ require("conform").setup({
   formatters_by_ft = {
     typescript = { "eslint_d", "prettier" },
     typescriptreact = { "eslint_d", "prettier" },
+    go = { "golines" },
   },
   formatters = {
     eslint_d = {
       args = { "--fix-to-stdout", "--stdin", "--stdin-filename", "$FILENAME" },
+    },
+    golines = {
+      prepend_args = { "--max-len=100", "--base-formatter=gofumpt" },
     },
   },
   -- format_on_save = {
