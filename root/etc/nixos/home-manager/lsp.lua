@@ -13,10 +13,10 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
 
-format_on_save = true
+vim.g.format_on_save = true
 function toggle_format_on_save()
-  format_on_save = not format_on_save
-  if format_on_save then
+  vim.g.format_on_save = not vim.g.format_on_save
+  if vim.g.format_on_save then
     print("Autoformatting on save enabled")
   else
     print("Autoformatting on save disabled")
@@ -60,7 +60,7 @@ local on_attach = function(client, bufnr)
           group = augroup,
           buffer = bufnr,
           callback = function()
-              if format_on_save then
+              if vim.g.format_on_save then
                 print("Autoformatting...")
                 vim.lsp.buf.format({
                     timeout_ms = 2000,
@@ -81,23 +81,21 @@ require("conform").setup({
   formatters_by_ft = {
     typescript = { "eslint_d", "prettier" },
     typescriptreact = { "eslint_d", "prettier" },
-    go = { "golines" },
+    go = { "goimports", "golines" },
   },
   formatters = {
     eslint_d = {
       args = { "--fix-to-stdout", "--stdin", "--stdin-filename", "$FILENAME" },
     },
-    golines = {
-      prepend_args = { "--max-len=100", "--base-formatter=gofumpt" },
-    },
   },
-  -- format_on_save = {
-    -- lsp_format = "fallback",
-    -- timeout_ms = 3000,
-  -- },
-  format_after_save = {
-    lsp_format = "fallback",
-  },
+  format_after_save = function(bufnr)
+    if vim.g.format_on_save == false then
+      return
+    end
+    return {
+      lsp_format = "fallback",
+    }
+  end,
 })
 
 nvim_lsp.gopls.setup{

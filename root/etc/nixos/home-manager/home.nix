@@ -63,14 +63,6 @@
         set show-mode-in-prompt on
         set vi-cmd-mode-string "\1\e[2 q\2"
         set vi-ins-mode-string "\1\e[6 q\2"
-
-        function find_and_replace() {
-          local search="$1"
-          local replace="$2"
-          shift 2
-          
-          find "$@" -type f -exec grep -l "$search" {} \; -exec sh -c 'echo "Modifying: $1" && sed -i "s/'"$search"'/'"$replace"'/g" "$1"' _ {} \;
-        }
       '';
     };
     readline = {
