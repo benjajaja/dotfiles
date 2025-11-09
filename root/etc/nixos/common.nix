@@ -6,7 +6,7 @@
 
 let
   iamb = (builtins.getFlake "github:ulyssa/iamb?ref=34d3b844af99315a84fbae554e4b20594ecefc66").packages.x86_64-linux.default;
-  mdfried = builtins.getFlake "github:benjajaja/mdfried/v0.12.0";
+  mdfried = builtins.getFlake "github:benjajaja/mdfried/v0.14.1";
   git-recent = pkgs.callPackage ./git-recent.nix {};
   # compiledLayout = pkgs.runCommand "keyboard-layout" {} ''
     # ${pkgs.xorg.xkbcomp}/bin/xkbcomp ${./xkb/layout.xkb} $out
@@ -145,6 +145,7 @@ in
     fuzzel
     wget
     git
+    git-lfs
     killall
     nixos-option
     stow
@@ -196,6 +197,7 @@ in
     pasystray
     dunst
     pavucontrol
+    pulseaudio
     pulsemixer
     gvfs
     samba
@@ -260,6 +262,7 @@ in
     gh
     niv
     nodejs
+    ffmpeg
 
     # work dev
     go
