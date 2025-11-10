@@ -174,6 +174,7 @@ return {
       enable = true;
       userName = "Benjamin Große";
       userEmail = "ste3ls@gmail.com";
+      lfs.enable = true;
       aliases = {
           pff = "pull --ff-only";
           mff = "merge --ff-only";

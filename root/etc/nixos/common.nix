@@ -145,7 +145,6 @@ in
     fuzzel
     wget
     git
-    git-lfs
     killall
     nixos-option
     stow
