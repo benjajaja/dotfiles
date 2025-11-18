@@ -6,7 +6,7 @@
 
 let
   iamb = (builtins.getFlake "github:ulyssa/iamb?ref=34d3b844af99315a84fbae554e4b20594ecefc66").packages.x86_64-linux.default;
-  mdfried = builtins.getFlake "github:benjajaja/mdfried/v0.14.1";
+  mdfried = builtins.getFlake "github:benjajaja/mdfried/v0.14.4";
   git-recent = pkgs.callPackage ./git-recent.nix {};
   # compiledLayout = pkgs.runCommand "keyboard-layout" {} ''
     # ${pkgs.xorg.xkbcomp}/bin/xkbcomp ${./xkb/layout.xkb} $out
@@ -47,6 +47,27 @@ in
 
   # Enable networking
   networking.networkmanager.enable = true;
+
+  networking.wg-quick.interfaces = {
+    wg0 = {
+      address = [ "10.0.50.3/32" ];  # Laptop uses .3
+      privateKeyFile = "/etc/wireguard/laptop.key";
+      dns = [ "192.168.8.1" ];
+      autostart = false;
+      
+      peers = [
+        {
+          publicKey = "rBuslEAt+tKDXIaqu/wOQQLewhVVWSe8AMFL1iVwNHU=";
+          allowedIPs = [
+            "10.0.50.0/24"
+            "192.168.8.0/24"
+          ];
+          endpoint = "qdice.wtf:51820";
+          persistentKeepalive = 25;
+        }
+      ];
+    };
+  };
 
   # Set your time zone.
   time.timeZone = "Atlantic/Canary";
@@ -139,6 +160,7 @@ in
     swaybg
     starship
     busybox
+    fish
 
     xwayland-satellite
     wdisplays
@@ -160,6 +182,7 @@ in
     unrar
     nfs-utils
     imv
+    wireguard-tools
 
     inputplug
     firefox
@@ -224,6 +247,7 @@ in
     kdePackages.konsole
     ghostty
     enlightenment.terminology
+    warp-terminal
 
     # programs
     tmux
@@ -327,6 +351,7 @@ in
       esptool
       pyserial
     ]))
+    python313Packages.meshtastic
   ];
 
   services.udev.extraRules = ''
