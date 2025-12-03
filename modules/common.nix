@@ -60,18 +60,8 @@ in
     packages = [ pkgs.dconf ];
   };
 
-  xdg.portal = {
-    enable = true;
-    wlr.enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk pkgs.xdg-desktop-portal-gnome pkgs.gnome-keyring ];
-    config = {
-      common = {
-        default = [ "wlr" "gtk" ];
-      };
-    };
-  };
-
-  services.gnome.gnome-keyring.enable = true;
+  # Niri module handles portals (gnome + gtk) and gnome-keyring automatically
+  programs.niri.enable = true;
   security.pam.services.greetd.enableGnomeKeyring = true;
   security.pam.services.swaylock.text = ''
     auth include greetd
@@ -124,7 +114,6 @@ in
 
   environment.systemPackages = with pkgs; [
     nano # leave this as last resort editor!
-    niri
     waybar
     swaybg
     starship

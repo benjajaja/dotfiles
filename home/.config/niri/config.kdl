@@ -11,9 +11,6 @@ workspace "8"
 input {
     keyboard {
         xkb {
-            // layout "us,ru"
-            //options "compose:ralt,capslock(swapescape)"
-            //include "pc+us(altgr-intl)+inet(evdev)+altwin(swap_lalt_lwin)+capslock(swapescape)"
             model "pc101"
             file "/home/gipsy/.config/xkb/layout.xkb"
         }
@@ -28,10 +25,6 @@ input {
     mouse { }
 
     trackpoint { }
-
-    // warp-mouse-to-focus
-    // focus-follows-mouse max-scroll-amount="0%"
-    // focus-follows-mouse
 }
 
 gestures {
@@ -79,27 +72,15 @@ layout {
 
     focus-ring {
         off
-
-        width 4
-        active-color "#7fc8ff"
-        inactive-color "#505050"
-        // inactive-gradient from="#505050" to="#808080" angle=45 relative-to="workspace-view"
     }
 
     border {
-        width 2
-        active-color "#ffc87f"
-        inactive-color "#505050"
-        // active-gradient from="#ffbb66" to="#ffc880" angle=45 relative-to="workspace-view"
-        // inactive-gradient from="#505050" to="#808080" angle=45 relative-to="workspace-view"
+        width 1
+        active-gradient from="#ffc87f" to="#d9a565" angle=180
+        inactive-gradient from="#505050" to="#383838" angle=180
     }
 
-    struts {
-        // left 64
-        // right 64
-        // top 64
-        // bottom 64
-    }
+    struts { }
     background-color "transparent"
 }
 
@@ -110,7 +91,7 @@ layer-rule {
 
 environment {
   QT_QPA_PLATFORM "wayland"
-  DISPLAY ":0"
+  DISPLAY ":0"  // xwayland
   SSH_AUTH_SOCK "/run/user/1000/gcr/ssh"
 }
 
@@ -118,7 +99,7 @@ spawn-at-startup "waybar"
 spawn-at-startup "emote" // auto-daemons itself
 spawn-at-startup "firefox"
 
-spawn-at-startup "swayidle" "-w" "timeout" "1200" "swaylock --indicator --screenshots --effect-blur 5x5 --effect-vignette 0.5:0.5 --clock --font \"ProFontWindows Nerd Font Mono\" -f" "timeout" "1800" "niri msg action powerr-off-monitors" "resume" "niri msg action powerr-on-monitors" "timeout" "3600" "systemctl suspend" "before-sleep" "playerctl pause" "before-sleep" "swaylock --indicator --screenshots --effect-blur 5x5 --effect-vignette 0.5:0.5 --clock --font \"ProFontWindows Nerd Font Mono\" -f"
+spawn-at-startup "swayidle" "-w" "timeout" "1200" "swaylock --indicator --screenshots --effect-blur 5x5 --effect-vignette 0.5:0.5 --clock --font \"ProFontWindows Nerd Font Mono\" -f" "timeout" "1800" "niri msg action power-off-monitors" "resume" "niri msg action power-on-monitors" "timeout" "3600" "systemctl suspend" "before-sleep" "playerctl pause" "before-sleep" "swaylock --indicator --screenshots --effect-blur 5x5 --effect-vignette 0.5:0.5 --clock --font \"ProFontWindows Nerd Font Mono\" -f"
 spawn-at-startup "swaybg -m fill -i ~/Pictures/wallpaper_milkyway.jpg"
 
 prefer-no-csd

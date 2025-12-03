@@ -31,14 +31,10 @@
       '';
       sessionVariables = {
         EDITOR = "nvim";
-        MOZ_ENABLE_WAYLAND=1;
-        NIXOS_OZONE_WL = "1";
-        SDL_VIDEODRIVER=pkgs.wayland;
-        _JAVA_AWT_WM_NONREPARENTING=1;
-        QT_QPA_PLATFORM=pkgs.wayland;
-        QT_QPA_PLATFORM_PLUGIN_PATH="${pkgs.qt5.qtbase.bin}/lib/qt-${pkgs.qt5.qtbase.version}/plugins/platforms";
-        XDG_CURRENT_DESKTOP=pkgs.niri;
-        XDG_SESSION_DESKTOP=pkgs.niri;
+        NIXOS_OZONE_WL = "1";  # Electron apps
+        _JAVA_AWT_WM_NONREPARENTING = "1";
+        XDG_CURRENT_DESKTOP = "niri";
+        XDG_SESSION_DESKTOP = "niri";
       };
       shellAliases = {
         nv = "nvim";
