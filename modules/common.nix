@@ -116,10 +116,10 @@ in
 
   virtualisation.docker.enable = true;
 
-  services.logind = {
-    lidSwitch = "suspend";
-    lidSwitchDocked = "ignore";
-    lidSwitchExternalPower = "ignore";
+  services.logind.settings.Login = {
+    HandleLidSwitch = "suspend";
+    HandleLidSwitchDocked = "ignore";
+    HandleLidSwitchExternalPower = "ignore";
   };
 
   environment.systemPackages = with pkgs; [
@@ -139,7 +139,7 @@ in
     killall
     nixos-option
     stow
-    glxinfo
+    mesa-demos # glxinfo
     inxi
     xorg.xdpyinfo
     pciutils
@@ -171,7 +171,7 @@ in
     vcprompt
 
     (steam.override {
-       extraPkgs = pkgs: [ glxinfo ];
+       extraPkgs = pkgs: [ mesa-demos ];
     }).run
     steamcmd
     wine64
@@ -243,7 +243,7 @@ in
     eza
     parquet-tools
     zed-editor
-    transmission_3-gtk
+    transmission_4-gtk
     transmission-remote-gtk
     celluloid
     vscode
@@ -298,7 +298,7 @@ in
     unar
 
     # debug / unusual
-    glxinfo
+    mesa-demos # glxinfo
     vulkan-tools
     xorg.xev
     imagemagick

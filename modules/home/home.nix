@@ -148,15 +148,7 @@ return {
 
     git = {
       enable = true;
-      userName = "Benjamin Große";
-      userEmail = "ste3ls@gmail.com";
       lfs.enable = true;
-      aliases = {
-          pff = "pull --ff-only";
-          mff = "merge --ff-only";
-          psu = "push -u origin HEAD";
-          ccc = "commit --no-verify";
-      };
       includes = [{
         contents = {
           gpg = {
@@ -170,11 +162,23 @@ return {
           };
         };
       }];
-      extraConfig = {
-        sendemail.smtpserver = "smtp.gmail.com";
-        sendemail.smtpserverport = "587";
-        sendemail.smtpencryption = "tls";
-        sendemail.smtpuser = "ste3ls@gmail.com";
+      settings = {
+        user = {
+          name = "Benjamin Große";
+          email = "ste3ls@gmail.com";
+        };
+        alias = {
+          pff = "pull --ff-only";
+          mff = "merge --ff-only";
+          psu = "push -u origin HEAD";
+          ccc = "commit --no-verify";
+        };
+        sendemail = {
+          smtpserver = "smtp.gmail.com";
+          smtpserverport = "587";
+          smtpencryption = "tls";
+          smtpuser = "ste3ls@gmail.com";
+        };
         rerere.enabled = true;
       };
     };

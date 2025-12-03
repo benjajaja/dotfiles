@@ -147,25 +147,14 @@ require("typescript-tools").setup {
   }
 }
 
-require('rust-tools').setup({
+vim.g.rustaceanvim = {
   server = {
     on_attach = on_attach,
-    standalone = true,
     capabilities = capabilities,
-    tools = {
-      autoSetHints = true,
-      hover_with_actions = true,
-      runnables = {
-          use_telescope = true
-      },
-      inlay_hints = {
-          show_parameter_hints = true,
-      },
-    },
     settings = {
       ['rust-analyzer'] = {
         diagnostics = {
-          enable = true;
+          enable = true,
         },
         procMacro = {
           enable = true,
@@ -173,7 +162,7 @@ require('rust-tools').setup({
       }
     },
   },
-})
+}
 
 -- nvim_lsp.elmls.setup({
     -- capabilities = capabilities,

@@ -86,7 +86,7 @@ in {
         telescope-nvim
         telescope-zf-native-nvim
         nvim-treesitter.withAllGrammars
-        rust-tools-nvim
+        rustaceanvim
         vim-illuminate
         persistence-nvim
         blink-cmp
