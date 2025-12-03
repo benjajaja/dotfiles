@@ -1,3 +1,5 @@
+# CrowdStrike Falcon Sensor package
+# You need to get the binary from IT and place it at /opt/CrowdStrikeDistro/
 { stdenv
 , lib
 , pkgs
@@ -18,8 +20,8 @@ let
   # You need to get the binary from #it guys
   # mkdir -p /opt/CrowdStrikeDistro/
   # mv /tmp/falcon*.deb /opt/CrowdStrikeDistro/
-  # src = /opt/CrowdStrikeDistro/falcon-sensor_6.47.0-14408_amd64.deb;
   src = /opt/CrowdStrikeDistro/falcon-sensor_6.44.0-14107_amd64.deb;
+
   falcon-sensor = stdenv.mkDerivation {
     inherit arch src;
     name = pname;

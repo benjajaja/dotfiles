@@ -1,39 +1,133 @@
-# NixOS dotfiles
+# NixOS Dotfiles (Flakes)
 
-1. Install NixOS as usual, set up user shell with git.
-2. Clone this repo to `~/dotfiles`, `cd` into it, rename username.
-3. Optionally create a machine specific file `root/etc/nixos/machines/<name>.nix`.
-4. `stow` the config files to home-manager and root dirs:
+This repository uses Nix flakes for reproducible NixOS configuration.
+
+## Structure
+
 ```
+~/dotfiles/
+├── flake.nix              # Entry point - defines all inputs and hosts
+├── flake.lock             # Pinned dependency versions
+├── hosts/                 # Machine-specific configurations
+│   ├── thinkpad/          # hostname: motherbase
+│   │   ├── default.nix
+│   │   └── hardware-configuration.nix
+│   ├── slimbook/          # hostname: lz
+│   │   ├── default.nix
+│   │   └── hardware-configuration.nix
+│   └── falcon/            # hostname: falcon
+│       ├── default.nix
+│       └── hardware-configuration.nix
+├── modules/
+│   ├── common.nix         # Shared system configuration
+│   ├── falcon-sensor.nix  # CrowdStrike module
+│   └── home/              # Home-manager configuration
+│       ├── home.nix
+│       ├── vim.nix
+│       └── *.lua
+├── packages/              # Custom package definitions
+│   ├── git-recent.nix
+│   ├── git-recent
+│   └── falcon-sensor.nix
+└── home/                  # Non-Nix dotfiles (use stow)
+    └── .config/
+        ├── niri/
+        ├── waybar/
+        ├── starship.toml
+        └── ...
+```
+
+## Fresh Install
+
+1. Boot NixOS installer and install minimal system
+2. Clone this repo:
+   ```bash
+   git clone <repo-url> ~/dotfiles
+   cd ~/dotfiles
+   ```
+3. Copy hardware configuration for your machine:
+   ```bash
+   cp /etc/nixos/hardware-configuration.nix hosts/<machine>/
+   ```
+4. Build and switch:
+   ```bash
+   sudo nixos-rebuild switch --flake .#<hostname>
+   ```
+
+   Where `<hostname>` is one of: `motherbase`, `lz`, `falcon`
+
+5. Stow non-Nix dotfiles:
+   ```bash
+   stow home
+   ```
+
+## Daily Usage
+
+### Rebuild system
+```bash
+sudo nixos-rebuild switch --flake ~/dotfiles#<hostname>
+```
+
+### Update all inputs (nixpkgs, home-manager, etc.)
+```bash
+nix flake update
+sudo nixos-rebuild switch --flake ~/dotfiles#<hostname>
+```
+
+### Update a single input
+```bash
+nix flake lock --update-input nixpkgs
+```
+
+### Test configuration without switching
+```bash
+sudo nixos-rebuild test --flake ~/dotfiles#<hostname>
+```
+
+### Build without activating
+```bash
+sudo nixos-rebuild build --flake ~/dotfiles#<hostname>
+```
+
+## Adding a New Machine
+
+1. Create directory: `mkdir -p hosts/<name>`
+2. Create `hosts/<name>/default.nix` with machine-specific config
+3. Copy hardware config: `cp /etc/nixos/hardware-configuration.nix hosts/<name>/`
+4. Add to `flake.nix`:
+   ```nix
+   nixosConfigurations = {
+     # ...existing...
+     <name> = mkHost "<name>";
+   };
+   ```
+
+## Non-Nix Dotfiles (Stow)
+
+The `home/` directory contains configuration files that aren't managed by Nix/home-manager.
+These are symlinked to your home directory using stow:
+
+```bash
+# Initial setup
 stow home
-sudo stow root -t /
+
+# After adding new files
+stow -R home
 ```
 
-Edit `/etc/nixos/configuration.nix` as usual and only import `./machines/<name>.nix`:
-```
-{ config, pkgs, ... }:
+## Flake Inputs
 
-{
-  imports = [ 
-    ./machines/thinkpad.nix
-  ];
-}
-```
-...or just add machine specific configuration there:
-```
-{ config, pkgs, ... }:
+| Input | Description |
+|-------|-------------|
+| `nixpkgs` | NixOS unstable packages |
+| `home-manager` | Home directory management |
+| `iamb` | Matrix client |
+| `mdfried` | Markdown renderer |
 
-{
-  imports = [ 
-    ./common.nix
-  ];
-  boot.initrd.kernelModules = [ "i915" ];
-  services.xserver.videoDrivers = [ "modesetting" ];
-}
-```
-5. Run `nixos-rebuild switch` and `home-manager switch`.
+## Hosts
 
-# Stow
-The "filesystem files" are symlinks to their equivalents in `~/dotfiles`, you
-can edit either. When adding some file, run `stow -R home/` or
-`sudo stow -R root/ -t /`.
+| Hostname | Machine | Description |
+|----------|---------|-------------|
+| `motherbase` | ThinkPad | Intel laptop with Cloudflare Warp |
+| `lz` | Slimbook | AMD/NVIDIA hybrid laptop |
+| `falcon` | Desktop | Intel desktop |

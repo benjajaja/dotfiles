@@ -62,9 +62,7 @@ let
     };
   };
 
-  # vimrc = builtins.readFile ./vimrc;
   lsp_lua = builtins.readFile ./lsp.lua;
-  cmp_lua = builtins.readFile ./cmp.lua;
   blink_lua = builtins.readFile ./blink.lua;
   nvim_lua = builtins.readFile ./nvim.lua;
 in {
@@ -87,7 +85,6 @@ in {
         vim-vsnip
         telescope-nvim
         telescope-zf-native-nvim
-        #nvim-lsputils
         nvim-treesitter.withAllGrammars
         rust-tools-nvim
         vim-illuminate
@@ -97,15 +94,11 @@ in {
 
         plenary-nvim
         null-ls-nvim
-        #typescript-nvim
         typescript-tools-nvim
-        #go-nvim
         nvim-dap
         nvim-dap-ui
         nvim-dap-go
         conform-nvim
-
-        #dressing-nvim
 
         tokyonight-nvim
         dracula-nvim
@@ -126,6 +119,4 @@ EOF
       '';
     };
   };
-
 }
-

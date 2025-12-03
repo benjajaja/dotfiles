@@ -3,19 +3,9 @@
   imports = [
     ./vim.nix
   ];
-  # Home Manager needs a bit of information about you and the
-  # paths it should manage.
+
   home.username = "gipsy";
   home.homeDirectory = "/home/gipsy";
-
-  # This value determines the Home Manager release that your
-  # configuration is compatible with. This helps avoid breakage
-  # when a new Home Manager release introduces backwards
-  # incompatible changes.
-  #
-  # You can update Home Manager without changing this value. See
-  # the Home Manager release notes for a list of state version
-  # changes in each release.
   home.stateVersion = "22.05";
 
   gtk = {
@@ -65,6 +55,7 @@
         set vi-ins-mode-string "\1\e[6 q\2"
       '';
     };
+
     readline = {
       enable = true;
       extraConfig = ''
@@ -74,6 +65,7 @@
         set keyseq-timeout 50
       '';
     };
+
     alacritty = {
       enable = true;
       settings = {
@@ -94,30 +86,16 @@
         ];
       };
     };
+
     kitty = {
       enable = true;
-      # font = {
-        # name = "ProFontWindows Nerd Font Mono";
-        # size = 12;
-        # bold_font = "Mononoki Nerd Font Mono Bold";
-        # italic_font = "Mononoki Nerd Font Mono Italic";
-        # bold_italic_font = "Mononoki Nerd Font Mono Bold Italic";
-      # };
       settings = {
-        # shell_integration = "no-cursor";
         cursor_shape = "block";
         cursor_shape_unfocused = "hollow";
         scrollback_lines = 10000;
-        # bold_text_in_bright_colors = true;
-        # italic_text = true;
-        # background = "#282c34";
         background = "#1c1a23";
-        # font_family = "ProFontWindows Nerd Font Mono";
         font_family = "EnvyCodeR Nerd Font Mono";
         font_size = 12;
-        # bold_font = "Hurmit Nerd Font Mono";
-        # italic_font = "Hurmit Nerd Font Mono";
-        # bold_italic_font = "Hurmit Nerd Font Mono";
         "map ctrl+shift+page_up" = "scroll -24";
         "map ctrl+shift+page_down" = "scroll 24";
         "map ctrl+page_up" = "scroll -1";
@@ -127,16 +105,13 @@
         enableBashIntegration = true;
         mode = "no-cursor";
       };
-      # theme = "Tokyo Night";
-      # theme = "Cyberpunk";
     };
+
     foot = {
       enable = true;
       settings = {
         main = {
-          #term = "xterm-256color";
           font = "ProFontWindows Nerd Font Mono:size=12";
-          #dpi-aware = "yes";
         };
         mouse = {
           hide-when-typing = "yes";
@@ -147,13 +122,13 @@
         };
       };
     };
+
     wezterm = {
       enable = true;
       extraConfig = ''
 return {
   front_end = "WebGpu",
   font = wezterm.font("ProFontWindows Nerd Font"),
-  -- font_size = 14,
   bold_brightens_ansi_colors = "BrightOnly",
   color_scheme = "Tokyo Night",
   window_padding = {
@@ -170,6 +145,7 @@ return {
 }
       '';
     };
+
     git = {
       enable = true;
       userName = "Benjamin Große";
@@ -205,7 +181,6 @@ return {
 
     direnv = {
       enable = true;
-      # enableBashIntegration = true; # see note on other shells below
       nix-direnv.enable = true;
     };
 
@@ -227,37 +202,14 @@ return {
         OverrideFirstRunPage = "";
         OverridePostUpdatePage = "";
         DontCheckDefaultBrowser = true;
-        DisplayMenuBar = "never"; # alternatives: "always", "never" or "default-on"
+        DisplayMenuBar = "never";
         SearchBar = "unified";
         PasswordManagerEnabled = true;
       };
       profiles.default = {
-        #userChrome = builtins.readFile ./userChrome.css;
         settings = {
-          #"apz.overscroll.enabled" = true;
           "browser.aboutConfig.showWarning" = false;
-          #"general.autoScroll" = true;
-          #"toolkit.legacyUserProfileCustomizations.stylesheets" = true;
         };
-        #bookmarks = [
-          #{
-            #name = "wikipedia";
-            #tags = ["wiki"];
-            #keyword = "wiki";
-            #url = "https://en.wikipedia.org/wiki/Special:Search?search=%s&amp;go=Go";
-          #}
-          #{
-            #name = "Samwise PRs";
-            #keyword = "sam";
-            #url = "https://github.com/monasticventures/samwise/pulls";
-          #}
-          #{
-            #name = "Hacker News Search";
-            #tags = ["news" "tech"];
-            #keyword = "hn";
-            #url = "https://hn.algolia.com/?q=%s";
-          #}
-        #];
       };
     };
   };

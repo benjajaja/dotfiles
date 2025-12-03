@@ -1,3 +1,4 @@
+# Slimbook - AMD/NVIDIA hybrid laptop (hostname: lz)
 { config, pkgs, lib, ... }:
 
 let
@@ -10,15 +11,11 @@ let
   '';
 in
 {
-  imports = [ 
-    ../common.nix
+  imports = [
+    ./hardware-configuration.nix
   ];
-  networking.hostName = "lz"; # Define your hostname.
 
-  # services.xserver.xrandrHeads = [ "eDP-1" ];
-  # boot.kernelPackages = "
-  # services.xserver.videoDrivers = [ "nvidia" ];
-  # boot.extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];
+  networking.hostName = "lz";
 
   hardware = {
     enableAllFirmware = true;
@@ -44,17 +41,4 @@ in
     # ensure the kernel doesn't tear down the card/driver prior to X startup due to the card powering down.
     nvidiaPersistenced = false; # disable for wayland
   };
-  # now set up reverse PRIME by configuring the NVIDIA provider's outputs as a source for the 
-  # amdgpu. you'll need to get these providers from `xrandr --listproviders` AFTER switching to the 
-  # above config AND rebooting.
-
-  # specialisation = {
-   # external-display.configuration = {
-     # system.nixos.tags = [ "external-display" ];
-     # hardware.nvidia.prime.offload.enable = lib.mkForce false;
-     # hardware.nvidia.powerManagement.enable = lib.mkForce false;
-   # };
-  # };
-
 }
-

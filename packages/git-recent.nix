@@ -1,7 +1,4 @@
-with import <nixpkgs> {};
-with pkgs;
-
-{ stdenv, lib }:
+{ stdenv, lib, pkgs, ... }:
 
 let
   script = builtins.readFile ./git-recent;

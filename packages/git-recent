@@ -90,4 +90,3 @@ if [[ $INTERACTIVE = '1' ]]; then
 else
   printf '%s\n' "${BRANCHES[@]}"
 fi
-

@@ -1,10 +1,12 @@
-{ config, pkgs, lib, fetchurl, ... }:
+# ThinkPad - Intel laptop (hostname: motherbase)
+{ config, pkgs, lib, ... }:
 
 {
-  imports = [ 
-    ../common.nix
-    ./falcon.nix
+  imports = [
+    ./hardware-configuration.nix
+    ../../modules/falcon-sensor.nix
   ];
+
   boot.initrd.kernelModules = [ "i915" ];
   boot.kernelModules = [];
 
@@ -19,11 +21,12 @@
     ];
   };
 
-  networking.hostName = "motherbase"; # Define your hostname.
+  networking.hostName = "motherbase";
 
   environment.systemPackages = with pkgs; [
     cloudflare-warp
   ];
+
   systemd.services.cloudflare-warp = {
     enable = true;
     description = "Warp server";

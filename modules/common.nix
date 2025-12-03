@@ -1,28 +1,15 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, pkgs, lib, ... }:
+# Common NixOS configuration shared across all machines
+{ config, pkgs, lib, inputs, iamb, mdfried, ... }:
 
 let
-  iamb = (builtins.getFlake "github:ulyssa/iamb?ref=34d3b844af99315a84fbae554e4b20594ecefc66").packages.x86_64-linux.default;
-  mdfried = builtins.getFlake "github:benjajaja/mdfried/v0.14.4";
-  git-recent = pkgs.callPackage ./git-recent.nix {};
-  # compiledLayout = pkgs.runCommand "keyboard-layout" {} ''
-    # ${pkgs.xorg.xkbcomp}/bin/xkbcomp ${./xkb/layout.xkb} $out
-  # '';
+  git-recent = pkgs.callPackage ../packages/git-recent.nix {};
 in
 {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.settings.auto-optimise-store = true;
   nix.settings.trusted-users = ["root" "@wheel"];
-  imports =
-    [ # Include the results of the hardware scan.
-      /etc/nixos/hardware-configuration.nix
-      <home-manager/nixos>
-    ];
 
-  # Bootloader.
+  # Bootloader
   boot.loader.systemd-boot = {
     enable = true;
     consoleMode = "keep";
@@ -33,28 +20,21 @@ in
   boot.loader.efi.efiSysMountPoint = "/boot/efi";
   boot.plymouth.enable = true;
   boot.supportedFilesystems = [ "ntfs" ];
-  # boot.kernelModules = [ "i2c-dev" ]; # for ddcutils (monitors)
   boot.blacklistedKernelModules = [ "dvb_usb_rtl28xxu" "rtl2832" "rtl2830" ]; # tinkering
 
   # A DBus service that allows applications to update firmware
   services.fwupd.enable = true;
-
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Enable networking
   networking.networkmanager.enable = true;
 
   networking.wg-quick.interfaces = {
     wg0 = {
-      address = [ "10.0.50.3/32" ];  # Laptop uses .3
+      address = [ "10.0.50.3/32" ];
       privateKeyFile = "/etc/wireguard/laptop.key";
       dns = [ "192.168.8.1" ];
       autostart = false;
-      
+
       peers = [
         {
           publicKey = "rBuslEAt+tKDXIaqu/wOQQLewhVVWSe8AMFL1iVwNHU=";
@@ -69,37 +49,33 @@ in
     };
   };
 
-  # Set your time zone.
+  # Set your time zone
   time.timeZone = "Atlantic/Canary";
 
-  # Select internationalisation properties.
+  # Select internationalisation properties
   i18n.defaultLocale = "en_US.UTF-8";
 
   services.dbus = {
     enable = true;
     packages = [ pkgs.dconf ];
   };
+
   xdg.portal = {
     enable = true;
     wlr.enable = true;
-    # gtk portal needed to make gtk apps happy
     extraPortals = [ pkgs.xdg-desktop-portal-gtk pkgs.xdg-desktop-portal-gnome pkgs.gnome-keyring ];
     config = {
       common = {
-        default = [ "wlr" "gtk" ];  # Try wlr first, then fallback to gtk
+        default = [ "wlr" "gtk" ];
       };
     };
   };
 
   services.gnome.gnome-keyring.enable = true;
-  # security.pam.services.gdm.enableGnomeKeyring = true;
   security.pam.services.greetd.enableGnomeKeyring = true;
   security.pam.services.swaylock.text = ''
-    # PAM configuration file for the swaylock screen locker. By default, it includes
-    # the 'login' configuration file (see /etc/pam.d/login)
     auth include greetd
   '';
-  # Enabling this option allows any program run by the "users" group to request real-time priority.
   security.pam.loginLimits = [
     { domain = "@users"; item = "rtprio"; type = "-"; value = 1; }
   ];
@@ -107,27 +83,22 @@ in
   services.upower.enable = true;
   services.gvfs.enable = true;
 
-
-  # Enable CUPS to print documents.
+  # Enable CUPS to print documents
   services.printing.enable = true;
   services.autorandr.enable = false;
 
   hardware.bluetooth.enable = true;
   hardware.keyboard.qmk.enable = true;
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
+  # Define a user account
   users.users.gipsy = {
     isNormalUser = true;
     description = "gipsy";
     extraGroups = [ "networkmanager" "wheel" "docker" "disk" "audio" "video" "adbusers" "kvm" "dialout" "plugdev"];
   };
 
-  home-manager.users.gipsy = import ./home-manager/home.nix;
-  home-manager.useGlobalPkgs = true;
-
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
-  # Some insecure package
   nixpkgs.config.permittedInsecurePackages = [
     "olm-3.2.16"
   ];
@@ -146,13 +117,11 @@ in
   virtualisation.docker.enable = true;
 
   services.logind = {
-    lidSwitch = "suspend"; # also default
+    lidSwitch = "suspend";
     lidSwitchDocked = "ignore";
     lidSwitchExternalPower = "ignore";
   };
 
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
   environment.systemPackages = with pkgs; [
     nano # leave this as last resort editor!
     niri
@@ -202,7 +171,6 @@ in
     vcprompt
 
     (steam.override {
-       # withPrimus = true;
        extraPkgs = pkgs: [ glxinfo ];
     }).run
     steamcmd
@@ -260,24 +228,22 @@ in
     gnomecast
     nheko
     fractal
-    iamb
+    iamb.packages.${pkgs.system}.default
     mdfried.packages.${pkgs.system}.default
     glow
     ncdu
     gnupg
     awscli
-    file # joshuto file preview mimetype
-    exiftool # joshuto file preview
+    file
+    exiftool
     _1password-cli
     jq
-    file # joshuto file preview mimetype
-    exiftool # joshuto file preview
-    postgresql # for pg_dump
+    postgresql
     dbeaver-bin
     eza
     parquet-tools
     zed-editor
-    transmission_3-gtk # transmission_4-gtk
+    transmission_3-gtk
     transmission-remote-gtk
     celluloid
     vscode
@@ -336,7 +302,7 @@ in
     vulkan-tools
     xorg.xev
     imagemagick
-    binutils # a bunch of helper bins, a lot of build tools need some
+    binutils
     xorg.xwd
 
     # tinkering
@@ -378,11 +344,9 @@ in
     defaultSession = "none+xmonad";
   };
 
-  # does not work together with altgr-intl, but home-manager sets proper X keymap
   console.useXkbConfig = true;
 
   environment.variables = {
-    #QT_QPA_PLATFORM = "wayland";
     MOZ_ENABLE_WAYLAND = "1";
     NIXOS_OZONE_WL = "1";
   };
@@ -455,12 +419,13 @@ in
     };
     seahorse.enable = true;
   };
+
   qt.platformTheme = "qt5ct";
 
   services.blueman.enable = true;
 
   services.udev.packages = with pkgs; [ qmk-udev-rules rtl-sdr ];
-  
+
   services.power-profiles-daemon.enable = false;
   services.auto-cpufreq.enable = true;
   services.auto-cpufreq.settings = {
@@ -479,7 +444,7 @@ in
       enable = true;
       libraries = with pkgs; [
         stdenv.cc.cc.lib
-        zlib # numpy
+        zlib
       ];
     };
   };
@@ -492,16 +457,17 @@ in
       };
     };
   };
+
   systemd.services.greetd.serviceConfig = {
     Type = "idle";
     StandardInput = "tty";
     StandardOutput = "tty";
-    StandardError = "journal"; # Without this errors will spam on screen
-    # Without these bootlogs will spam on screen
+    StandardError = "journal";
     TTYReset = true;
     TTYVHangup = true;
     TTYVTDisallocate = true;
   };
+
   environment.etc."tuigreeter/sessions/niri".text = ''
     [Desktop Entry]
     Name=Niri
@@ -513,16 +479,11 @@ in
     Exec="${pkgs.bash}/bin/bash"
     '';
 
-  # services.pipewire = {
-    # enable = true;
-    # alsa.enable = true;
-    # pulse.enable = true;
-  # };
   services.udisks2.enable = true;
 
   # Enable NFS client support
   services.rpcbind.enable = true;
-  
+
   # Define the NFS mount
   fileSystems."/mnt/ops" = {
     device = "ops:/";
@@ -553,40 +514,30 @@ in
     wantedBy = [ "timers.target" ];
     timerConfig = {
       OnCalendar = "daily";
-      Persistent = true;  # Run if system was off during scheduled time
+      Persistent = true;
     };
   };
 
   xdg.mime.defaultApplications = {
-    # Common formats
     "image/jpeg" = "imv.desktop";
     "image/png" = "imv.desktop";
     "image/gif" = "imv.desktop";
     "image/webp" = "imv.desktop";
     "image/svg+xml" = "imv.desktop";
-    
-    # Icons
     "image/x-icon" = "imv.desktop";
     "image/vnd.microsoft.icon" = "imv.desktop";
-    
-    # Legacy/specialized formats
     "image/bmp" = "imv.desktop";
     "image/tiff" = "imv.desktop";
     "image/x-tiff" = "imv.desktop";
-    
-    # Raw/camera formats (if your viewer supports them)
     "image/x-canon-cr2" = "imv.desktop";
     "image/x-canon-crw" = "imv.desktop";
     "image/x-nikon-nef" = "imv.desktop";
     "image/x-sony-arw" = "imv.desktop";
-    
-    # Other formats
-    "image/x-pixmap" = "imv.desktop";        # XPM
-    "image/x-portable-pixmap" = "imv.desktop"; # PPM
-    "image/x-portable-graymap" = "imv.desktop"; # PGM
-    "image/x-portable-bitmap" = "imv.desktop";  # PBM
+    "image/x-pixmap" = "imv.desktop";
+    "image/x-portable-pixmap" = "imv.desktop";
+    "image/x-portable-graymap" = "imv.desktop";
+    "image/x-portable-bitmap" = "imv.desktop";
   };
 
-  system.stateVersion = "22.05"; # Did you read the comment?
+  system.stateVersion = "22.05";
 }
-
