@@ -16,7 +16,7 @@
     };
 
     mdfried = {
-      url = "github:benjajaja/mdfried/v0.14.4";
+      url = "github:benjajaja/mdfried/v0.14.6";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -34,6 +34,7 @@
         modules = [
           ./hosts/${hostName}
           ./modules/common.nix
+          ./modules/cachix.nix
           home-manager.nixosModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
@@ -50,9 +51,6 @@
 
         # Slimbook - AMD/NVIDIA hybrid laptop
         lz = mkHost "slimbook";
-
-        # Falcon - Desktop
-        falcon = mkHost "falcon";
       };
     };
 }
