@@ -15,7 +15,7 @@ input {
             //options "compose:ralt,capslock(swapescape)"
             //include "pc+us(altgr-intl)+inet(evdev)+altwin(swap_lalt_lwin)+capslock(swapescape)"
             model "pc101"
-            file "/etc/nixos/home-manager/xkb/layout.xkb"
+            file "/home/gipsy/.config/xkb/layout.xkb"
         }
         repeat-delay 200
     }
