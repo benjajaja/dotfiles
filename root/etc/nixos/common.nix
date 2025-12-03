@@ -286,6 +286,7 @@ in
     niv
     nodejs
     ffmpeg
+    watchexec
 
     # work dev
     go
@@ -540,7 +541,6 @@ in
     script = ''
       ${pkgs.rsync}/bin/rsync -av --delete /home/gipsy/Pictures/ /mnt/ops/backup/Pictures/
       ${pkgs.rsync}/bin/rsync -av --delete /home/gipsy/Documents/ /mnt/ops/backup/Documents/
-      ${pkgs.rsync}/bin/rsync -av --delete /home/gipsy/o/matrix/ /mnt/ops/backup/matrix/
     '';
     serviceConfig = {
       Type = "oneshot";
