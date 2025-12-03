@@ -1,13 +1,3 @@
-local ok, _ = pcall(require, 'lspconfig')
-if not ok then
-  return
-end
-local nvim_lsp = require('lspconfig')
-
---require('vim.lsp.log').set_level('debug')
-
--- local capabilities = vim.lsp.protocol.make_client_capabilities()
--- local capabilities = require("cmp_nvim_lsp").default_capabilities()
 local capabilities = require('blink.cmp').get_lsp_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
@@ -98,7 +88,7 @@ require("conform").setup({
   end,
 })
 
-nvim_lsp.gopls.setup{
+vim.lsp.config('gopls', {
   cmd = {'gopls'},
   -- for postfix snippets and analyzers
   capabilities = capabilities,
@@ -112,7 +102,8 @@ nvim_lsp.gopls.setup{
     },
   },
   on_attach = on_attach,
-}
+})
+vim.lsp.enable('gopls')
 
 function org_imports(wait_ms)
   local params = vim.lsp.util.make_range_params(nil, vim.lsp.util._get_offset_encoding())
@@ -164,11 +155,6 @@ vim.g.rustaceanvim = {
   },
 }
 
--- nvim_lsp.elmls.setup({
-    -- capabilities = capabilities,
-    -- on_attach = on_attach,
--- })
-
 require('illuminate').configure({
     -- providers: provider used to get references in the buffer, ordered by priority
     providers = {
@@ -179,13 +165,14 @@ require('illuminate').configure({
 })
 
 
-nvim_lsp.pyright.setup({
-    on_attach = function(client, bufnr)
-        -- Add custom settings or keybindings here if needed
-        -- For example, this could be your common `on_attach` for all LSPs
-    end,
-    capabilities = capabilities, -- If you have capabilities configured for autocompletion, etc.
+vim.lsp.config('pyright', {
+  capabilities = capabilities,
+  on_attach = function(client, bufnr)
+    -- Add custom settings or keybindings here if needed
+  end,
 })
+
+vim.lsp.enable('pyright')
 
 -- fix rust -32802: server cancelled the request
 -- https://github.com/neovim/neovim/issues/30985

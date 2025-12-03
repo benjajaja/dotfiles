@@ -228,8 +228,8 @@ in
     gnomecast
     nheko
     fractal
-    iamb.packages.${pkgs.system}.default
-    mdfried.packages.${pkgs.system}.default
+    iamb.packages.${pkgs.stdenv.hostPlatform.system}.default
+    mdfried.packages.${pkgs.stdenv.hostPlatform.system}.default
     glow
     ncdu
     gnupg
