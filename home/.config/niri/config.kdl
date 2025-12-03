@@ -114,11 +114,9 @@ environment {
   SSH_AUTH_SOCK "/run/user/1000/gcr/ssh"
 }
 
-spawn-at-startup "xwayland-satellite"
 spawn-at-startup "waybar"
 spawn-at-startup "emote" // auto-daemons itself
 spawn-at-startup "firefox"
-spawn-at-startup "pasystray"
 
 spawn-at-startup "swayidle" "-w" "timeout" "1200" "swaylock --indicator --screenshots --effect-blur 5x5 --effect-vignette 0.5:0.5 --clock --font \"ProFontWindows Nerd Font Mono\" -f" "timeout" "1800" "niri msg action powerr-off-monitors" "resume" "niri msg action powerr-on-monitors" "timeout" "3600" "systemctl suspend" "before-sleep" "playerctl pause" "before-sleep" "swaylock --indicator --screenshots --effect-blur 5x5 --effect-vignette 0.5:0.5 --clock --font \"ProFontWindows Nerd Font Mono\" -f"
 spawn-at-startup "swaybg -m fill -i ~/Pictures/wallpaper_milkyway.jpg"
@@ -154,19 +152,9 @@ cursor {
 }
 
 window-rule {
-    match app-id="firefox"
-    //match at-startup=true
-
-    // Properties that apply once upon window opening.
+    match app-id="firefox" at-startup=true
     open-on-workspace "1"
-    open-maximized true
-
-    // Properties that apply continuously.
-    variable-refresh-rate true
-
-    border {
-        off
-    }
+    open-maximized-to-edges true
 }
 
 window-rule {
@@ -398,7 +386,8 @@ binds {
     Mod+N { switch-preset-window-height; }
     Mod+Shift+R { reset-window-height; }
     Mod+F { maximize-column; }
-    Mod+Shift+F { fullscreen-window; }
+    // Mod+Shift+F { fullscreen-window; }
+    Mod+Shift+F { maximize-window-to-edges; }
     Mod+G { toggle-window-floating; }
     Mod+C { center-column; }
     Mod+S { screenshot; }
