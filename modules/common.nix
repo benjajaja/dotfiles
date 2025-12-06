@@ -480,6 +480,7 @@ in
     options = [
       "nfsvers=4"
       "nofail"
+      "_netdev"
       "timeo=5"
       "retrans=2"
       "hard"
@@ -489,8 +490,9 @@ in
   systemd.services.backup-sync = {
     description = "Sync Pictures and Documents to NFS";
     script = ''
-      ${pkgs.rsync}/bin/rsync -av --delete /home/gipsy/Pictures/ /mnt/ops/backup/Pictures/
-      ${pkgs.rsync}/bin/rsync -av --delete /home/gipsy/Documents/ /mnt/ops/backup/Documents/
+      ${pkgs.rsync}/bin/rsync -r --delete /home/gipsy/Pictures/ /mnt/ops/backup/Pictures/
+      ${pkgs.rsync}/bin/rsync -r --delete /home/gipsy/Documents/ /mnt/ops/backup/Documents/
+      ${pkgs.rsync}/bin/rsync -r --delete /home/gipsy/Music/ /mnt/ops/backup/Music/
     '';
     serviceConfig = {
       Type = "oneshot";
