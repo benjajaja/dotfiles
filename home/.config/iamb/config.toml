@@ -1,0 +1,19 @@
+[profiles.benjajaja]
+user_id = "@benjajaja:qdice.wtf"
+
+[settings]
+username_display = "displayname"
+
+[settings.image_preview]
+size = { height = 20, width = 90 }
+
+[layout]
+style = "restore"
+
+[macros."normal|insert|visual"]
+"<C-J>" = "gt"
+"<C-K>" = "gT"
+
+[macros.normal]
+"-" = ":tab chats<Enter>"
+"<C-C>" = ":tabclose<Enter>"
