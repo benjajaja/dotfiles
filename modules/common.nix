@@ -166,6 +166,7 @@ in
     wine64
 
     htop
+    btop
     docker-compose
 
     # wm session
@@ -211,6 +212,8 @@ in
     qutebrowser
     neovide
     tig
+    gitui
+    delta
     chromium
     libreoffice
     inkscape
