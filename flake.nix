@@ -19,14 +19,19 @@
       url = "github:benjajaja/mdfried/v0.14.6";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    ratatui-image = {
+      url = "github:benjajaja/ratatui-image/v8.1.1";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs = { self, nixpkgs, home-manager, iamb, mdfried, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, iamb, mdfried, ratatui-image, ... }@inputs:
     let
       system = "x86_64-linux";
 
       # Common module arguments passed to all configurations
-      specialArgs = { inherit inputs iamb mdfried; };
+      specialArgs = { inherit inputs iamb mdfried ratatui-image; };
 
       # Helper to create a NixOS system configuration
       mkHost = hostName: nixpkgs.lib.nixosSystem {

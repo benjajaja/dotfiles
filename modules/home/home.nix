@@ -66,7 +66,7 @@
       enable = true;
       settings = {
         font = {
-          normal.family = "ProFontWindows Nerd Font Mono";
+          normal.family = "EnvyCodeR Nerd Font Mono";
           size = 12.0;
           bold.style = "normal";
         };

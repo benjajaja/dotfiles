@@ -1,5 +1,5 @@
 # Common NixOS configuration shared across all machines
-{ config, pkgs, lib, inputs, iamb, mdfried, ... }:
+{ config, pkgs, lib, inputs, iamb, mdfried, ratatui-image, ... }:
 
 let
   git-recent = pkgs.callPackage ../packages/git-recent.nix {};
@@ -222,6 +222,7 @@ in
     fractal
     iamb.packages.${pkgs.stdenv.hostPlatform.system}.default
     mdfried.packages.${pkgs.stdenv.hostPlatform.system}.default
+    ratatui-image.packages.${pkgs.stdenv.hostPlatform.system}.default
     glow
     ncdu
     gnupg
@@ -362,6 +363,11 @@ in
     termsyn
     tamsyn
     tamzen
+    noto-fonts
+    noto-fonts-cjk-sans
+    unifont
+    dejavu_fonts
+    symbola
   ];
 
   programs = {

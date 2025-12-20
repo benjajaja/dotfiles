@@ -10,10 +10,12 @@ size = { height = 20, width = 90 }
 [layout]
 style = "restore"
 
-[macros."normal|insert|visual"]
-"<C-J>" = "gt"
-"<C-K>" = "gT"
+[settings.notifications]
+enabled = true
+show_message = true
 
 [macros.normal]
+"<C-J>" = "gt"
+"<C-K>" = "gT"
 "-" = ":tab chats<Enter>"
 "<C-C>" = ":tabclose<Enter>"
