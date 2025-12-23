@@ -49,6 +49,11 @@ in
     };
   };
 
+  networking.extraHosts = ''
+    192.168.8.50 qdice.wtf
+    192.168.8.50 mesh.qdice.wtf
+  '';
+
   # Set your time zone
   time.timeZone = "Atlantic/Canary";
 
