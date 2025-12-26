@@ -89,8 +89,11 @@ in
   users.users.gipsy = {
     isNormalUser = true;
     description = "gipsy";
+    shell = pkgs.fish;
     extraGroups = [ "networkmanager" "wheel" "docker" "disk" "audio" "video" "adbusers" "kvm" "dialout" "plugdev"];
   };
+
+  programs.fish.enable = true;
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
@@ -317,6 +320,8 @@ in
       pyserial
     ]))
     python313Packages.meshtastic
+
+    prismlauncher
   ];
 
   services.udev.extraRules = ''
@@ -326,6 +331,16 @@ in
     # CH340 chips
     SUBSYSTEM=="tty", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="7523", GROUP="dialout", MODE="0666"
   '';
+  services.keyd = {
+    enable = true;
+    keyboards.default = {
+      ids = [ "*" ];
+      settings.main = {
+        capslock = "esc";
+        esc = "capslock";
+      };
+    };
+  };
 
   services.pulseaudio.enable = false;
 

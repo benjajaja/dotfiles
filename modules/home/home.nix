@@ -52,6 +52,44 @@
       '';
     };
 
+    fish = {
+      enable = true;
+      shellInit = ''
+        # PATH additions
+        fish_add_path -p $HOME/venvs/default/bin $HOME/.local/bin $HOME/go/bin $HOME/.cargo/bin
+
+        # Environment variables
+        set -gx LD_LIBRARY_PATH $NIX_LD_LIBRARY_PATH
+        set -gx SDL_VIDEODRIVER wayland
+        set -gx EDITOR nvim
+        set -gx NIXOS_OZONE_WL 1
+        set -gx _JAVA_AWT_WM_NONREPARENTING 1
+        set -gx XDG_CURRENT_DESKTOP niri
+        set -gx XDG_SESSION_DESKTOP niri
+      '';
+      shellAliases = {
+        nv = "nvim";
+        ne = "neovide --multigrid -- --cmd 'cd ~/p/core' --cmd 'set mouse=a'";
+        xc = "xclip -selection clipboard";
+        gow = "gotestsum --watch";
+        claude = "/home/gipsy/.claude/local/claude";
+      };
+      interactiveShellInit = ''
+        set -g fish_greeting # stfu
+        # Vi mode
+        fish_vi_key_bindings
+
+        # Cursor shape for vi mode (block in normal, line in insert)
+        set fish_cursor_default block
+        set fish_cursor_insert line
+        set fish_cursor_replace_one underscore
+        set fish_cursor_visual block
+
+        # Starship prompt
+        starship init fish | source
+      '';
+    };
+
     readline = {
       enable = true;
       extraConfig = ''
@@ -99,6 +137,7 @@
       };
       shellIntegration = {
         enableBashIntegration = true;
+        enableFishIntegration = true;
         mode = "no-cursor";
       };
     };
