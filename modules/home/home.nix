@@ -220,6 +220,12 @@ return {
           mff = "merge --ff-only";
           psu = "push -u origin HEAD";
           ccc = "commit --no-verify";
+          pr-checkout = ''!f() { 
+            user="''${1%%:*}"; 
+            branch="''${1#*:}"; 
+            repo=$(git remote get-url origin | sed -E 's|.*github\.com[:/]([^/]+)/([^/.]+).*|\2|'); 
+            git fetch "https://github.com/$user/$repo.git" "$branch:$branch" && git checkout "$branch"; 
+          }; f'';
         };
         sendemail = {
           smtpserver = "smtp.gmail.com";
@@ -266,7 +272,5 @@ return {
     };
   };
 
-  services = {
-    udiskie.enable = true;
-  };
+  services.udiskie.enable = true;
 }
