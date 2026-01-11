@@ -27,7 +27,7 @@
         PATH="$HOME/venvs/default/bin:$HOME/.local/bin:$PATH:/home/$USER/go/bin:/home/$USER/.cargo/bin"
         export LD_LIBRARY_PATH=$NIX_LD_LIBRARY_PATH
         export SDL_VIDEODRIVER=wayland # steam?
-        alias claude="/home/gipsy/.claude/local/claude"
+        # alias claude="/home/gipsy/.claude/local/claude"
       '';
       sessionVariables = {
         EDITOR = "nvim";
@@ -72,7 +72,7 @@
         ne = "neovide --multigrid -- --cmd 'cd ~/p/core' --cmd 'set mouse=a'";
         xc = "xclip -selection clipboard";
         gow = "gotestsum --watch";
-        claude = "/home/gipsy/.claude/local/claude";
+        # claude = "/home/gipsy/.claude/local/claude";
       };
       interactiveShellInit = ''
         set -g fish_greeting # stfu
