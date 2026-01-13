@@ -1,5 +1,5 @@
 # Common NixOS configuration shared across all machines
-{ config, pkgs, lib, inputs, iamb, mdfried, ratatui-image, ... }:
+{ config, pkgs, pkgs-unstable, lib, inputs, iamb, mdfried, ratatui-image, ... }:
 
 let
   git-recent = pkgs.callPackage ../packages/git-recent.nix {};
@@ -314,7 +314,7 @@ in
       esptool
       pyserial
     ]))
-    python313Packages.meshtastic
+    pkgs-unstable.python313Packages.meshtastic
 
     prismlauncher
   ];

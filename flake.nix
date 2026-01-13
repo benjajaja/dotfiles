@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     home-manager = {
       url = "github:nix-community/home-manager/release-25.11";
@@ -26,12 +27,17 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, iamb, mdfried, ratatui-image, ... }@inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, iamb, mdfried, ratatui-image, ... }@inputs:
     let
       system = "x86_64-linux";
 
+      pkgs-unstable = import nixpkgs-unstable {
+        inherit system;
+        config.allowUnfree = true;
+      };
+
       # Common module arguments passed to all configurations
-      specialArgs = { inherit inputs iamb mdfried ratatui-image; };
+      specialArgs = { inherit inputs iamb mdfried ratatui-image pkgs-unstable; };
 
       # Helper to create a NixOS system configuration
       mkHost = hostName: nixpkgs.lib.nixosSystem {
