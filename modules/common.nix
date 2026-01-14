@@ -534,6 +534,7 @@ in
   };
 
   xdg.mime.defaultApplications = {
+    "inode/directory" = "org.gnome.Nautilus.desktop";
     "image/jpeg" = "imv.desktop";
     "image/png" = "imv.desktop";
     "image/gif" = "imv.desktop";
