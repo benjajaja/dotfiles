@@ -144,6 +144,7 @@ in
     nfs-utils
     imv
     wireguard-tools
+    dig
 
     inputplug
     firefox
@@ -441,7 +442,7 @@ in
 
   services.blueman.enable = true;
 
-  services.udev.packages = with pkgs; [ qmk-udev-rules rtl-sdr ];
+  services.udev.packages = with pkgs; [ qmk-udev-rules rtl-sdr limesuite ];
 
   services.power-profiles-daemon.enable = false;
   services.auto-cpufreq.enable = true;
