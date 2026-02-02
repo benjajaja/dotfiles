@@ -71,7 +71,7 @@ require("conform").setup({
   formatters_by_ft = {
     typescript = { "eslint_d", "biome" },
     typescriptreact = { "eslint_d", "biome" },
-    go = { "goimports", "golines" },
+    go = { "goimports" },
   },
   formatters = {
     eslint_d = {

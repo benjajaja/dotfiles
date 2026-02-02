@@ -87,6 +87,9 @@
 
         # Starship prompt
         starship init fish | source
+
+        # Ctrl-R history
+        bind -M insert \cr history-search-backward
       '';
     };
 

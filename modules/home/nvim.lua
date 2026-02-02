@@ -78,10 +78,6 @@ vim.api.nvim_set_keymap('n', '<leader>cc',
   { noremap = true, silent = true }
 )
 
--- Go formatting settings
-vim.g.go_fmt_command = "golines"
-vim.g.go_fmt_options = { golines = "-m 100" }
-
 -- Set a shorter update time
 vim.o.updatetime = 300
 
