@@ -178,7 +178,7 @@ in
     networkmanagerapplet
     pa_applet
     pasystray
-    dunst
+    mako
     pavucontrol
     pulseaudio
     pulsemixer
