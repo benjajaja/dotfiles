@@ -240,11 +240,6 @@ return {
       };
     };
 
-    direnv = {
-      enable = true;
-      nix-direnv.enable = true;
-    };
-
     firefox = {
       enable = false;
       policies = {
@@ -274,6 +269,13 @@ return {
       };
     };
   };
+
+  xdg.configFile."direnv/direnv.toml".text = ''
+    [global]
+    hide_env_diff = true
+    log_format = "-"
+    log_filter = "^$"
+  '';
 
   services.udiskie.enable = true;
 }

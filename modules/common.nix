@@ -399,6 +399,10 @@ in
       '';
     };
     dconf.enable = true;
+    direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+    };
     light.enable = true;
     neovim = {
       enable = true;
