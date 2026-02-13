@@ -30,7 +30,6 @@
   outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, iamb, mdfried, ratatui-image, ... }@inputs:
     let
       system = "x86_64-linux";
-
       pkgs-unstable = import nixpkgs-unstable {
         inherit system;
         config.allowUnfree = true;

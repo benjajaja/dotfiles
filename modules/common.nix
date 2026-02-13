@@ -318,6 +318,7 @@ in
     pkgs-unstable.python313Packages.meshtastic
 
     prismlauncher
+    pkgs-unstable.openttd
   ];
 
   services.udev.extraRules = ''
