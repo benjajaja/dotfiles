@@ -224,6 +224,7 @@ in
     gnomecast
     nheko
     fractal
+    mumble
     iamb.packages.${pkgs.stdenv.hostPlatform.system}.default
     mdfried.packages.${pkgs.stdenv.hostPlatform.system}.default
     ratatui-image.packages.${pkgs.stdenv.hostPlatform.system}.default
