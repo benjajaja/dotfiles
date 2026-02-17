@@ -16,6 +16,7 @@
     "backlight",
     "custom/memory",
     "tray",
+    "custom/warp",
     "pulseaudio#output",
     "pulseaudio#input",
     "battery",
@@ -98,6 +99,14 @@
     "format": "{icon} {capacity}%",
     "format-charging": "󰂄 {capacity}%",
     "tooltip": false,
+  },
+
+  "custom/warp": {
+    "exec": "~/.config/waybar/warp-status.sh",
+    "return-type": "json",
+    "interval": 1,
+    "on-click": "systemctl is-active --quiet cloudflare-warp && sudo systemctl stop cloudflare-warp || sudo systemctl start cloudflare-warp",
+    "tooltip": true,
   },
 
   "clock": {

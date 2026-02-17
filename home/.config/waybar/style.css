@@ -71,6 +71,15 @@ window#waybar {
   box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.5);
 }
 
+#custom-warp {
+  color: @main-di;
+  text-shadow: none;
+}
+#custom-warp.active {
+  color: @secondary-fg;
+  text-shadow: 0 0 2px @secondary-sh;
+}
+
 #clock {
   color: @main-di;
   text-shadow: none;
