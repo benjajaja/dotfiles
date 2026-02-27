@@ -290,4 +290,9 @@ return {
   '';
 
   services.udiskie.enable = true;
+
+  services.mako = {
+    enable = true;
+    defaultTimeout = 5000;  # 5 seconds
+  };
 }
