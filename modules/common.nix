@@ -156,7 +156,6 @@ in
     adwaita-icon-theme
     gimp
     tuigreet
-    claude-code
 
     gnumake
     gcc
@@ -316,10 +315,10 @@ in
       esptool
       pyserial
     ]))
-    pkgs-unstable.python313Packages.meshtastic
 
     prismlauncher
     pkgs-unstable.openttd
+    pkgs-unstable.python313Packages.meshtastic
   ];
 
   services.udev.extraRules = ''
