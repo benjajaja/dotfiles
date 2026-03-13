@@ -25,9 +25,21 @@
       url = "github:benjajaja/ratatui-image/v8.1.1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    claude-code.url = "github:sadjow/claude-code-nix";
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, iamb, mdfried, ratatui-image, ... }@inputs:
+  outputs = {
+    self,
+    nixpkgs,
+    nixpkgs-unstable, 
+    home-manager,
+    iamb,
+    mdfried,
+    ratatui-image,
+    claude-code,
+    ...
+  }@inputs:
     let
       system = "x86_64-linux";
       pkgs-unstable = import nixpkgs-unstable {
@@ -36,7 +48,7 @@
       };
 
       # Common module arguments passed to all configurations
-      specialArgs = { inherit inputs iamb mdfried ratatui-image pkgs-unstable; };
+      specialArgs = { inherit inputs iamb mdfried ratatui-image claude-code pkgs-unstable; };
 
       # Helper to create a NixOS system configuration
       mkHost = hostName: nixpkgs.lib.nixosSystem {
