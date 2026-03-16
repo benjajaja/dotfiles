@@ -261,7 +261,6 @@ in
     google-cloud-sdk
     nil
     ruff
-    mise
 
     # hobby dev
     rustc
