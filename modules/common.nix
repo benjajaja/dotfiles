@@ -404,6 +404,7 @@ in
     direnv = {
       enable = true;
       nix-direnv.enable = true;
+      silent = true;
     };
     light.enable = true;
     neovim = {
