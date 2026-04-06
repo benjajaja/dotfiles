@@ -222,7 +222,6 @@ in
     inkscape
     gnomecast
     nheko
-    fractal
     mumble
     iamb.packages.${pkgs.stdenv.hostPlatform.system}.default
     mdfried.packages.${pkgs.stdenv.hostPlatform.system}.default
@@ -318,6 +317,7 @@ in
     prismlauncher
     pkgs-unstable.openttd
     pkgs-unstable.python313Packages.meshtastic
+    pkgs-unstable.fractal
     claude-code.packages.${pkgs.stdenv.hostPlatform.system}.default
   ];
 
