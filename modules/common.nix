@@ -117,7 +117,6 @@ in
 
   environment.systemPackages = with pkgs; [
     nano # leave this as last resort editor!
-    waybar
     swaybg
     starship
     busybox
@@ -178,7 +177,6 @@ in
     networkmanagerapplet
     pa_applet
     pasystray
-    mako
     pavucontrol
     pulseaudio
     pulsemixer

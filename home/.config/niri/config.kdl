@@ -95,12 +95,12 @@ environment {
   SSH_AUTH_SOCK "/run/user/1000/gcr/ssh"
 }
 
-spawn-at-startup "waybar"
+// spawn-at-startup "waybar"
 spawn-at-startup "emote" // auto-daemons itself
 spawn-at-startup "firefox"
 
-spawn-at-startup "swayidle" "-w" "timeout" "1200" "swaylock --indicator --screenshots --effect-blur 5x5 --effect-vignette 0.5:0.5 --clock --font \"ProFontWindows Nerd Font Mono\" -f" "timeout" "1800" "niri msg action power-off-monitors" "resume" "niri msg action power-on-monitors" "timeout" "3600" "systemctl suspend" "before-sleep" "playerctl pause" "before-sleep" "swaylock --indicator --screenshots --effect-blur 5x5 --effect-vignette 0.5:0.5 --clock --font \"ProFontWindows Nerd Font Mono\" -f"
-spawn-at-startup "swaybg -m fill -i ~/Pictures/wallpaper_milkyway.jpg"
+// spawn-at-startup "swayidle" "-w" "timeout" "1200" "swaylock --indicator --screenshots --effect-blur 5x5 --effect-vignette 0.5:0.5 --clock --font \"ProFontWindows Nerd Font Mono\" -f" "timeout" "1800" "niri msg action power-off-monitors" "resume" "niri msg action power-on-monitors" "timeout" "3600" "systemctl suspend" "before-sleep" "playerctl pause" "before-sleep" "swaylock --indicator --screenshots --effect-blur 5x5 --effect-vignette 0.5:0.5 --clock --font \"ProFontWindows Nerd Font Mono\" -f"
+// spawn-at-startup "swaybg -m fill -i ~/Pictures/wallpaper_milkyway.jpg"
 
 prefer-no-csd
 

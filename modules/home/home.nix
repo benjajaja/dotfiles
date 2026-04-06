@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 {
   imports = [
     ./vim.nix
@@ -286,6 +286,38 @@ return {
 
   services.mako = {
     enable = true;
-    defaultTimeout = 5000;  # 5 seconds
+    defaultTimeout = 15000;  # 5 seconds
+  };
+  systemd.user.services.mako.Install.WantedBy = lib.mkForce [ "niri.service" ];
+  programs.waybar = {
+    enable = true;
+    systemd = {
+      enable = true;
+      target = "niri.service";
+    };
+  };
+
+#// spawn-at-startup "swayidle" "-w" "timeout" "1200" "swaylock --indicator --screenshots --effect-blur 5x5 --effect-vignette 0.5:0.5 --clock --font \"ProFontWindows Nerd Font Mono\" -f" "timeout" "1800" "niri msg action power-off-monitors" "resume" "niri msg action power-on-monitors" "timeout" "3600" "systemctl suspend" "before-sleep" "playerctl pause" "before-sleep" "swaylock --indicator --screenshots --effect-blur 5x5 --effect-vignette 0.5:0.5 --clock --font \"ProFontWindows Nerd Font Mono\" -f"
+  systemd.user.services.swayidle = {
+    Unit = {
+      Description = "Idle manager for Wayland";
+      PartOf = [ "graphical-session.target" ];
+      After = [ "graphical-session.target" ];
+      Requisite = [ "graphical-session.target" ];
+    };
+    Service = {
+      ExecStart = ''
+        ${pkgs.swayidle}/bin/swayidle -w \
+          timeout 1200 '${pkgs.swaylock}/bin/swaylock -f' \
+          timeout 1800 'niri msg action power-off-monitors' \
+          before-sleep '${pkgs.swaylock}/bin/swaylock -f' \
+          --clock \
+          -- font 'ProFontWindows Nerd Font Mono'
+      '';
+      Restart = "on-failure";
+    };
+    Install = {
+      WantedBy = [ "niri.service" ];
+    };
   };
 }
