@@ -308,8 +308,9 @@ return {
     Service = {
       ExecStart = ''
         ${pkgs.swayidle}/bin/swayidle -w \
-          timeout 1200 '${pkgs.swaylock}/bin/swaylock --screenshots --effect-blur 5x5 --effect-vignette 0.5:0.5 --clock --font "ProFontWindows Nerd Font Mono" -f' \
-          timeout 1800 'niri msg action power-off-monitors'
+          timeout 1800 'niri msg action power-off-monitors && ${pkgs.hyprlock}/bin/hyprlock' \
+          resume 'niri msg action power-on-monitors' \
+          before-sleep '${pkgs.hyprlock}/bin/hyprlock'
       '';
       Restart = "on-failure";
     };

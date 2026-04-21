@@ -285,6 +285,7 @@ in
     sd
     fd
     fzf
+    fastfetch
 
     unzip
     zip
@@ -317,6 +318,10 @@ in
     pkgs-unstable.python313Packages.meshtastic
     pkgs-unstable.fractal
     claude-code.packages.${pkgs.stdenv.hostPlatform.system}.default
+    qwen-code
+    mistralclient
+    mistral-rs
+    uv
   ];
 
   services.udev.extraRules = ''
@@ -360,6 +365,7 @@ in
   };
 
   fonts.packages = with pkgs; [
+    corefonts
     fira-code
     fira-mono
     nerd-fonts.agave
@@ -368,6 +374,7 @@ in
     nerd-fonts.fira-code
     nerd-fonts.hurmit
     nerd-fonts.iosevka-term
+    # nerd-fonts.jetbrains-mono
     nerd-fonts.monofur
     nerd-fonts.profont
     nerd-fonts.mononoki
