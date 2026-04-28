@@ -207,6 +207,9 @@ in
     ghostty
     enlightenment.terminology
     warp-terminal
+    rio
+    mlterm
+    blackbox-terminal
 
     # programs
     tmux

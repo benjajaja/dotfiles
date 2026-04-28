@@ -17,12 +17,12 @@
     };
 
     mdfried = {
-      url = "github:benjajaja/mdfried/v0.18.2";
+      url = "github:benjajaja/mdfried/v0.19.5";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     ratatui-image = {
-      url = "github:benjajaja/ratatui-image/v8.1.1";
+      url = "github:benjajaja/ratatui-image/v10.0.6";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
