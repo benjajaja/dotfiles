@@ -282,11 +282,50 @@ return {
     };
   };
 
+  xresources.properties = {
+    "XTerm.vt100.faceName"    = "EnvyCodeR Nerd Font Mono";
+    "XTerm.vt100.faceSize"    = 13;
+    "XTerm.vt100.renderFont"  = true;
+
+    "XTerm.vt100.background"  = "#1a1b2e";
+    "XTerm.vt100.foreground"  = "#c0caf5";
+
+    "XTerm.vt100.color0"      = "#15161e";
+    "XTerm.vt100.color1"      = "#f7768e";
+    "XTerm.vt100.color2"      = "#9ece6a";
+    "XTerm.vt100.color3"      = "#e0af68";
+    "XTerm.vt100.color4"      = "#7aa2f7";
+    "XTerm.vt100.color5"      = "#bb9af7";
+    "XTerm.vt100.color6"      = "#7dcfff";
+    "XTerm.vt100.color7"      = "#a9b1d6";
+
+    "XTerm.vt100.color8"      = "#414868";
+    "XTerm.vt100.color9"      = "#f7768e";
+    "XTerm.vt100.color10"     = "#9ece6a";
+    "XTerm.vt100.color11"     = "#e0af68";
+    "XTerm.vt100.color12"     = "#7aa2f7";
+    "XTerm.vt100.color13"     = "#bb9af7";
+    "XTerm.vt100.color14"     = "#7dcfff";
+    "XTerm.vt100.color15"     = "#c0caf5";
+
+    "XTerm.vt100.scrollBar"       = false;
+    "XTerm.vt100.scrollTtyOutput" = false;
+    "XTerm.vt100.saveLines"       = 10000;
+    "XTerm.vt100.dynamicColors"   = true;
+    "XTerm.vt100.internalBorder"  = 12;
+    "XTerm.vt100.cursorColor"     = "#7aa2f7";
+    "XTerm.vt100.cursorBlink"     = true;
+    "XTerm.selectToClipboard"     = true;
+    "XTerm*geometry"              = "120x35";
+  };
+
   services.udiskie.enable = true;
 
   services.mako = {
     enable = true;
-    defaultTimeout = 15000;  # 5 seconds
+    settings = {
+      default-timeout = 15000;
+    };
   };
   systemd.user.services.mako.Install.WantedBy = lib.mkForce [ "niri.service" ];
   programs.waybar = {
