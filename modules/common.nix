@@ -196,6 +196,7 @@ in
     swayidle
     swaylock-effects
     wl-clipboard
+    gnome-calculator
 
     # terminals
     kitty
