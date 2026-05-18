@@ -197,6 +197,10 @@ in
     swaylock-effects
     wl-clipboard
     gnome-calculator
+    readability-cli
+    pandoc
+    python313Packages.markdownify
+    python313Packages.html2text
 
     # terminals
     kitty
@@ -311,7 +315,6 @@ in
     rtl-sdr
     rtl-ais
     sdrpp
-    esphome
     (pkgs.python3.withPackages (ps: with ps; [
       esptool
       pyserial
