@@ -22,20 +22,4 @@
   };
 
   networking.hostName = "motherbase";
-
-  environment.systemPackages = with pkgs; [
-    cloudflare-warp
-  ];
-
-  systemd.services.cloudflare-warp = {
-    enable = true;
-    description = "Warp server";
-    path = [ pkgs.cloudflare-warp ];
-    unitConfig = {
-      Type = "simple";
-    };
-    serviceConfig = {
-      ExecStart = "${pkgs.cloudflare-warp}/bin/warp-svc";
-    };
-  };
 }

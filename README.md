@@ -83,5 +83,5 @@ nix flake lock --update-input nixpkgs  # Update single input
 
 | Hostname | Machine | Description |
 |----------|---------|-------------|
-| `motherbase` | ThinkPad | Intel laptop, Cloudflare Warp, Falcon Sensor |
+| `motherbase` | ThinkPad | Intel laptop |
 | `lz` | Slimbook | AMD/NVIDIA hybrid, PRIME offload |
