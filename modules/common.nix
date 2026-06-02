@@ -67,7 +67,11 @@ in
     auth include greetd
   '';
   security.pam.loginLimits = [
-    { domain = "@users"; item = "rtprio"; type = "-"; value = 1; }
+    # { domain = "@users"; item = "rtprio"; type = "-"; value = 1; }
+    { domain = "@audio"; type = "hard"; item = "rtprio"; value = 95; }
+    { domain = "@audio"; type = "soft"; item = "rtprio"; value = 95; }
+    { domain = "@audio"; type = "hard"; item = "memlock"; value = "unlimited"; }
+    { domain = "@audio"; type = "soft"; item = "memlock"; value = "unlimited"; }
   ];
   security.polkit.enable = true;
   services.upower.enable = true;
@@ -255,6 +259,10 @@ in
     nodejs
     ffmpeg
     watchexec
+    gmetronome
+    klick
+    jack2
+    pipewire.jack
 
     # work dev
     go
@@ -350,6 +358,12 @@ in
   };
 
   services.pulseaudio.enable = false;
+  services.pipewire = {
+    enable = true;
+    pulse.enable = true;
+    jack.enable = true;
+  };
+  security.rtkit.enable = true;
 
   services.libinput = {
       enable = true;
@@ -470,6 +484,14 @@ in
        turbo = "auto";
     };
   };
+  services.avahi = {
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
+  };
+  networking.firewall.allowedUDPPorts = [
+    24727 # AusweisApp
+  ];
 
   programs = {
     nix-ld = {

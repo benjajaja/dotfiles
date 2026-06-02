@@ -15,6 +15,7 @@ input {
             file "/home/gipsy/.config/xkb/layout.xkb"
         }
         repeat-delay 200
+        repeat-rate 25
     }
 
     touchpad {
