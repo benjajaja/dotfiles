@@ -555,9 +555,9 @@ in
   systemd.services.backup-sync = {
     description = "Sync Pictures and Documents to NFS";
     script = ''
-      ${pkgs.rsync}/bin/rsync -r --delete /home/gipsy/Pictures/ /mnt/ops/backup/Pictures/
-      ${pkgs.rsync}/bin/rsync -r --delete /home/gipsy/Documents/ /mnt/ops/backup/Documents/
-      ${pkgs.rsync}/bin/rsync -r --delete /home/gipsy/Music/ /mnt/ops/backup/Music/
+      ${pkgs.rsync}/bin/rsync -r /home/gipsy/Pictures/ /mnt/ops/backup/Pictures/
+      ${pkgs.rsync}/bin/rsync -r /home/gipsy/Documents/ /mnt/ops/backup/Documents/
+      ${pkgs.rsync}/bin/rsync -r /home/gipsy/Music/ /mnt/ops/backup/Music/
     '';
     serviceConfig = {
       Type = "oneshot";
