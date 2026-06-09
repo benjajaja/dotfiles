@@ -163,7 +163,6 @@ in
     xfce.thunar
     xfce.thunar-archive-plugin
     nautilus
-    light
     adwaita-icon-theme
     gimp
     tuigreet
@@ -384,7 +383,7 @@ in
   };
 
   services.displayManager = {
-    defaultSession = "none+xmonad";
+    defaultSession = "niri";
   };
 
   console.useXkbConfig = true;
@@ -441,12 +440,10 @@ in
       nix-direnv.enable = true;
       silent = true;
     };
-    light.enable = true;
     neovim = {
       enable = true;
       package = pkgs.neovim-unwrapped;
       defaultEditor = true;
-      withRuby = false;
       configure.packages.neovimPlugins = with pkgs.vimPlugins; {
         start = [ vim-nix barbar-nvim vim-repeat vim-surround nerdcommenter ];
       };
