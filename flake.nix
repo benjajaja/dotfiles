@@ -17,7 +17,7 @@
     };
 
     mdfried = {
-      url = "github:benjajaja/mdfried/master";
+      url = "github:benjajaja/mdfried?ref=v0.22.1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

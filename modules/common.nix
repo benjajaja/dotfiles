@@ -8,6 +8,14 @@ in
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nix.settings.auto-optimise-store = true;
   nix.settings.trusted-users = ["root" "@wheel"];
+  nix.distributedBuilds = true;
+  nix.buildMachines = [
+    { hostName = "eu.nixbuild.net";
+      systems = [ "x86_64-linux" "aarch64-linux" "riscv64-linux" "x86_64-darwin" "aarch64-darwin" ];
+      maxJobs = 100;
+      supportedFeatures = [ "benchmark" "big-parallel" ];
+    }
+  ];
 
   # Bootloader
   boot.loader.systemd-boot = {
@@ -337,6 +345,7 @@ in
     mistralclient
     mistral-rs
     uv
+    nixpkgs-review
   ];
 
   services.udev.extraRules = ''
@@ -462,6 +471,18 @@ in
     };
     ssh = {
       startAgent = false;
+      extraConfig = ''
+        Host eu.nixbuild.net
+        PubkeyAcceptedKeyTypes ssh-ed25519
+        ServerAliveInterval 60
+        IdentityFile /home/gipsy/.ssh/id_ed25519
+      '';
+      knownHosts = {
+        nixbuild = {
+          hostNames = [ "eu.nixbuild.net" ];
+          publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPIQCZc54poJ8vqawd8TraNryQeJnvH1eLpIDgbiqymM";
+        };
+      };
     };
     seahorse.enable = true;
   };
