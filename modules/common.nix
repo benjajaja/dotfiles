@@ -11,7 +11,7 @@ in
   nix.distributedBuilds = true;
   nix.buildMachines = [
     { hostName = "eu.nixbuild.net";
-      systems = [ "x86_64-linux" "aarch64-linux" "riscv64-linux" "x86_64-darwin" "aarch64-darwin" ];
+      systems = [ "aarch64-linux" "riscv64-linux" "x86_64-darwin" "aarch64-darwin" ];
       maxJobs = 100;
       supportedFeatures = [ "benchmark" "big-parallel" ];
     }
@@ -166,6 +166,8 @@ in
     adwaita-icon-theme
     gimp
     tuigreet
+    yazi
+    ranger
 
     gnumake
     gcc
