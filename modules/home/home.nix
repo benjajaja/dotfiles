@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 {
   imports = [
     ./vim.nix
@@ -18,6 +18,7 @@
       name = "adw-gtk3-dark";
       package = pkgs.adw-gtk3;
     };
+    gtk4.theme = config.gtk.theme;
     gtk3.extraConfig = {
       gtk-application-prefer-dark-theme = true;
     };
@@ -332,7 +333,7 @@ return {
     enable = true;
     systemd = {
       enable = true;
-      target = "niri.service";
+      targets = [ "niri.service" ];
     };
   };
 

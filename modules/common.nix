@@ -144,7 +144,7 @@ in
     stow
     mesa-demos # glxinfo
     inxi
-    xorg.xdpyinfo
+    xdpyinfo
     pciutils
     ethtool
     usbutils
@@ -160,8 +160,8 @@ in
     inputplug
     firefox
     dmenu
-    xfce.thunar
-    xfce.thunar-archive-plugin
+    thunar
+    thunar-archive-plugin
     nautilus
     adwaita-icon-theme
     gimp
@@ -199,8 +199,8 @@ in
     swappy
     grim
     slurp
-    xfce.xfce4-clipman-plugin
-    mate.mate-applets
+    xfce4-clipman-plugin
+    mate-applets
     brightnessctl
     obs-studio
     emote
@@ -317,10 +317,10 @@ in
     # debug / unusual
     mesa-demos # glxinfo
     vulkan-tools
-    xorg.xev
+    xev
     imagemagick
     binutils
-    xorg.xwd
+    xwd
 
     # tinkering
     arduino
