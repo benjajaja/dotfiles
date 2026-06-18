@@ -108,7 +108,6 @@ in {
         nightvision-nvim
         nebulous-nvim
         awesome-vim-colorschemes
-        changeColorScheme-vim
       ];
       extraConfig = ''
 lua << EOF

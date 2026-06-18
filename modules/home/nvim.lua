@@ -89,11 +89,15 @@ vim.cmd('iabbrev iferr if err != nil { return err }')
 vim.g.mapleader = ';'
 vim.g.EasyClipShareYanks  = 1
 
-require'nvim-treesitter.configs'.setup {
-  highlight = {
-    enable = true,
-  },
-}
+-- nvim-treesitter main branch (shipped since nixos 26.05) removed the
+-- `nvim-treesitter.configs` module and its `.setup{ highlight = ... }` API.
+-- Grammars are provided by nix (`nvim-treesitter.withAllGrammars`); enable
+-- highlighting per-buffer through neovim's built-in treesitter.
+vim.api.nvim_create_autocmd('FileType', {
+  callback = function(args)
+    pcall(vim.treesitter.start, args.buf)
+  end,
+})
 
 vim.api.nvim_set_var("lsp_utils_location_opts", {
   height = 30,
@@ -178,7 +182,8 @@ vim.cmd[[colorscheme tokyonight]]
 
 require('dap-go').setup()
 local dap, dapui = require("dap"), require("dapui")
-require('dap.ext.vscode').load_launchjs(nil, {})
+-- .vscode/launch.json is now read automatically on-demand (see :help dap-providers);
+-- the old require('dap.ext.vscode').load_launchjs(...) call is deprecated and unneeded.
 dapui.setup()
 dap.listeners.after.event_initialized["dapui_config"]=function()
   dapui.open()
