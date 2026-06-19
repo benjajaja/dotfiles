@@ -189,7 +189,7 @@ binds {
     Mod+P { spawn "fuzzel"; }
     Mod+Shift+P { spawn "emote"; }
     // Mod+Shift+N { spawn "neovide" "--" "--cmd" ":cd /home/gipsy/p/core" "--cmd" "set mouse=a"; }
-    Super+Alt+L { spawn "swaylock"; }
+    Super+Alt+L { spawn "sh" "-c" "hyprlock & sleep 0.5 && niri msg action power-off-monitors"; }
 
     // You can also use a shell. Do this if you need pipes, multiple commands, etc.
     // Note: the entire command goes as a single argument in the end.
