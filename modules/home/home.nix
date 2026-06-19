@@ -89,6 +89,13 @@
       };
       interactiveShellInit = ''
         set -g fish_greeting # stfu
+
+        # fish 4.2+ no longer loads share/fish/completions from $fish_complete_path;
+        # prepend it so fish's own (fixed) completions take precedence over broken
+        # vendor ones (e.g. cargo.fish with unquoted list variable).
+        # workaround: https://github.com/NixOS/nixpkgs/issues/462025
+        set -p fish_complete_path ${config.programs.fish.package}/share/fish/completions
+
         # Vi mode
         fish_vi_key_bindings
 
