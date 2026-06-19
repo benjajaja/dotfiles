@@ -10,19 +10,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Previously fetched via builtins.getFlake
-    iamb = {
-      url = "github:ulyssa/iamb";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     mdfried = {
       url = "github:benjajaja/mdfried?ref=master";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    ratatui-image = {
-      url = "github:benjajaja/ratatui-image/v10.0.6";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -34,9 +23,7 @@
     nixpkgs,
     nixpkgs-unstable, 
     home-manager,
-    iamb,
     mdfried,
-    ratatui-image,
     claude-code,
     ...
   }@inputs:
@@ -48,7 +35,7 @@
       };
 
       # Common module arguments passed to all configurations
-      specialArgs = { inherit inputs iamb mdfried ratatui-image claude-code pkgs-unstable; };
+      specialArgs = { inherit inputs mdfried claude-code pkgs-unstable; };
 
       # Helper to create a NixOS system configuration
       mkHost = hostName: nixpkgs.lib.nixosSystem {

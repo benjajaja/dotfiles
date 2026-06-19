@@ -1,5 +1,5 @@
 # Common NixOS configuration shared across all machines
-{ config, pkgs, pkgs-unstable, lib, inputs, iamb, mdfried, ratatui-image, claude-code, ... }:
+{ config, pkgs, pkgs-unstable, lib, inputs, mdfried, claude-code, ... }:
 
 let
   git-recent = pkgs.callPackage ../packages/git-recent.nix {};
@@ -242,9 +242,8 @@ in
     gnomecast
     nheko
     mumble
-    iamb.packages.${pkgs.stdenv.hostPlatform.system}.default
+    iamb
     mdfried.packages.${pkgs.stdenv.hostPlatform.system}.default
-    ratatui-image.packages.${pkgs.stdenv.hostPlatform.system}.default
     glow
     ncdu
     gnupg
