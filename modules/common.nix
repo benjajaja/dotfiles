@@ -3,6 +3,7 @@
 
 let
   git-recent = pkgs.callPackage ../packages/git-recent.nix {};
+  trenchbroom = pkgs.callPackage ../packages/trenchbroom.nix {};
 in
 {
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
@@ -266,6 +267,7 @@ in
     niv
     nodejs
     ffmpeg
+    losslesscut-bin
     watchexec
     gmetronome
     klick
@@ -336,6 +338,7 @@ in
       pyserial
     ]))
 
+    trenchbroom
     prismlauncher
     pkgs-unstable.openttd
     pkgs-unstable.python313Packages.meshtastic
