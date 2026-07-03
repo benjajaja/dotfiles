@@ -27,6 +27,12 @@
     };
   };
 
+  xdg.desktopEntries.TrenchBroom = {
+    name = "TrenchBroom";
+    exec = "TrenchBroom";
+    categories = [ "Game" ];
+  };
+
   dconf.settings = {
     "org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";

@@ -316,6 +316,7 @@ in
     unzip
     zip
     unar
+    exfatprogs
 
     # debug / unusual
     mesa-demos # glxinfo
@@ -339,6 +340,8 @@ in
     ]))
 
     trenchbroom
+    blender
+    icu
     prismlauncher
     pkgs-unstable.openttd
     pkgs-unstable.python313Packages.meshtastic
