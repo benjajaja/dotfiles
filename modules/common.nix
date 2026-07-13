@@ -401,6 +401,10 @@ in
   };
 
   fonts.packages = with pkgs; [
+    (pkgs.runCommand "spectral-fonts" {} ''
+      mkdir -p $out/share/fonts/truetype
+      cp ${./fonts/spectral}/*.ttf $out/share/fonts/truetype/
+    '')
     corefonts
     fira-code
     fira-mono
