@@ -569,7 +569,7 @@ in
 
   # Define the NFS mount
   fileSystems."/mnt/ops" = {
-    device = "ops:/";
+    device = "ops:/srv";
     fsType = "nfs4";
     options = [
       "nfsvers=4"
