@@ -405,6 +405,10 @@ in
       mkdir -p $out/share/fonts/truetype
       cp ${./fonts/spectral}/*.ttf $out/share/fonts/truetype/
     '')
+    (pkgs.runCommand "manufacturing-consent-fonts" {} ''
+      mkdir -p $out/share/fonts/truetype
+      cp ${./fonts/manufacturing-consent}/*.ttf $out/share/fonts/truetype/
+    '')
     corefonts
     fira-code
     fira-mono
