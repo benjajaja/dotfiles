@@ -273,6 +273,8 @@ in
     klick
     jack2
     pipewire.jack
+    vital
+    ardour
 
     # work dev
     go
