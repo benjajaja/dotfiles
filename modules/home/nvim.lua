@@ -220,6 +220,12 @@ vim.api.nvim_set_keymap('!', '<C-v>', '<C-R>+', { noremap = true, silent = true}
 vim.api.nvim_set_keymap('t', '<C-v>', '<C-R>+', { noremap = true, silent = true})
 vim.api.nvim_set_keymap('v', '<C-v>', '<C-R>+', { noremap = true, silent = true})
 
+vim.keymap.set('n', '<leader>yf', function()
+  local path = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ':.')
+  vim.fn.setreg('+', path)
+  vim.notify('Copied: ' .. path)
+end, { desc = 'Copy relative file path to clipboard' })
+
 require("no-neck-pain").setup({
   buffers = {
     right = {
