@@ -206,6 +206,7 @@ in
     mate-applets
     brightnessctl
     obs-studio
+    obs-cmd
     emote
     swayidle
     swaylock-effects
@@ -275,6 +276,7 @@ in
     pipewire.jack
     vital
     ardour
+    musescore
 
     # work dev
     go
