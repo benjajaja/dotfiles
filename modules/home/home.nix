@@ -267,7 +267,20 @@ return {
     };
 
     firefox = {
-      enable = false;
+      enable = true;
+      profiles.default = {
+        extensions.packages = [
+          (pkgs.fetchFirefoxAddon {
+            name = "bitwarden";
+            url = "https://addons.mozilla.org/firefox/downloads/file/4875950/bitwarden_password_manager-2026.6.1.xpi";
+            hash = "sha256-e6FsPUIqsofbF7AUpGg7rONjQeRx5NT9WKwrYWxqwX0=";
+            fixedExtid = "{446900e4-71c2-419f-a6a7-df9c091e268b}";
+          })
+        ];
+        settings = {
+          "browser.aboutConfig.showWarning" = false;
+        };
+      };
       policies = {
         DisableTelemetry = true;
         DisableFirefoxStudies = true;
@@ -287,10 +300,12 @@ return {
         DisplayMenuBar = "never";
         SearchBar = "unified";
         PasswordManagerEnabled = true;
-      };
-      profiles.default = {
-        settings = {
-          "browser.aboutConfig.showWarning" = false;
+        ExtensionSettings = {
+          "{446900e4-71c2-419f-a6a7-df9c091e268b}" = {
+            installation_mode = "force_installed";
+            install_url = "https://addons.mozilla.org/firefox/downloads/file/4875950/bitwarden_password_manager-2026.6.1.xpi";
+            updates_disabled = true;
+          };
         };
       };
     };
