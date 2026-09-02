@@ -276,6 +276,11 @@ in
     pipewire.jack
     vital
     ardour
+    aubio
+    sox
+    audacity
+    sonic-visualiser
+    vamp-plugin-sdk
     musescore
 
     # work dev
@@ -356,6 +361,7 @@ in
     mistral-rs
     uv
     nixpkgs-review
+    linuxConsoleTools
   ];
 
   services.udev.extraRules = ''

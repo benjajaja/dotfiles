@@ -373,6 +373,7 @@ binds {
     Mod+G { toggle-window-floating; }
     Mod+C { center-column; }
     Mod+S { screenshot; }
+    Mod+Shift+S { screenshot-screen; }
 
     // Finer width adjustments.
     // This command can also:
