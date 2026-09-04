@@ -331,6 +331,7 @@ in
     mesa-demos # glxinfo
     vulkan-tools
     xev
+    xrdb
     imagemagick
     binutils
     xwd

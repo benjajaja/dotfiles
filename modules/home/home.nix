@@ -33,6 +33,13 @@
     categories = [ "Game" ];
   };
 
+  xdg.desktopEntries."xterm-vt340" = {
+    name = "Xterm vt340";
+    exec = "xterm -ti vt340";
+    terminal = false;
+    categories = [ "System" "TerminalEmulator" ];
+  };
+
   dconf.settings = {
     "org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";
@@ -268,7 +275,9 @@ return {
 
     firefox = {
       enable = true;
+      configPath = ".mozilla/firefox";
       profiles.default = {
+        path = "jq75vup2.default";
         extensions.packages = [
           (pkgs.fetchFirefoxAddon {
             name = "bitwarden";
@@ -312,8 +321,10 @@ return {
   };
 
   xresources.properties = {
+    "Xft.dpi"                 = 96;
+
     "XTerm.vt100.faceName"    = "EnvyCodeR Nerd Font Mono";
-    "XTerm.vt100.faceSize"    = 13;
+    "XTerm.vt100.faceSize"    = 16;
     "XTerm.vt100.renderFont"  = true;
 
     "XTerm.vt100.background"  = "#1a1b2e";
