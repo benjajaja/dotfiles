@@ -230,6 +230,7 @@ in
     rio
     mlterm
     blackbox-terminal
+    xfce4-terminal
 
     # programs
     tmux
@@ -245,6 +246,8 @@ in
     nheko
     mumble
     iamb
+    dino
+
     mdfried.packages.${pkgs.stdenv.hostPlatform.system}.default
     glow
     ncdu
@@ -282,6 +285,8 @@ in
     sonic-visualiser
     vamp-plugin-sdk
     musescore
+    kdePackages.kdenlive
+    shotcut
 
     # work dev
     go
