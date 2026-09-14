@@ -349,6 +349,12 @@ return {
     enable = true;
     settings = {
       default-timeout = 15000;
+      background-color = "#11111b";
+      text-color = "#f8c500";
+      border-color = "#898135";
+      border-size = 1;
+      border-radius = 4;
+      font = "ProFontWindows Nerd Font Mono 11";
     };
   };
   systemd.user.services.mako.Install.WantedBy = lib.mkForce [ "niri.service" ];
