@@ -33,7 +33,8 @@ window#waybar {
 #clock,
 #bluetooth,
 #pulseaudio,
-#battery {
+#battery,
+#custom-mako-dnd {
   opacity: 1;
   color: @main-fg;
   margin-bottom: 0;
@@ -72,6 +73,11 @@ window#waybar {
 }
 
 #clock {
+  color: @main-di;
+  text-shadow: none;
+}
+
+#custom-mako-dnd.dnd {
   color: @main-di;
   text-shadow: none;
 }
