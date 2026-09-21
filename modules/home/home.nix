@@ -356,6 +356,10 @@ return {
       border-radius = 4;
       font = "ProFontWindows Nerd Font Mono 11";
     };
+    extraConfig = ''
+      [mode=do-not-disturb]
+      invisible=1
+    '';
   };
   systemd.user.services.mako.Install.WantedBy = lib.mkForce [ "niri.service" ];
   programs.waybar = {
