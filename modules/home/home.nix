@@ -382,7 +382,7 @@ return {
       ExecStart = ''
         ${pkgs.swayidle}/bin/swayidle -w \
           timeout 1200 'niri msg action power-off-monitors' \
-          timeout 1800 '${pkgs.hyprlock}/bin/hyprlock' \
+          timeout 21600 '${pkgs.hyprlock}/bin/hyprlock' \
           resume 'niri msg action power-on-monitors' \
           before-sleep '${pkgs.hyprlock}/bin/hyprlock'
       '';

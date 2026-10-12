@@ -244,6 +244,7 @@ in
     inkscape
     gnomecast
     nheko
+    kdePackages.neochat
     mumble
     iamb
     dino
@@ -362,6 +363,7 @@ in
     pkgs-unstable.python313Packages.meshtastic
     pkgs-unstable.fractal
     claude-code.packages.${pkgs.stdenv.hostPlatform.system}.default
+    opencode
     qwen-code
     mistralclient
     mistral-rs
