@@ -36,6 +36,7 @@ in
 
   # Enable networking
   networking.networkmanager.enable = true;
+  networking.networkmanager.plugins = with pkgs; [ networkmanager-openvpn ];
 
   networking.wg-quick.interfaces = {
     wg0 = {
@@ -155,6 +156,9 @@ in
     unrar
     nfs-utils
     imv
+    swayimg
+    oculante
+    loupe
     wireguard-tools
     dig
 
