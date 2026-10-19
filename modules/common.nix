@@ -164,6 +164,7 @@ in
 
     inputplug
     firefox
+    pkgs-unstable.ladybird
     dmenu
     thunar
     thunar-archive-plugin
@@ -366,7 +367,8 @@ in
     pkgs-unstable.openttd
     pkgs-unstable.python313Packages.meshtastic
     pkgs-unstable.fractal
-    claude-code.packages.${pkgs.stdenv.hostPlatform.system}.default
+    # claude-code.packages.${pkgs.stdenv.hostPlatform.system}.default
+    pkgs-unstable.claude-code
     opencode
     qwen-code
     mistralclient

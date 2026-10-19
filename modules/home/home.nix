@@ -294,7 +294,7 @@ return {
         DontCheckDefaultBrowser = true;
         DisplayMenuBar = "never";
         SearchBar = "unified";
-        PasswordManagerEnabled = true;
+        PasswordManagerEnabled = false;
         ExtensionSettings = {
           "{446900e4-71c2-419f-a6a7-df9c091e268b}" = {
             installation_mode = "force_installed";
