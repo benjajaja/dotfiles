@@ -250,6 +250,7 @@ in
     gnomecast
     nheko
     kdePackages.neochat
+    fractal
     mumble
     iamb
     dino
@@ -366,7 +367,6 @@ in
     prismlauncher
     pkgs-unstable.openttd
     pkgs-unstable.python313Packages.meshtastic
-    pkgs-unstable.fractal
     # claude-code.packages.${pkgs.stdenv.hostPlatform.system}.default
     pkgs-unstable.claude-code
     opencode
